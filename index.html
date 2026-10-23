@@ -14487,42 +14487,42 @@ Answer: Augusta</pre>
          a toast, and each trophy can be shared or posted to Facebook,
          same as the hosts'. Host scoring is untouched. */
       var PLAYER_TROPHIES = [
-        { id: "tutgrad", icon: "🎓", name: "Tutorial Graduate", desc: "Finish the Quick Tour tutorial — welcome to the bar!" },
-        { id: "firstsip", icon: "🥂", name: "First Sip", desc: "Get your first question right" },
-        { id: "hotstreak", icon: "🔥", name: "Hot Streak", desc: "Get 3 correct answers in a row" },
-        { id: "onfire", icon: "☄️", name: "On Fire", desc: "Get 5 correct answers in a row" },
-        { id: "perfectpour", icon: "🍾", name: "Perfect Pour", desc: "Answer every question in a round correctly" },
-        { id: "comebackkid", icon: "💪", name: "Comeback Kid", desc: "Get one right right after missing two in a row" },
-        { id: "lightningfast", icon: "⚡", name: "Lightning Fast", desc: "Get a Lightning Round question right" },
-        { id: "sharpshooter", icon: "🎯", name: "Sharp Shooter", desc: "Get 10 questions right in one night" },
-        { id: "firstnight", icon: "🌙", name: "First Night Out", desc: "Show up for your first trivia night" },
-        { id: "regular", icon: "🗓️", name: "Regular", desc: "Play on 3 different trivia nights" },
-        { id: "wellrounded", icon: "🌐", name: "Well Rounded", desc: "Get answers right in 5 different categories" },
-        { id: "topicmaster", icon: "🎖️", name: "Topic Master", desc: "Master a topic — 10 right answers in one category, across any nights" },
-        { id: "explorer", icon: "🧭", name: "Category Explorer", desc: "Play questions from 10 different categories" },
-        { id: "century", icon: "💯", name: "Century Club", desc: "Get 100 questions right all-time" },
-        { id: "champion", icon: "🏆", name: "Champion", desc: "Win a trivia night" },
-        { id: "devoted", icon: "📆", name: "Devoted Regular", desc: "Play on 7 different trivia nights" },
-        { id: "eagleeye", icon: "👁️", name: "Eagle Eye", desc: "Get 5 picture questions right" },
-        { id: "sharpear", icon: "🎧", name: "Sharp Ear", desc: "Get 5 listening questions right" },
-        { id: "unstoppable", icon: "🌋", name: "Unstoppable", desc: "Get 8 correct answers in a row" },
-        { id: "phoenix", icon: "🐦‍🔥", name: "Phoenix", desc: "Get one right after missing three in a row" },
-        { id: "deadeye", icon: "🏹", name: "Deadeye", desc: "Get 15 questions right in one night" },
-        { id: "quickdraw", icon: "🤠", name: "Quick Draw", desc: "Earn a speed bonus on 5 right answers" },
-        { id: "tripleflawless", icon: "🏅", name: "Flawless ×3", desc: "Perfect rounds in 3 different categories" },
-        { id: "deepcut", icon: "🔬", name: "Deep Cut", desc: "Get 25 right answers in one category, across any nights" },
-        { id: "fixture", icon: "🪑", name: "Bar Fixture", desc: "Play on 15 different trivia nights" },
-        { id: "tarheel", icon: "🏔️", name: "Tar Heel Traveler", desc: "Get 5 North Carolina questions right" },
-        { id: "islandhopper", icon: "🏖️", name: "Island Hopper", desc: "Get 5 South Carolina questions right" },
-        { id: "peachstate", icon: "🍑", name: "Peach State Pro", desc: "Get 5 Georgia questions right" },
-        { id: "littlerhody", icon: "⚓", name: "Little Rhody", desc: "Get 5 Rhode Island questions right" },
-        { id: "capecodder", icon: "🦞", name: "Cape Codder", desc: "Get 5 Massachusetts questions right" },
-        { id: "maineiac", icon: "🌲", name: "Maine-iac", desc: "Get 5 Maine questions right" },
-        { id: "coasttocoast", icon: "🗺️", name: "Coast to Coast", desc: "Get questions right in all 6 vacation states" },
-        { id: "rocketleague", icon: "🚗", name: "Rocket League Rookie", desc: "Get 5 Rocket League questions right" },
-        { id: "golfer", icon: "⛳", name: "Fairway Finder", desc: "Get 5 golf questions right" },
-        { id: "orchardkeeper", icon: "🍎", name: "Orchard Keeper", desc: "Get 5 Apple Tree questions right" },
-        { id: "beefriend", icon: "🐝", name: "Bee Friend", desc: "Get 3 bee/pollination questions right" }
+        { id: "tutgrad", icon: "🎓", name: "Tutorial Graduate", desc: "Finish the Quick Tour tutorial — welcome to the bar!", req: "Complete the Quick Tour" },
+        { id: "firstsip", icon: "🥂", name: "First Sip", desc: "Get your first question right", req: "1 correct answer" },
+        { id: "hotstreak", icon: "🔥", name: "Hot Streak", desc: "Get 3 correct answers in a row", req: "3-in-a-row streak" },
+        { id: "onfire", icon: "☄️", name: "On Fire", desc: "Get 5 correct answers in a row", req: "5-in-a-row streak" },
+        { id: "perfectpour", icon: "🍾", name: "Perfect Pour", desc: "Answer every question in a round correctly", req: "100% in one round" },
+        { id: "comebackkid", icon: "💪", name: "Comeback Kid", desc: "Get one right right after missing two in a row", req: "Right answer after 2 misses" },
+        { id: "lightningfast", icon: "⚡", name: "Lightning Fast", desc: "Get a Lightning Round question right", req: "1 Lightning Round correct" },
+        { id: "sharpshooter", icon: "🎯", name: "Sharp Shooter", desc: "Get 10 questions right in one night", req: "10 correct in one night" },
+        { id: "firstnight", icon: "🌙", name: "First Night Out", desc: "Show up for your first trivia night", req: "Play 1 trivia night" },
+        { id: "regular", icon: "🗓️", name: "Regular", desc: "Play on 3 different trivia nights", req: "Play 3 different nights" },
+        { id: "wellrounded", icon: "🌐", name: "Well Rounded", desc: "Get answers right in 5 different categories", req: "Correct in 5 categories" },
+        { id: "topicmaster", icon: "🎖️", name: "Topic Master", desc: "Master a topic — 10 right answers in one category, across any nights", req: "10 correct in one topic" },
+        { id: "explorer", icon: "🧭", name: "Category Explorer", desc: "Play questions from 10 different categories", req: "Play 10 categories" },
+        { id: "century", icon: "💯", name: "Century Club", desc: "Get 100 questions right all-time", req: "100 correct all-time" },
+        { id: "champion", icon: "🏆", name: "Champion", desc: "Win a trivia night", req: "Win 1 trivia night" },
+        { id: "devoted", icon: "📆", name: "Devoted Regular", desc: "Play on 7 different trivia nights", req: "Play 7 different nights" },
+        { id: "eagleeye", icon: "👁️", name: "Eagle Eye", desc: "Get 5 picture questions right", req: "5 picture questions correct" },
+        { id: "sharpear", icon: "🎧", name: "Sharp Ear", desc: "Get 5 listening questions right", req: "5 listening questions correct" },
+        { id: "unstoppable", icon: "🌋", name: "Unstoppable", desc: "Get 8 correct answers in a row", req: "8-in-a-row streak" },
+        { id: "phoenix", icon: "🐦‍🔥", name: "Phoenix", desc: "Get one right after missing three in a row", req: "Right answer after 3 misses" },
+        { id: "deadeye", icon: "🏹", name: "Deadeye", desc: "Get 15 questions right in one night", req: "15 correct in one night" },
+        { id: "quickdraw", icon: "🤠", name: "Quick Draw", desc: "Earn a speed bonus on 5 right answers", req: "5 speed bonuses" },
+        { id: "tripleflawless", icon: "🏅", name: "Flawless ×3", desc: "Perfect rounds in 3 different categories", req: "Perfect in 3 categories" },
+        { id: "deepcut", icon: "🔬", name: "Deep Cut", desc: "Get 25 right answers in one category, across any nights", req: "25 correct in one topic" },
+        { id: "fixture", icon: "🪑", name: "Bar Fixture", desc: "Play on 15 different trivia nights", req: "Play 15 different nights" },
+        { id: "tarheel", icon: "🏔️", name: "Tar Heel Traveler", desc: "Get 5 North Carolina questions right", req: "5 NC correct" },
+        { id: "islandhopper", icon: "🏖️", name: "Island Hopper", desc: "Get 5 South Carolina questions right", req: "5 SC correct" },
+        { id: "peachstate", icon: "🍑", name: "Peach State Pro", desc: "Get 5 Georgia questions right", req: "5 Georgia correct" },
+        { id: "littlerhody", icon: "⚓", name: "Little Rhody", desc: "Get 5 Rhode Island questions right", req: "5 RI correct" },
+        { id: "capecodder", icon: "🦞", name: "Cape Codder", desc: "Get 5 Massachusetts questions right", req: "5 MA correct" },
+        { id: "maineiac", icon: "🌲", name: "Maine-iac", desc: "Get 5 Maine questions right", req: "5 Maine correct" },
+        { id: "coasttocoast", icon: "🗺️", name: "Coast to Coast", desc: "Get questions right in all 6 vacation states", req: "Correct in NC, SC, GA, RI, MA, ME" },
+        { id: "rocketleague", icon: "🚗", name: "Rocket League Rookie", desc: "Get 5 Rocket League questions right", req: "5 Rocket League correct" },
+        { id: "golfer", icon: "⛳", name: "Fairway Finder", desc: "Get 5 golf questions right", req: "5 golf correct" },
+        { id: "orchardkeeper", icon: "🍎", name: "Orchard Keeper", desc: "Get 5 Apple Tree questions right", req: "5 Apple Tree correct" },
+        { id: "beefriend", icon: "🐝", name: "Bee Friend", desc: "Get 3 bee/pollination questions right", req: "3 bee questions correct" }
       ];
       function playerTrophyById(id) {
         for (var i = 0; i < PLAYER_TROPHIES.length; i++) if (PLAYER_TROPHIES[i].id === id) return PLAYER_TROPHIES[i];
@@ -14641,7 +14641,7 @@ Answer: Augusta</pre>
           g.setAttribute("class", "con-node" + (lit[i] ? " lit" : " dim") + (lit[i] && !calm ? " con-twinkle" : ""));
           g.setAttribute("tabindex", "0");
           g.setAttribute("role", "button");
-          g.setAttribute("aria-label", tr.name + (lit[i] ? " (unlocked)" : " (locked)"));
+          g.setAttribute("aria-label", tr.name + " — " + (tr.req || tr.desc) + (lit[i] ? " (unlocked)" : " (locked)"));
           var halo = document.createElementNS(NS, "circle");
           halo.setAttribute("cx", p[0]); halo.setAttribute("cy", p[1]); halo.setAttribute("r", 22);
           halo.setAttribute("class", "halo");
@@ -15053,7 +15053,7 @@ Answer: Augusta</pre>
           earned: !!ts,
           when: ts != null ? fmtWhen(ts) : "",
           what: BADGE_WHAT[tr.id] || "One of the badges in the case — earned at the Barboretum, kept on this device.",
-          how: tr.desc + (String(tr.desc).slice(-1) === "." ? "" : "."),
+          how: (tr.req ? "Requirement: " + tr.req + ". " : "") + tr.desc + (String(tr.desc).slice(-1) === "." ? "" : "."),
           progress: side === "host" ? hostProgressLine(tr.id, prof) : playerProgressLine(tr.id)
         };
         if (side === "player" && !ts) {
