@@ -1548,7 +1548,10 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         .timer-wrap { min-width: 0; }
         .hostbar .btn { flex: 1 1 40%; }
       }
-    </style>
+    
+      .qr-branded { max-width: 232px !important; width: 100% !important; height: auto !important; display: block; margin: 0 auto; border-radius: 12px; }
+      #qr-box img.qr-branded { max-width: 232px !important; }
+</style>
   </head>
   <body>
     <div id="theme-fx" aria-hidden="true"></div>
@@ -14562,7 +14565,12 @@ Answer: Augusta</pre>
       }
       function renderConstellation(list, fam, inFam, unlocked) {
         var NS = "http://www.w3.org/2000/svg";
-        var W = 360, H = 150;
+        var W = 360;
+        var n = inFam.length;
+        /* Wrap crowded families into multiple rows so nodes don't overlap. */
+        var perRow = 6;
+        var rows = Math.ceil(n / perRow);
+        var H = 150 + (rows - 1) * 90;
         var svg = document.createElementNS(NS, "svg");
         svg.setAttribute("viewBox", "0 0 " + W + " " + H);
         svg.setAttribute("class", "constel");
@@ -14573,14 +14581,17 @@ Answer: Augusta</pre>
         title.setAttribute("class", "con-label");
         title.textContent = fam.label;
         svg.appendChild(title);
-        var n = inFam.length;
         function pos(i) {
-          var x = n === 1 ? W / 2 : 34 + i * ((W - 68) / (n - 1));
-          var y = 74 + 30 * Math.sin(i * 2.3 + fam.key.length * 1.7);
+          var row = Math.floor(i / perRow);
+          var col = i % perRow;
+          var inRow = Math.min(perRow, n - row * perRow);
+          var x = inRow === 1 ? W / 2 : 34 + col * ((W - 68) / (inRow - 1));
+          var y = 74 + row * 90 + 30 * Math.sin(col * 2.3 + fam.key.length * 1.7 + row);
           return [x, y];
         }
         var lit = inFam.map(function (tr) { return !!unlocked[tr.id]; });
         for (var i = 0; i < n - 1; i++) {
+          if (Math.floor(i / perRow) !== Math.floor((i + 1) / perRow)) continue;
           var a = pos(i), b = pos(i + 1);
           var ln = document.createElementNS(NS, "line");
           ln.setAttribute("x1", a[0]); ln.setAttribute("y1", a[1]);
@@ -17588,5 +17599,4 @@ Answer: Augusta</pre>
     </script>
   </body>
 </html>
-      .qr-branded { max-width: 232px; width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 12px; }
 
