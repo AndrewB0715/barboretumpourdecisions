@@ -1564,23 +1564,6 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .qr-branded { max-width: 232px !important; width: 100% !important; height: auto !important; display: block; margin: 0 auto; border-radius: 12px; }
       #qr-box img.qr-branded { max-width: 232px !important; }
 
-      /* Theme particles: floating emoji for each theme */
-      .theme-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none !important; z-index: 0; overflow: hidden; }
-      .theme-particles * { pointer-events: none !important; }
-      .theme-particle { position: absolute; top: -50px; animation: fall linear infinite; opacity: 0.8; }
-      @keyframes fall {
-        0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
-        10% { opacity: 0.8; }
-        90% { opacity: 0.8; }
-        100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
-      }
-      @keyframes wave {
-        0%, 100% { transform: translateX(0) translateY(0); }
-        25% { transform: translateX(-20px) translateY(-10px); }
-        50% { transform: translateX(0) translateY(0); }
-        75% { transform: translateX(20px) translateY(10px); }
-      }
-      .theme-particle.wave { animation: wave 4s ease-in-out infinite; top: auto; }
 </style>
   </head>
   <body>
@@ -14789,45 +14772,6 @@ Answer: Augusta</pre>
         } catch(e) {}
       })();
 
-      /* Theme particles: spawn floating emoji based on current theme */
-      var THEME_PARTICLES = {
-        ocean: ["🌊", "🐚", "🐠", "💧"],
-        fall: ["🍂", "🍁", "🌰", "🍃"],
-        winter: ["❄️", "⛄", "🌨️", "🧊"],
-        shamrock: ["☘️", "🍀", "🌈", "💚"],
-        independence: ["🇺🇸", "🎆", "🎇", "⭐"],
-        halloween: ["🎃", "🍬", "🍭", "👻"],
-        christmas: ["💡", "🎄", "⭐", "🔔"],
-        valentine: ["💕", "💘", "🌹", "💝"]
-      };
-      function startThemeParticles() {
-        // Remove old particles
-        var old = document.querySelector(".theme-particles");
-        if (old) old.remove();
-        var theme = (typeof currentTheme !== "undefined" && currentTheme) ? currentTheme : "default";
-        var emojis = THEME_PARTICLES[theme];
-        if (!emojis) return;
-        // Respect reduced motion
-        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        var container = document.createElement("div");
-        container.className = "theme-particles";
-        container.setAttribute("aria-hidden", "true");
-        for (var i = 0; i < 15; i++) {
-          var p = document.createElement("div");
-          p.className = "theme-particle";
-          p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-          p.style.left = Math.random() * 100 + "%";
-          p.style.fontSize = (16 + Math.random() * 20) + "px";
-          p.style.animationDuration = (6 + Math.random() * 8) + "s";
-          p.style.animationDelay = (Math.random() * 8) + "s";
-          container.appendChild(p);
-        }
-        document.body.appendChild(container);
-      }
-      // Start particles on load and when theme changes
-      setTimeout(startThemeParticles, 1000);
-      // Hook into theme changes
-      var _origSetTheme = typeof setTheme === "function" ? setTheme : null;
       function renderAchievements() {
         /* Skyrim-style constellation view of every achievement. */
         var list = $("achievements-list");
