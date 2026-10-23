@@ -1581,13 +1581,12 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <button class="btn" data-action="goto-find">🧭 Find Your Team</button>
               <button class="btn small" id="btn-how-join" type="button">❓ How do I join?</button>
             </div>
-          </div>
-          <div class="menu-group quick-controls">
+            <div class="menu-group-label" style="margin-top:.7rem">🎵 Music &amp; theme</div>
             <div class="title-actions">
               <button class="btn music-btn" type="button" aria-pressed="false">🎵 Music: Off</button>
               <button class="btn sfx-btn on" type="button" aria-pressed="true">🔊 Sound: On</button>
             </div>
-            <div class="theme-picker" id="theme-picker-quick" role="group" aria-label="Night theme"></div>
+            <div class="theme-picker" id="theme-picker-quick" role="group" aria-label="Night theme" style="margin-top:.4rem"></div>
           </div>
           
           <div class="menu-group">
@@ -14533,6 +14532,19 @@ Answer: Augusta</pre>
           svg.appendChild(g);
         });
         list.appendChild(svg);
+      }
+      function personalizeTrophies() {
+        /* Title the trophy shelf with the current player's name. */
+        var h = $("pt-h"), sub = $("pt-sub");
+        if (player && player.name) {
+          var n = player.name;
+          var poss = /s$/i.test(n) ? n + "\u2019" : n + "\u2019s";
+          if (h) h.textContent = "🏆 " + poss + " Trophies";
+          if (sub) sub.textContent = poss + " personal trophy shelf — earned on this phone.";
+        } else {
+          if (h) h.textContent = "🏆 My Trophies";
+          if (sub) sub.textContent = "Your personal trophy shelf.";
+        }
       }
       function renderPlayerTrophies() {
         if (!player) return;
