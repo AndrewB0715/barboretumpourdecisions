@@ -1032,7 +1032,16 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         --gold: #ffd23e; --gold-soft: #ffe37e; --wine: #c41e3a; --wine-deep: #8b1428;
         --green: #8fe388;
       }
-      [data-theme="christmas"] body {
+      
+      /* Wine Cork theme */
+      [data-theme="cork"] { --bg: #1a0f06; --bg-2: #241608; --panel: #2e1c0a; --panel-2: #3a2410; }
+      [data-theme="cork"] body {
+        background:
+          radial-gradient(1100px 600px at 85% -10%, rgba(160, 100, 40, .18), transparent 60%),
+          radial-gradient(900px 700px at -10% 110%, rgba(120, 70, 20, .12), transparent 55%),
+          var(--bg);
+      }
+[data-theme="christmas"] body {
         background:
           radial-gradient(1100px 600px at 85% -10%, rgba(255, 210, 62, .14), transparent 60%),
           radial-gradient(900px 700px at -10% 110%, rgba(196, 30, 58, .12), transparent 55%),
@@ -4925,6 +4934,19 @@ Answer: Augusta</pre>
             { q: "What is a female horse called? 🐴", a: "A mare", choices: ["A mare", "The Dachshund", "A filly at any age", "A doe"], correct: 0 }
           ]
         },
+      {
+        id: "winecorks",
+        name: "Wine Corks",
+        icon: "🍾",
+        questions: [
+            { q: "🍾 What tree does natural wine cork come from?", a: "Cork oak", choices: ["Cork oak", "Pine", "Birch", "Maple"], correct: 0 },
+            { q: "🍾 Which country produces the most cork?", a: "Portugal", choices: ["Portugal", "France", "Italy", "Spain"], correct: 0 },
+            { q: "🍾 What is 'cork taint' caused by?", a: "A chemical called TCA", choices: ["A chemical called TCA", "Too much air", "Old grapes", "Bad storage"], correct: 0 },
+            { q: "🍾 How long does it take a cork oak to regrow its bark?", a: "About 9 years", choices: ["About 9 years", "About 2 years", "About 20 years", "About 50 years"], correct: 0 },
+            { q: "🍾 What do you call a wine bottle sealed with a cork?", a: "Corked (or cork-finished)", choices: ["Corked (or cork-finished)", "Screwed", "Sealed", "Closed"], correct: 0 },
+            { q: "🍾 Can cork be recycled?", a: "Yes", choices: ["Yes", "No", "Only in Europe", "Only new corks"], correct: 0 },
+        ]
+      },
         {
           id: "wildlife", name: "Wildlife Wonders", icon: "🦁",
           tagline: "Migration, camouflage, and survival tricks from the wild side of the animal kingdom.",
@@ -16268,9 +16290,10 @@ $("btn-start").addEventListener("click", function () {
         { id: "valentine", icon: "💘", name: "Valentine's" },
         { id: "ocean", icon: "🌊", name: "Ocean" },
         { id: "independence", icon: "🇺🇸", name: "Independence" },
-        { id: "christmas", icon: "🎄", name: "Christmas" }
+        { id: "christmas", icon: "🎄", name: "Christmas" },
+        { id: "cork", icon: "🍾", name: "Wine Cork" }
       ];
-      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824", independence: "#0a0a1e", christmas: "#0a1a0a" };
+      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824", independence: "#0a0a1e", christmas: "#0a1a0a", cork: "#1a0f06" };
       var currentTheme = "default";
       function setTheme(id) {
         currentTheme = id;
