@@ -1636,6 +1636,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <button class="btn" id="btn-blocked" type="button">🚫 Blocked Names</button>
               <button class="btn" id="btn-ambience" type="button">🌌 Ambience Links</button>
               <button class="btn" id="btn-bugreport" type="button">🐛 Report a Bug</button>
+              <button class="btn" id="btn-whatsnew" type="button">📝 What's New</button>
             </div>
           </div>
           <div class="menu-group">
@@ -2871,6 +2872,18 @@ Answer: Augusta</pre>
         <div id="topic-mastery-list"></div>
         <div class="sheet-actions">
           <button class="btn primary" data-close="overlay-player-trophies">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ WHAT'S NEW OVERLAY ============ -->
+    <div class="overlay" id="overlay-whatsnew" role="dialog" aria-modal="true" aria-labelledby="wn-h">
+      <div class="sheet builder-sheet">
+        <h2 id="wn-h">📝 What's New</h2>
+        <p class="sheet-sub">Every update, newest first — features added and bugs fixed.</p>
+        <div id="whatsnew-list"></div>
+        <div class="sheet-actions">
+          <button class="btn primary" data-close="overlay-whatsnew">Done</button>
         </div>
       </div>
     </div>
@@ -6415,8 +6428,12 @@ Answer: Augusta</pre>
             { q: "🏛️ The Breakers, the grandest of the Newport mansions, was built for which family?", a: "The Vanderbilts", choices: ["The Vanderbilts", "The Astors", "The Rockefellers", "The Carnegies"], correct: 0 },
             { q: "🎾 The International Tennis Hall of Fame is located in which Rhode Island city?", a: "Newport", choices: ["Providence", "Warwick", "Newport", "Bristol"], correct: 2 },
             { q: "🏭 In 1790, Samuel Slater built America's first successful water-powered textile mill in which Rhode Island town?", a: "Pawtucket", choices: ["Providence", "Pawtucket", "Woonsocket", "Newport"], correct: 1 },
-            { q: "🗺️ Despite the name, most of Rhode Island is actually what?", a: "Mainland", choices: ["Desert", "One big island", "Mountains", "Mainland"], correct: 3 }
-          ]
+            { q: "🗺️ Despite the name, most of Rhode Island is actually what?", a: "Mainland", choices: ["Desert", "One big island", "Mountains", "Mainland"], correct: 3 },
+          
+            { q: "🏛️ Providence, RI is the capital of which state?", a: "Rhode Island", choices: ["Rhode Island", "Connecticut", "Massachusetts", "Delaware"], correct: 0 },
+            { q: "🏰 Newport, RI is famous for what kind of historic buildings?", a: "Gilded Age mansions", choices: ["Gilded Age mansions", "Colonial forts", "Lighthouses", "Whaling museums"], correct: 0, fact: "Newport's famous mansions like The Breakers were built by Gilded Age industrialists as summer 'cottages'." },
+            { q: "🌉 Jamestown, RI is located on which island?", a: "Conanicut Island", choices: ["Conanicut Island", "Aquidneck Island", "Block Island", "Long Island"], correct: 0 },
+            { q: "⛵ Newport Harbor is famous for what annual sailing event?", a: "Newport Bermuda Race", choices: ["Newport Bermuda Race", "America's Cup (every year)", "Tall Ships Festival", "Lobster Boat Races"], correct: 0 },]
         },
         {
           id: "massachusetts", name: "Massachusetts", icon: "🦞",
@@ -6434,8 +6451,13 @@ Answer: Augusta</pre>
             { q: "⚾ Fenway Park, the oldest active major-league ballpark, opened in which year?", a: "1912", choices: ["1903", "1912", "1923", "1876"], correct: 1 },
             { q: "🏫 Boston Latin School, founded in 1635, was America's first what?", a: "Public school", choices: ["Public school", "College", "Library", "Newspaper"], correct: 0 },
             { q: "🚇 America's first subway opened in 1897 in which city?", a: "Boston", choices: ["New York", "Philadelphia", "Boston", "Chicago"], correct: 2 },
-            { q: "🗺️ In 1629, colonists dubbed the area the 'Massachusetts Bay Colony' — giving the state which nickname?", a: "The Bay State", choices: ["The Ocean State", "The Pine Tree State", "The Harbor State", "The Bay State"], correct: 3 }
-          ]
+            { q: "🗺️ In 1629, colonists dubbed the area the 'Massachusetts Bay Colony' — giving the state which nickname?", a: "The Bay State", choices: ["The Ocean State", "The Pine Tree State", "The Harbor State", "The Bay State"], correct: 3 },
+          
+            { q: "🦞 Cape Cod's Chatham is famous for what?", a: "Shark sightings and seals", choices: ["Shark sightings and seals", "Whale watching only", "Lobster festivals", "Surfing competitions"], correct: 0, fact: "Chatham's growing seal population has attracted great white sharks — it's now a shark research hotspot." },
+            { q: "🏳️‍🌈 Provincetown, at the tip of Cape Cod, is known as what?", a: "An LGBTQ+ friendly arts community", choices: ["An LGBTQ+ friendly arts community", "A fishing port only", "A military base", "A cranberry capital"], correct: 0 },
+            { q: "⛴️ Hyannis is the main ferry departure point for which islands?", a: "Nantucket and Martha's Vineyard", choices: ["Nantucket and Martha's Vineyard", "Block Island and Long Island", "Staten Island and Ellis Island", "Mount Desert Island"], correct: 0 },
+            { q: "🏙️ Boston's famous waterfront trail is called what?", a: "The Freedom Trail", choices: ["The Freedom Trail", "The Harbor Walk", "The Emerald Necklace", "The Rose Kennedy Greenway"], correct: 0, fact: "The 2.5-mile Freedom Trail connects 16 historic sites from Boston Common to Bunker Hill." },
+            { q: "🦀 Which Cape Cod town is home to the famous Chatham Bars Inn?", a: "Chatham", choices: ["Chatham", "Hyannis", "Provincetown", "Falmouth"], correct: 0 },]
         },
         {
           id: "maine", name: "Maine", icon: "🌲",
@@ -6453,7 +6475,48 @@ Answer: Augusta</pre>
             { q: "🏞️ Acadia was the first national park established east of which river?", a: "The Mississippi", choices: ["The Mississippi", "The Hudson", "The Ohio", "The Missouri"], correct: 0 },
             { q: "🗺️ Maine borders how many other states?", a: "One", choices: ["Three", "Two", "One", "Four"], correct: 2 },
             { q: "🔤 Maine is the only U.S. state with what distinction?", a: "A one-syllable name", choices: ["No sales tax", "A one-syllable name", "Two peninsulas", "No state bird"], correct: 1 },
-            { q: "🦞 Maine lobstermen haul in around 90 million pounds a year — about what share of America's lobster?", a: "Around 80%", choices: ["Around 20%", "Around 40%", "Around 60%", "Around 80%"], correct: 3 }
+            { q: "🦞 Maine lobstermen haul in around 90 million pounds a year — about what share of America's lobster?", a: "Around 80%", choices: ["Around 20%", "Around 40%", "Around 60%", "Around 80%"], correct: 3 },
+          
+            { q: "🏖️ Ogunquit, Maine is famous for what?", a: "A beautiful sandy beach and art colony", choices: ["A beautiful sandy beach and art colony", "Lobster processing plants", "A naval shipyard", "Ski resorts"], correct: 0 },
+            { q: "⚓ Kennebunkport is known as the summer home of which US president?", a: "George H.W. Bush", choices: ["George H.W. Bush", "John F. Kennedy", "Bill Clinton", "Barack Obama"], correct: 0, fact: "The Bush family compound at Walker's Point in Kennebunkport has been their summer home for generations." },
+            { q: "🛍️ Freeport, Maine is home to the flagship store of which retailer?", a: "L.L.Bean", choices: ["L.L.Bean", "Eddie Bauer", "REI", "Patagonia"], correct: 0, fact: "L.L.Bean's flagship in Freeport has been open 24/7 since 1951." },
+            { q: "⛵ Camden, Maine is known as what?", a: "Where the mountains meet the sea", choices: ["Where the mountains meet the sea", "The lobster capital", "The blueberry capital", "The sailing capital of the world"], correct: 0 },
+            { q: "🦞 Boothbay Harbor is famous for what?", a: "A working harbor and boat tours", choices: ["A working harbor and boat tours", "Ski slopes", "Casinos", "Amusement parks"], correct: 0 },
+            { q: "🍲 Cabbage Island is famous for what Maine experience?", a: "A traditional clam bake", choices: ["A traditional clam bake", "A lighthouse tour", "Whale watching", "A music festival"], correct: 0, fact: "The Cabbage Island clam bake — reached by boat from Boothbay Harbor — is a classic Maine coastal tradition." },
+            { q: "🫐 Bar Harbor is the gateway to which national park?", a: "Acadia National Park", choices: ["Acadia National Park", "Shenandoah", "Great Smoky Mountains", "Cape Cod National Seashore"], correct: 0 },
+            { q: "🏞️ Acadia National Park is located primarily on which island?", a: "Mount Desert Island", choices: ["Mount Desert Island", "Long Island", "Martha's Vineyard", "Block Island"], correct: 0 },
+            { q: "🦞 Portland, Maine is famous for what food?", a: "Lobster rolls", choices: ["Lobster rolls", "Clam chowder", "Blueberry pie", "All of these"], correct: 3 },]
+        },
+        {
+          id: "southcarolina", name: "South Carolina", icon: "🏖️",
+          tagline: "Hilton Head Island — Sea Pines, Harbour Town, and the Salty Dog.",
+          cue: "Name the Hilton Head fact",
+          questions: [
+            { q: "🏖️ Hilton Head Island is located in which state?", a: "South Carolina", choices: ["South Carolina", "North Carolina", "Georgia", "Florida"], correct: 0 },
+            { q: "🌲 Sea Pines is what on Hilton Head Island?", a: "A resort community", choices: ["A resort community", "A state park", "A historic fort", "A fishing village"], correct: 0, fact: "Sea Pines Resort, founded in the 1950s, helped turn Hilton Head into a world-class vacation destination." },
+            { q: "⛵ Harbour Town is famous for what landmark?", a: "The Harbour Town Lighthouse", choices: ["The Harbour Town Lighthouse", "A historic fort", "A pirate museum", "A naval ship"], correct: 0 },
+            { q: "🐕 The Salty Dog is what at South Beach?", a: "A famous restaurant and shop", choices: ["A famous restaurant and shop", "A dog beach", "A fishing charter", "A lighthouse"], correct: 0, fact: "The Salty Dog Cafe at South Beach Marina is a Hilton Head institution — Jake the Salty Dog is its mascot." },
+            { q: "🌳 The Forest Preserve on Hilton Head protects what?", a: "Native maritime forest and wetlands", choices: ["Native maritime forest and wetlands", "A Civil War battlefield", "An amusement park", "A golf course"], correct: 0 },
+            { q: "🏛️ Stoney-Baynard refers to what on Hilton Head?", a: "Historic plantation ruins", choices: ["Historic plantation ruins", "A modern resort", "A nature trail", "A seafood restaurant"], correct: 0, fact: "The Stoney-Baynard ruins in Sea Pines are the remains of a 19th-century plantation." },
+            { q: "🏖️ Tower Beach is known for what?", a: "A quiet beach near Sea Pines", choices: ["A quiet beach near Sea Pines", "Surfing competitions", "A nude beach", "Shark fishing"], correct: 0 },
+            { q: "🦐 Fish Camp on Hilton Head is what kind of place?", a: "A seafood restaurant", choices: ["A seafood restaurant", "A fishing tournament", "A campground", "A fish market only"], correct: 0 },
+            { q: "⛳ Hilton Head is famous for which PGA Tour event?", a: "The RBC Heritage", choices: ["The RBC Heritage", "The Masters", "The US Open", "The PGA Championship"], correct: 0, fact: "The RBC Heritage has been played at Harbour Town Golf Links since 1969." },
+            { q: "🐬 What marine animal is commonly spotted on dolphin tours from Hilton Head?", a: "Bottlenose dolphins", choices: ["Bottlenose dolphins", "Manatees", "Sea turtles", "Whales"], correct: 0 }
+          ]
+        },
+        {
+          id: "georgia", name: "Georgia", icon: "🍑",
+          tagline: "Atlanta — Georgia Tech, football, and the Peach State.",
+          cue: "Name the Georgia fact",
+          questions: [
+            { q: "🏈 Georgia Tech's football team is called what?", a: "The Yellow Jackets", choices: ["The Yellow Jackets", "The Bulldogs", "The Tigers", "The Eagles"], correct: 0 },
+            { q: "🏟️ Georgia Tech plays home games at which stadium?", a: "Bobby Dodd Stadium", choices: ["Bobby Dodd Stadium", "Sanford Stadium", "Mercedes-Benz Stadium", "Turner Field"], correct: 0, fact: "Bobby Dodd Stadium at Hyundai Field has been Georgia Tech's home since 1913." },
+            { q: "🍑 Atlanta is the capital of which state?", a: "Georgia", choices: ["Georgia", "Alabama", "Tennessee", "South Carolina"], correct: 0 },
+            { q: "🏈 Georgia Tech's biggest rival is whom?", a: "Georgia (Clean, Old-Fashioned Hate)", choices: ["Georgia (Clean, Old-Fashioned Hate)", "Clemson", "Florida State", "Auburn"], correct: 0 },
+            { q: "🎓 Georgia Tech is famous for what academic focus?", a: "Engineering and technology", choices: ["Engineering and technology", "Law", "Medicine", "Agriculture"], correct: 0 },
+            { q: "🏙️ Which Atlanta attraction features a giant aquarium?", a: "Georgia Aquarium", choices: ["Georgia Aquarium", "Zoo Atlanta", "World of Coca-Cola", "Stone Mountain"], correct: 0, fact: "The Georgia Aquarium is one of the largest aquariums in the world." },
+            { q: "🥤 The World of Coca-Cola is located in which city?", a: "Atlanta", choices: ["Atlanta", "Charlotte", "Nashville", "Birmingham"], correct: 0 },
+            { q: "🏈 What is Georgia Tech's mascot?", a: "Buzz the Yellow Jacket", choices: ["Buzz the Yellow Jacket", "Uga the Bulldog", "Aubie the Tiger", "Cocky the Gamecock"], correct: 0 }
           ]
         },
         {
@@ -6472,8 +6535,13 @@ Answer: Augusta</pre>
             { q: "🌸 The Carolina lily is North Carolina's official state what?", a: "Wildflower", choices: ["Tree", "Wildflower", "Beverage", "Dance"], correct: 1 },
             { q: "🌉 Grandfather Mountain's Mile High Swinging Bridge sits exactly how high above sea level?", a: "5,280 feet", choices: ["5,280 feet", "6,684 feet", "4,000 feet", "3,000 feet"], correct: 0 },
             { q: "🐢 The eastern box turtle is North Carolina's official state what?", a: "Reptile", choices: ["Amphibian", "Mammal", "Reptile", "Crustacean"], correct: 2 },
-            { q: "🏀 Michael Jordan grew up and played high school ball in which North Carolina city?", a: "Wilmington", choices: ["Raleigh", "Durham", "Charlotte", "Wilmington"], correct: 3 }
-          ]
+            { q: "🏀 Michael Jordan grew up and played high school ball in which North Carolina city?", a: "Wilmington", choices: ["Raleigh", "Durham", "Charlotte", "Wilmington"], correct: 3 },
+          
+            { q: "🏔️ Blowing Rock, NC is named for a cliff where legend says light objects do what?", a: "Blow back upward", choices: ["Blow back upward", "Roll downhill", "Float sideways", "Disappear in fog"], correct: 0, fact: "The legend says the wind at the Blowing Rock cliff is so strong it blows light objects back up — hence the name." },
+            { q: "🥾 Moses Cone Park's Flat Top Mountain is part of which NC parkway attraction?", a: "The Blue Ridge Parkway", choices: ["The Blue Ridge Parkway", "Great Smoky Mountains NP", "Pisgah National Forest", "Stone Mountain Park"], correct: 0 },
+            { q: "🏛️ Flat Top Manor, the 1901 country estate on the Blue Ridge Parkway, was built for whom?", a: "Moses Cone (textile magnate)", choices: ["Moses Cone (textile magnate)", "George Vanderbilt", "Andrew Carnegie", "John D. Rockefeller"], correct: 0, fact: "Moses Cone, a textile magnate, built Flat Top Manor in 1901 as his country estate — now part of Moses Cone Memorial Park." },
+            { q: "🏞️ Bass Lake near Blowing Rock is known for what surrounding feature?", a: "Walking trails around the lake", choices: ["Walking trails around the lake", "Whitewater rapids", "A ski resort", "Hot springs"], correct: 0 },
+            { q: "🏨 The Inn at Ragged Gardens is located in which NC mountain town?", a: "Blowing Rock", choices: ["Blowing Rock", "Asheville", "Boone", "Banner Elk"], correct: 0 },]
         },
               {
           id: "pictureround", name: "Picture Round", icon: "🖼️",
@@ -6536,7 +6604,15 @@ Answer: Augusta</pre>
             { q: "🖼️ Picture question — these long legs show up on Andrew's seafood counter every winter. What crab?", a: "Snow crab", choices: ["King crab", "Snow crab", "Dungeness crab", "Blue crab"], correct: 1, img: "assets/pic-snow-crab.jpeg", fact: "Snow crab is prized for its sweet meat and long, easy-to-crack legs." },
             { q: "🖼️ Picture question — this is the fish in a classic tuna melt. What is it?", a: "Tuna", choices: ["Tuna", "Mahi-mahi", "Swordfish", "Grouper"], correct: 0, img: "assets/pic-tuna.jpeg", fact: "Canned tuna is usually skipjack or albacore." },
             { q: "🖼️ Picture question — this roast comes from which animal?", a: "Pig", choices: ["Cow", "Pig", "Lamb", "Deer"], correct: 1, img: "assets/pic-pork-roast.jpeg", fact: "Pork roast is cut from the pig's loin or shoulder." },
-          ]
+          
+            { q: "🖼️ Which mountain town is known for the Blowing Rock cliff? 🏔️", a: "Blowing Rock, NC", choices: ["Blowing Rock, NC", "Asheville, NC", "Boone, NC", "Gatlinburg, TN"], correct: 0 },
+            { q: "🖼️ Which island is home to Harbour Town and the Salty Dog? 🏖️", a: "Hilton Head Island", choices: ["Hilton Head Island", "Kiawah Island", "Tybee Island", "Amelia Island"], correct: 0 },
+            { q: "🖼️ Which city is home to Georgia Tech? 🏈", a: "Atlanta", choices: ["Atlanta", "Athens", "Macon", "Savannah"], correct: 0 },
+            { q: "🖼️ Which Rhode Island city is famous for Gilded Age mansions? 🏰", a: "Newport", choices: ["Newport", "Providence", "Jamestown", "Narragansett"], correct: 0 },
+            { q: "🖼️ Which Cape Cod town is at the very tip? 🗺️", a: "Provincetown", choices: ["Provincetown", "Chatham", "Hyannis", "Falmouth"], correct: 0 },
+            { q: "🖼️ Which Maine town is the gateway to Acadia? 🦞", a: "Bar Harbor", choices: ["Bar Harbor", "Camden", "Portland", "Bangor"], correct: 0 },
+            { q: "🖼️ Cabbage Island is reached by boat from which Maine harbor? ⛵", a: "Boothbay Harbor", choices: ["Boothbay Harbor", "Camden", "Bar Harbor", "Portland"], correct: 0 },
+            { q: "🖼️ The L.L.Bean flagship store is in which Maine town? 🛍️", a: "Freeport", choices: ["Freeport", "Portland", "Bangor", "Augusta"], correct: 0 },]
         },
 
 ];
@@ -6601,7 +6677,7 @@ Answer: Augusta</pre>
         { label: "🚀 Sci-Fi", icons: ["🌌", "⚔️", "🚀", "🛸", "🤖", "🪐", "💫", "☄️", "🌠", "🛰️", "👽", "🔭", "⭐", "🌙", "🖖", "🔴", "📜", "🧠"] },
         { label: "🐉 Fantasy & Adventure", icons: ["💍", "🧝", "🧙", "🐉", "🦄", "🏹", "⛏️", "🗡️", "🌋", "🌻", "🍳", "🏰", "🔮", "🧪", "🏴‍☠️", "🧭", "🗺️", "🪙", "💀", "🔱", "🌊", "⛵", "⚓", "🪄", "🧹", "🦡", "🐍", "🧙‍♀️", "🔑", "🎃", "🏆"] },
         { label: "🚗 Vehicles", icons: ["🚗", "🏎️", "🛻", "🚕", "🚌", "🚂", "✈️", "🛩️", "🚁", "🚤", "🚢", "🏍️", "🚲", "🚜", "🚑", "🚒", "🚓"] },
-        { label: "🏆 Sports & Games", icons: ["⚽", "🏀", "🏈", "⚾", "🥎", "🎾", "🏐", "🏉", "🎱", "🏓", "⛳", "🏒", "🥊", "🥇", "🎯", "🏄", "🏊", "🚴", "🏋️", "🤸", "🧗", "🎮", "🕹️", "🧱", "💎", "🛡️", "🎲", "👾", "🔥", "🧨"] },
+        { label: "🏆 Sports & Games", icons: ["⚽", "🏀", "🏈", "⚾", "🥎", "🎾", "🏐", "🏉", "🎱", "🏓", "⛳", "🏌️", "🏌️‍♂️", "🏌️‍♀️", "🏒", "🥊", "🥇", "🎯", "🏄", "🏊", "🚴", "🏋️", "🤸", "🧗", "🎮", "🕹️", "🧱", "💎", "🛡️", "🎲", "👾", "🔥", "🧨", "🚗", "🏎️"] },
         { label: "🎣 Hobbies & Home", icons: ["🎣", "🏕️", "🌱", "👨‍🍳", "🎸", "🎤", "🎧", "🎷", "🥾", "📸", "🎨", "📚", "♟️", "🧶", "🎺", "🎻", "🥁", "🚣", "🪕", "🐄", "🐖", "🐓", "🌾", "🚶", "🥕", "🧑‍🌾", "🏡", "🐕", "🥚"] }
       ];;
       var ICONS = [];
@@ -14546,6 +14622,40 @@ Answer: Augusta</pre>
         });
         list.appendChild(svg);
       }
+      var VERSION_HISTORY = [
+        { v: "Update 14", d: "Oct 23", items: ["Fixed the giant QR code on desktop — now a normal size"] },
+        { v: "Update 13", d: "Oct 23", items: ["Achievements screen now uses the Skyrim constellation star chart"] },
+        { v: "Update 12", d: "Oct 23", items: ["New ⭐ Achievements tab in My Stuff — all 25 achievements, locked & unlocked"] },
+        { v: "Update 11", d: "Oct 23", items: ["Trophies show your name (Andrew's Trophies, Jeremy's Trophies…)", "Music, Sound & theme picker moved into the ▶ Play group"] },
+        { v: "Update 10", d: "Oct 23", items: ["Branded join QR code with the wine glass logo"] },
+        { v: "Update 9", d: "Oct 23", items: ["FIXED: Begin the Evening / Skip intro not starting the game", "First-run profile prompt — who's playing?", "New 🐛 Report a Bug button with automatic diagnostics"] },
+        { v: "Update 8", d: "Oct 23", items: ["Trivia Trophies button now opens YOUR trophies, not the hosts'"] },
+        { v: "Update 7", d: "Oct 23", items: ["Opening sting now ends with the realistic triangle ring"] },
+        { v: "Update 6", d: "Oct 23", items: ["Music/sound/theme controls moved to the top", "Music auto-starts on first tap"] },
+        { v: "Update 5", d: "Oct 23", items: ["20 new picture questions (32 total in Picture Round)"] },
+        { v: "Update 4", d: "Oct 23", items: ["Round opener with fanfare", "Correct Barboretum social links"] },
+        { v: "Update 3", d: "Oct 23", items: ["Independence (4th of July) theme", "Realistic triangle ring sound", "Host Guide in help"] },
+        { v: "Update 2", d: "Oct 22", items: ["Shamrock (Irish jig) and Valentine's (waltz) theme music"] },
+        { v: "Phase 2", d: "Oct 22", items: ["190 player icons in 8 groups", "Cosmetic unlock locker", "Skyrim constellation trophy tree", "Ocean theme (9th)", "Practice coach overlay", "Picture Round topic", "QR code with wine + beer"] },
+        { v: "Update 1", d: "Oct 22", items: ["5 state topics (NY, RI, MA, ME, NC)", "5 mastery achievements", "App icon as favicon"] }
+      ];
+      function renderWhatsNew() {
+        var list = $("whatsnew-list");
+        if (!list) return;
+        var html = "";
+        VERSION_HISTORY.forEach(function(entry) {
+          html += '<div class="trophy-card"><div class="t-body">' +
+            '<div class="t-name">' + entry.v + ' <span style="opacity:.6;font-weight:normal">· ' + entry.d + '</span></div>' +
+            '<div class="t-desc"><ul style="margin:.3em 0 0;padding-left:1.2em">' +
+            entry.items.map(function(it){ return "<li>" + it + "</li>"; }).join("") +
+            "</ul></div></div></div>";
+        });
+        list.innerHTML = html;
+      }
+      $("btn-whatsnew").addEventListener("click", function() {
+        renderWhatsNew();
+        openOverlay("overlay-whatsnew");
+      });
       function renderAchievements() {
         /* Skyrim-style constellation view of every achievement. */
         var list = $("achievements-list");
