@@ -1642,6 +1642,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             <div class="menu-group-label">🏆 My Stuff</div>
             <div class="title-actions">
               <button class="btn" id="btn-trophies" type="button">🏆 Trivia Trophies</button>
+              <button class="btn" id="btn-achievements" type="button">⭐ Achievements</button>
             </div>
           </div>
           <div class="menu-group">
@@ -2870,6 +2871,18 @@ Answer: Augusta</pre>
         <div id="topic-mastery-list"></div>
         <div class="sheet-actions">
           <button class="btn primary" data-close="overlay-player-trophies">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ ACHIEVEMENTS OVERLAY ============ -->
+    <div class="overlay" id="overlay-achievements" role="dialog" aria-modal="true" aria-labelledby="ach-h">
+      <div class="sheet builder-sheet">
+        <h2 id="ach-h">⭐ Achievements</h2>
+        <p class="sheet-sub" id="ach-sub">Every achievement in the game — earned and still to earn.</p>
+        <div id="achievements-list"></div>
+        <div class="sheet-actions">
+          <button class="btn primary" data-close="overlay-achievements">Done</button>
         </div>
       </div>
     </div>
@@ -14533,6 +14546,37 @@ Answer: Augusta</pre>
         });
         list.appendChild(svg);
       }
+      function renderAchievements() {
+        /* Show every achievement: unlocked ones lit up, locked ones greyed. */
+        var list = $("achievements-list");
+        if (!list) return;
+        var got = (player && player.trophies) ? player.trophies : {};
+        var html = "";
+        PLAYER_TROPHIES.forEach(function(t) {
+          var unlocked = !!got[t.id];
+          html += '<div class="trophy-card' + (unlocked ? "" : " t-locked") + '">' +
+            '<div class="t-icon">' + (unlocked ? t.icon : "🔒") + "</div>" +
+            '<div class="t-body"><div class="t-name">' + t.name + "</div>" +
+            '<div class="t-desc">' + t.desc + "</div>" +
+            (unlocked ? "" : '<div class="t-locked-note">Not yet earned</div>') +
+            "</div></div>";
+        });
+        list.innerHTML = html;
+        var h = $("ach-h"), sub = $("ach-sub");
+        if (player && player.name) {
+          var n = player.name;
+          var poss = /s$/i.test(n) ? n + "\u2019" : n + "\u2019s";
+          if (h) h.textContent = "⭐ " + poss + " Achievements";
+          if (sub) {
+            var nGot = PLAYER_TROPHIES.filter(function(t){ return got[t.id]; }).length;
+            sub.textContent = poss + " achievements — " + nGot + " of " + PLAYER_TROPHIES.length + " earned on this phone.";
+          }
+        }
+      }
+      $("btn-achievements").addEventListener("click", function() {
+        renderAchievements();
+        openOverlay("overlay-achievements");
+      });
       function personalizeTrophies() {
         /* Title the trophy shelf with the current player's name. */
         var h = $("pt-h"), sub = $("pt-sub");
