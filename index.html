@@ -7694,7 +7694,10 @@ Answer: Augusta</pre>
         if (countEl) countEl.textContent = "Every topic on the shelf — " + cats.length + " topics, " + totalQ + " questions — with the formats inside each. Look the whole room over before you build a night." + (term ? " Showing " + shown + " matching “" + (searchEl ? searchEl.value.trim() : "") + "”." : "");
       }
       document.querySelectorAll(".open-topics").forEach(function (b) {
-        b.addEventListener("click", function () { paintTopics(); openOverlay("overlay-topics"); });
+        b.addEventListener("click", function () {
+          try { paintTopics(); } catch(e) { console.error("paintTopics failed:", e); }
+          openOverlay("overlay-topics");
+        });
       });
       var topicsSearchEl = $("topics-search");
       if (topicsSearchEl) topicsSearchEl.addEventListener("input", paintTopics);
