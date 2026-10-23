@@ -4881,7 +4881,12 @@ Answer: Augusta</pre>
           id: "pets", name: "Pets, Breeds & Animal Antics", icon: "🐶",
           tagline: "Breeds, famous pets, and the animals who own us — a round for everyone who has fur on their clothes.",
           cue: "For pet people",
-          questions: [
+          questions: [            { q: "🦜 What are the two parrots at the Salty Dog T-shirt shop called?", a: "Roscoe and Earnest", choices: ["Roscoe and Earnest", "Jake and Elwood", "Sunny and Cher", "Coco and Pepper"], correct: 0 },
+            { q: "🦎 What do you call a lizard that can change its color?", a: "Chameleon", choices: ["Chameleon", "Gecko", "Iguana", "Skink"], correct: 0 },
+            { q: "🦀 Can you keep a lobster as a pet?", a: "Yes, in a saltwater aquarium", choices: ["Yes, in a saltwater aquarium", "No, it's illegal everywhere", "Only in Maine", "Only restaurants can"], correct: 0 },
+            { q: "🦜 How long can a large parrot live?", a: "50-80 years", choices: ["50-80 years", "10-15 years", "20-25 years", "5-10 years"], correct: 0 },
+            { q: "🦎 Which is the largest lizard in the world?", a: "Komodo dragon", choices: ["Komodo dragon", "Monitor lizard", "Gila monster", "Iguana"], correct: 0 },
+
             { q: "Which dog breed is famous for its blue-black tongue? 👅", a: "The Chow Chow", choices: ["The Chow Chow", "Their paw pads", "The Dalmatian", "The Boxer"], correct: 0 },
             { q: "Which breed ended the Lab's 31-year run atop the AKC list in 2022? 🐶", a: "The French Bulldog", choices: ["The Golden Retriever", "The German Shepherd", "The French Bulldog", "The Poodle"], correct: 2 },
             { q: "A group of cats living together is sometimes called what? 🐱", a: "A clowder", choices: ["A clowder", "A pack", "A herd", "The betta"], correct: 0 },
@@ -6586,6 +6591,7 @@ Answer: Augusta</pre>
             { q: "🎄 Which country started the tradition of the Christmas tree?", a: "Germany", choices: ["Germany", "England", "France", "Italy"], correct: 0, fact: "The modern Christmas tree tradition began in 16th-century Germany." }
           ]
         },
+
         {
           id: "northcarolina", name: "North Carolina", icon: "✈️",
           tagline: "First in Flight, first in flavor — from the Outer Banks to the Blue Ridge.",
@@ -14591,7 +14597,11 @@ $("btn-start").addEventListener("click", function () {
         { id: "orchardkeeper", icon: "🍎", name: "Orchard Keeper", desc: "Get 5 Apple Tree questions right", req: "5 Apple Tree correct" },
         { id: "beefriend", icon: "🐝", name: "Bee Friend", desc: "Get 3 bee/pollination questions right", req: "3 bee questions correct" },
         { id: "nativity", icon: "⭐", name: "Nativity Scholar", desc: "Get 5 Christmas questions right", req: "5 Christmas correct" },
-        { id: "starfollower", icon: "🌟", name: "Star Follower", desc: "Get all 3 wise-men questions right", req: "3 wise-men questions correct" }
+        { id: "starfollower", icon: "🌟", name: "Star Follower", desc: "Get all 3 wise-men questions right", req: "3 wise-men questions correct" },
+        { id: "petlover", icon: "🐾", name: "Pet Lover", desc: "Get 5 Pets questions right", req: "5 Pets correct" },
+        { id: "catperson", icon: "🐱", name: "Cat Person", desc: "Get 3 cat questions right", req: "3 cat questions correct" },
+        { id: "dogperson", icon: "🐶", name: "Dog Person", desc: "Get 3 dog questions right", req: "3 dog questions correct" },
+        { id: "birdwatcher", icon: "🦜", name: "Bird Watcher", desc: "Get 3 bird questions right", req: "3 bird questions correct" }
       ];
       function playerTrophyById(id) {
         for (var i = 0; i < PLAYER_TROPHIES.length; i++) if (PLAYER_TROPHIES[i].id === id) return PLAYER_TROPHIES[i];
@@ -14739,6 +14749,7 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
+        { v: "Pets update", d: "Oct 23", items: ["5 new pet questions (Salty Dog parrots, chameleons, pet lobsters, Komodo dragons)", "4 new animal achievements: Pet Lover, Cat Person, Dog Person, Bird Watcher"] },
         { v: "Bug fixes", d: "Oct 23", items: ["FIXED: all buttons stopped working (missing code tag restored)", "Removed theme animations that were blocking mobile buttons", "Disabled auto-update popup that covered the screen"] },
         { v: "Update 22", d: "Oct 23", items: ["Golf ⛳ and Rocket League 🚗 collectibles in My Collection", "🏠 Home button during games"] },
         { v: "Update 21", d: "Oct 23", items: ["Christmas night theme (11th)", "Jingle-bell Christmas music"] },
