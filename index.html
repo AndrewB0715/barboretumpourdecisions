@@ -15558,6 +15558,8 @@ Answer: Augusta</pre>
         { id: "r-bolt", tier: "rare", icon: "⚡", name: "Charged Up", hint: "Earn the Lightning Fast trophy", test: function (p) { return colHas(p, "lightningfast"); } },
         { id: "r-comet", tier: "rare", icon: "☄️", name: "Comet Tail", hint: "Reach a 5-answer streak", test: function (p) { return (p.bestStreak || 0) >= 5; } },
         { id: "r-pop", tier: "rare", icon: "🍾", name: "Pop Star", hint: "Earn the Perfect Pour trophy", test: function (p) { return colHas(p, "perfectpour"); } },
+        { id: "r-golfball", tier: "rare", icon: "⛳", name: "Hole in One", hint: "Earn the Fairway Finder trophy", test: function (p) { return colHas(p, "golfer"); } },
+        { id: "r-rlcar", tier: "rare", icon: "🚗", name: "Boost Pad", hint: "Earn the Rocket League Rookie trophy", test: function (p) { return colHas(p, "rocketleague"); } },
         { id: "r-glove", tier: "rare", icon: "🥊", name: "Comeback Story", hint: "Earn the Comeback Kid trophy", test: function (p) { return colHas(p, "comebackkid"); } },
         { id: "r-target", tier: "rare", icon: "🎯", name: "Sharp Dressed", hint: "Earn the Sharp Shooter trophy", test: function (p) { return colHas(p, "sharpshooter"); } },
         { id: "r-owl", tier: "rare", icon: "🦉", name: "Night Owl", hint: "Play on 5 different nights", test: function (p) { return colNights(p) >= 5; } },
