@@ -703,7 +703,11 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       /* ---------- phone tip banner & host picker ---------- */
       .homescreen-banner { background: linear-gradient(135deg, #1a3a5c, #2d5a87); color: #fff; padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top, 0px)); margin: 0.5rem; margin-top: calc(0.5rem + env(safe-area-inset-top, 0px)); border-radius: 12px; text-align: center; border: 2px solid #ffd700; position: relative; z-index: 10; }
       .homescreen-banner .btn { margin-top: 0.5rem; }
-      #app-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: var(--bg, #1a0f1e); transition: opacity 0.4s ease; }
+      #app-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.4s ease;
+        background:
+          radial-gradient(1100px 600px at 85% -10%, rgba(176, 48, 96, .22), transparent 60%),
+          radial-gradient(900px 700px at -10% 110%, rgba(226, 166, 61, .10), transparent 55%),
+          var(--bg, #160a10); }
       #app-loader.hidden { opacity: 0; pointer-events: none; }
       #app-loader .spin-glasses { font-size: 32px; animation: spinGlasses 1.2s linear infinite; }
       @keyframes spinGlasses { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
