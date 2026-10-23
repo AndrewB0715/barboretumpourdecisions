@@ -1636,6 +1636,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             <div class="title-actions">
               <button class="btn" id="btn-blocked" type="button">🚫 Blocked Names</button>
               <button class="btn" id="btn-ambience" type="button">🌌 Ambience Links</button>
+              <button class="btn" id="btn-bugreport" type="button">🐛 Report a Bug</button>
             </div>
           </div>
           <div class="menu-group">
@@ -6502,28 +6503,29 @@ Answer: Augusta</pre>
               choiceLabels: ["Tower Bridge", "Brooklyn Bridge", "Rialto Bridge", "Charles Bridge"], correct: 0 },
             { q: "Which one is the cello? 🎻", a: "The cello",
               choices: ["assets/pic-cello.jpeg", "assets/pic-violin.jpeg", "assets/pic-trumpet.jpeg", "assets/pic-triangle.jpeg"],
-              choiceLabels: ["Cello", "Violin", "Trumpet", "Triangle"], correct: 0 }
+              choiceLabels: ["Cello", "Violin", "Trumpet", "Triangle"], correct: 0 },,,
+            { q: "🖼️ Picture question — this orange bridge has been destroyed in movies more times than any other. Which city is it in?", a: "San Francisco", choices: ["San Francisco", "New York", "Seattle", "Los Angeles"], correct: 0, img: "assets/pic-golden-gate.jpeg", fact: "The Golden Gate Bridge opened in 1937 and is San Francisco's most filmed landmark." },
+            { q: "🖼️ Picture question — this London bridge is constantly confused with another bridge. Which bridge do tourists think it is?", a: "London Bridge", choices: ["Westminster Bridge", "London Bridge", "Millennium Bridge", "Tower of London"], correct: 1, img: "assets/pic-tower.jpeg", fact: "Tower Bridge (1894) is the one with the two towers; London Bridge is the plain one next to it." },
+            { q: "🖼️ Picture question — this bridge connects Manhattan to which other borough?", a: "Brooklyn", choices: ["Queens", "Brooklyn", "The Bronx", "Staten Island"], correct: 1, img: "assets/pic-brooklyn.jpeg", fact: "The Brooklyn Bridge opened in 1883, linking Manhattan and Brooklyn." },
+            { q: "🖼️ Picture question — this stone bridge crosses the Grand Canal. Which city?", a: "Venice", choices: ["Florence", "Venice", "Rome", "Milan"], correct: 1, img: "assets/pic-rialto.jpeg", fact: "The Rialto Bridge has spanned Venice's Grand Canal since 1591." },
+            { q: "🖼️ Picture question — locals call it 'the Coathanger.' Which harbor is it in?", a: "Sydney Harbour", choices: ["Sydney Harbour", "San Francisco Bay", "New York Harbor", "Boston Harbor"], correct: 0, img: "assets/pic-sydney.jpeg", fact: "The Sydney Harbour Bridge opened in 1932 and earned its nickname from its arch shape." },
+            { q: "🖼️ Picture question — this bridge is lined with statues of saints. Which city?", a: "Prague", choices: ["Vienna", "Budapest", "Prague", "Krakow"], correct: 2, img: "assets/pic-charles.jpeg", fact: "Prague's Charles Bridge is decorated with 30 statues of saints." },
+            { q: "🖼️ Picture question — this is the state crustacean of Maine. What is it?", a: "American lobster", choices: ["American lobster", "Blue crab", "Dungeness crab", "Snow crab"], correct: 0, img: "assets/pic-maine-lobster.jpeg", fact: "Maine designated the American lobster its state crustacean." },
+            { q: "🖼️ Picture question — this crab is the pride of the Chesapeake Bay. What is it?", a: "Blue crab", choices: ["King crab", "Blue crab", "Stone crab", "Snow crab"], correct: 1, img: "assets/pic-blue-crab.jpeg", fact: "The blue crab is Maryland's state crustacean and the Chesapeake's most famous catch." },
+            { q: "🖼️ Picture question — the Barboretum has one of these. When it rings, what does the whole room shout?", a: "Wooooo!", choices: ["Wooooo!", "Encore!", "Cheers!", "Bravo!"], correct: 0, img: "assets/pic-triangle.jpeg", fact: "When the triangle rings, the room chants Ric Flair's Wooooo and shouts Welcome to the Barboretum." },
+            { q: "🖼️ Picture question — Andrew played clarinet, but this is the big string instrument you hug between your knees. What is it?", a: "Cello", choices: ["Violin", "Viola", "Cello", "Double bass"], correct: 2, img: "assets/pic-cello.jpeg", fact: "The cello is played seated, held between the knees." },
+            { q: "🖼️ Picture question — this steak has a T-shaped bone. The big side is strip — the small tender side is what?", a: "Tenderloin", choices: ["Ribeye", "Tenderloin", "Sirloin", "Brisket"], correct: 1, img: "assets/pic-tbone.jpeg", fact: "A T-bone pairs strip steak on one side of the bone with tenderloin on the other." },
+            { q: "🖼️ Picture question — this tough cut turns tender after hours in the smoker. What cut is it?", a: "Brisket", choices: ["Brisket", "Flank", "Chuck", "Round"], correct: 0, img: "assets/pic-brisket.jpeg", fact: "Brisket needs low-and-slow cooking to break down its connective tissue." },
+            { q: "🖼️ Picture question — this lobster has no claws at all. What kind is it?", a: "Spiny lobster", choices: ["Maine lobster", "Spiny lobster", "Slipper lobster", "Reef lobster"], correct: 1, img: "assets/pic-spiny.jpeg", fact: "Spiny lobsters have long antennae instead of claws." },
+            { q: "🖼️ Picture question — these striped shrimp are named for which big cat?", a: "Tiger", choices: ["Lion", "Tiger", "Leopard", "Jaguar"], correct: 1, img: "assets/pic-tiger-shrimp.jpeg", fact: "Tiger shrimp get their name from the dark stripes on their shells." },
+            { q: "🖼️ Picture question — this well-marbled steak is cut from which part of the cow?", a: "The rib", choices: ["The rib", "The loin", "The round", "The chuck"], correct: 0, img: "assets/pic-ribeye.jpeg", fact: "Ribeye comes from the rib primal, which is why it's so marbled." },
+            { q: "🖼️ Picture question — this fish swims upstream to spawn. What is it?", a: "Salmon", choices: ["Trout", "Salmon", "Bass", "Catfish"], correct: 1, img: "assets/pic-salmon.jpeg", fact: "Salmon migrate from the ocean back to their birth rivers to spawn." },
+            { q: "🖼️ Picture question — Louis Armstrong was famous for playing this. What instrument?", a: "Trumpet", choices: ["Cornet", "Trumpet", "Trombone", "French horn"], correct: 1, img: "assets/pic-trumpet.jpeg", fact: "Louis Armstrong's trumpet made him one of jazz's biggest stars." },
+            { q: "🖼️ Picture question — these long legs show up on Andrew's seafood counter every winter. What crab?", a: "Snow crab", choices: ["King crab", "Snow crab", "Dungeness crab", "Blue crab"], correct: 1, img: "assets/pic-snow-crab.jpeg", fact: "Snow crab is prized for its sweet meat and long, easy-to-crack legs." },
+            { q: "🖼️ Picture question — this is the fish in a classic tuna melt. What is it?", a: "Tuna", choices: ["Tuna", "Mahi-mahi", "Swordfish", "Grouper"], correct: 0, img: "assets/pic-tuna.jpeg", fact: "Canned tuna is usually skipjack or albacore." },
+            { q: "🖼️ Picture question — this roast comes from which animal?", a: "Pig", choices: ["Cow", "Pig", "Lamb", "Deer"], correct: 1, img: "assets/pic-pork-roast.jpeg", fact: "Pork roast is cut from the pig's loin or shoulder." },
           ]
-        },            { q: "\U0001f5bc\ufe0f Picture question \u2014 this orange bridge has been destroyed in movies more times than any other. Which city is it in?", a: "San Francisco", choices: ["San Francisco", "New York", "Seattle", "Los Angeles"], correct: 0, img: "assets/pic-golden-gate.jpeg", fact: "The Golden Gate Bridge opened in 1937 and is San Francisco's most filmed landmark." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this London bridge is constantly confused with another bridge. Which bridge do tourists think it is?", a: "London Bridge", choices: ["Westminster Bridge", "London Bridge", "Millennium Bridge", "Tower of London"], correct: 1, img: "assets/pic-tower.jpeg", fact: "Tower Bridge (1894) is the one with the two towers; London Bridge is the plain one next to it." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this bridge connects Manhattan to which other borough?", a: "Brooklyn", choices: ["Queens", "Brooklyn", "The Bronx", "Staten Island"], correct: 1, img: "assets/pic-brooklyn.jpeg", fact: "The Brooklyn Bridge opened in 1883, linking Manhattan and Brooklyn." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this stone bridge crosses the Grand Canal. Which city?", a: "Venice", choices: ["Florence", "Venice", "Rome", "Milan"], correct: 1, img: "assets/pic-rialto.jpeg", fact: "The Rialto Bridge has spanned Venice's Grand Canal since 1591." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 locals call it 'the Coathanger.' Which harbor is it in?", a: "Sydney Harbour", choices: ["Sydney Harbour", "San Francisco Bay", "New York Harbor", "Boston Harbor"], correct: 0, img: "assets/pic-sydney.jpeg", fact: "The Sydney Harbour Bridge opened in 1932 and earned its nickname from its arch shape." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this bridge is lined with statues of saints. Which city?", a: "Prague", choices: ["Vienna", "Budapest", "Prague", "Krakow"], correct: 2, img: "assets/pic-charles.jpeg", fact: "Prague's Charles Bridge is decorated with 30 statues of saints." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this is the state crustacean of Maine. What is it?", a: "American lobster", choices: ["American lobster", "Blue crab", "Dungeness crab", "Snow crab"], correct: 0, img: "assets/pic-maine-lobster.jpeg", fact: "Maine designated the American lobster its state crustacean." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this crab is the pride of the Chesapeake Bay. What is it?", a: "Blue crab", choices: ["King crab", "Blue crab", "Stone crab", "Snow crab"], correct: 1, img: "assets/pic-blue-crab.jpeg", fact: "The blue crab is Maryland's state crustacean and the Chesapeake's most famous catch." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 the Barboretum has one of these. When it rings, what does the whole room shout?", a: "Wooooo!", choices: ["Wooooo!", "Encore!", "Cheers!", "Bravo!"], correct: 0, img: "assets/pic-triangle.jpeg", fact: "When the triangle rings, the room chants Ric Flair's Wooooo and shouts Welcome to the Barboretum." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 Andrew played clarinet, but this is the big string instrument you hug between your knees. What is it?", a: "Cello", choices: ["Violin", "Viola", "Cello", "Double bass"], correct: 2, img: "assets/pic-cello.jpeg", fact: "The cello is played seated, held between the knees." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this steak has a T-shaped bone. The big side is strip \u2014 the small tender side is what?", a: "Tenderloin", choices: ["Ribeye", "Tenderloin", "Sirloin", "Brisket"], correct: 1, img: "assets/pic-tbone.jpeg", fact: "A T-bone pairs strip steak on one side of the bone with tenderloin on the other." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this tough cut turns tender after hours in the smoker. What cut is it?", a: "Brisket", choices: ["Brisket", "Flank", "Chuck", "Round"], correct: 0, img: "assets/pic-brisket.jpeg", fact: "Brisket needs low-and-slow cooking to break down its connective tissue." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this lobster has no claws at all. What kind is it?", a: "Spiny lobster", choices: ["Maine lobster", "Spiny lobster", "Slipper lobster", "Reef lobster"], correct: 1, img: "assets/pic-spiny.jpeg", fact: "Spiny lobsters have long antennae instead of claws." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 these striped shrimp are named for which big cat?", a: "Tiger", choices: ["Lion", "Tiger", "Leopard", "Jaguar"], correct: 1, img: "assets/pic-tiger-shrimp.jpeg", fact: "Tiger shrimp get their name from the dark stripes on their shells." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this well-marbled steak is cut from which part of the cow?", a: "The rib", choices: ["The rib", "The loin", "The round", "The chuck"], correct: 0, img: "assets/pic-ribeye.jpeg", fact: "Ribeye comes from the rib primal, which is why it's so marbled." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this fish swims upstream to spawn. What is it?", a: "Salmon", choices: ["Trout", "Salmon", "Bass", "Catfish"], correct: 1, img: "assets/pic-salmon.jpeg", fact: "Salmon migrate from the ocean back to their birth rivers to spawn." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 Louis Armstrong was famous for playing this. What instrument?", a: "Trumpet", choices: ["Cornet", "Trumpet", "Trombone", "French horn"], correct: 1, img: "assets/pic-trumpet.jpeg", fact: "Louis Armstrong's trumpet made him one of jazz's biggest stars." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 these long legs show up on Andrew's seafood counter every winter. What crab?", a: "Snow crab", choices: ["King crab", "Snow crab", "Dungeness crab", "Blue crab"], correct: 1, img: "assets/pic-snow-crab.jpeg", fact: "Snow crab is prized for its sweet meat and long, easy-to-crack legs." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this is the fish in a classic tuna melt. What is it?", a: "Tuna", choices: ["Tuna", "Mahi-mahi", "Swordfish", "Grouper"], correct: 0, img: "assets/pic-tuna.jpeg", fact: "Canned tuna is usually skipjack or albacore." },
-            { q: "\U0001f5bc\ufe0f Picture question \u2014 this roast comes from which animal?", a: "Pig", choices: ["Cow", "Pig", "Lamb", "Deer"], correct: 1, img: "assets/pic-pork-roast.jpeg", fact: "Pork roast is cut from the pig's loin or shoulder." },
+        },
 
 ];
 
@@ -12578,6 +12580,43 @@ Answer: Augusta</pre>
         renderSuggestions();
         openOverlay("overlay-suggest");
       });
+      /* Bug report: form + auto diagnostics, emailed to Andrew. */
+      $("btn-bugreport").addEventListener("click", function(){
+        var ov = document.getElementById("bugreport-overlay");
+        if (!ov) {
+          ov = document.createElement("div");
+          ov.className = "overlay"; ov.id = "bugreport-overlay";
+          ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true");
+          ov.innerHTML = '<div class="sheet" style="max-width:520px">' +
+            "<h2>🐛 Report a Bug</h2>" +
+            "<p class='builder-note'>Found something broken? Tell Andrew — the app attaches what's on screen and any recent errors automatically.</p>" +
+            "<label style='display:block;margin:.6em 0 .3em'>What were you doing?</label>" +
+            "<textarea id='bug-doing' rows='2' style='width:100%' placeholder='e.g. Tapping Begin the Evening after picking teams'></textarea>" +
+            "<label style='display:block;margin:.6em 0 .3em'>What went wrong?</label>" +
+            "<textarea id='bug-happened' rows='3' style='width:100%' placeholder='e.g. It played a sound but stayed on the intro screen'></textarea>" +
+            "<div style='margin-top:.8em'>" +
+            "<button class='btn gold' id='bug-send' type='button'>📧 Send to Andrew</button> " +
+            "<button class='btn' id='bug-close' type='button'>Cancel</button></div></div>";
+          document.body.appendChild(ov);
+          document.getElementById("bug-close").addEventListener("click", function(){ closeOverlay("bugreport-overlay"); });
+          document.getElementById("bug-send").addEventListener("click", function(){
+            var doing = document.getElementById("bug-doing").value.trim();
+            var happened = document.getElementById("bug-happened").value.trim();
+            if (!doing || !happened) { alert("Please fill in both boxes so Andrew knows what broke."); return; }
+            var body = bugReportMessage(doing, happened);
+            // save locally too
+            try {
+              var reps = JSON.parse(localStorage.getItem("pourDecisions.bugreports.v1")||"[]");
+              reps.push({ t: Date.now(), doing: doing, happened: happened });
+              localStorage.setItem("pourDecisions.bugreports.v1", JSON.stringify(reps.slice(-50)));
+            } catch(e){}
+            window.location.href = "mailto:Andrew.blaeser@gmail.com?subject=" +
+              encodeURIComponent("🐛 Trivia app bug report") + "&body=" + encodeURIComponent(body);
+            closeOverlay("bugreport-overlay");
+          });
+        }
+        openOverlay("bugreport-overlay");
+      });
       document.querySelectorAll("#suggest-starters [data-starter]").forEach(function (chip) {
         chip.addEventListener("click", function () {
           var ta = $("suggest-text");
@@ -17337,6 +17376,33 @@ Answer: Augusta</pre>
       paintSettings();
       paintSfx();
       renderHostPicker();
+      /* Bug reporter: captures recent JS errors for diagnostics. */
+      var bugLog = [];
+      (function(){
+        function logErr(msg, src, line) {
+          bugLog.push({ t: new Date().toISOString(), msg: String(msg).slice(0,200), src: String(src||'').slice(-60), line: line||0 });
+          if (bugLog.length > 20) bugLog.shift();
+          try { localStorage.setItem("pourDecisions.buglog.v1", JSON.stringify(bugLog)); } catch(e){}
+        }
+        window.addEventListener("error", function(e){ logErr(e.message, e.filename, e.lineno); });
+        try { var saved = JSON.parse(localStorage.getItem("pourDecisions.buglog.v1")||"[]"); if (Array.isArray(saved)) bugLog = saved.slice(-20); } catch(e){}
+      })();
+      function bugReportMessage(doing, happened) {
+        var screen = "unknown";
+        try { var a = document.querySelector(".screen.active"); screen = a ? a.id : screen; } catch(e){}
+        var out = "🐛 BUG REPORT — Barboretum Trivia\n\n";
+        out += "What I was doing:\n" + doing + "\n\n";
+        out += "What went wrong:\n" + happened + "\n\n";
+        out += "--- automatic info ---\n";
+        out += "Screen: " + screen + "\n";
+        out += "Time: " + new Date().toString() + "\n";
+        out += "Browser: " + navigator.userAgent.slice(0,120) + "\n";
+        if (bugLog.length) {
+          out += "Recent errors:\n";
+          bugLog.slice(-5).forEach(function(b){ out += "  [" + b.t.slice(11,19) + "] " + b.msg + " (" + b.src + ":" + b.line + ")\n"; });
+        } else { out += "Recent errors: none logged\n"; }
+        return out;
+      }
       /* Visit counter: per-device page-visit count, $0, no backend. */
       (function(){
         var n = 0;
