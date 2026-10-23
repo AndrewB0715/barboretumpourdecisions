@@ -14547,21 +14547,23 @@ Answer: Augusta</pre>
         list.appendChild(svg);
       }
       function renderAchievements() {
-        /* Show every achievement: unlocked ones lit up, locked ones greyed. */
+        /* Skyrim-style constellation view of every achievement. */
         var list = $("achievements-list");
         if (!list) return;
         var got = (player && player.trophies) ? player.trophies : {};
-        var html = "";
-        PLAYER_TROPHIES.forEach(function(t) {
-          var unlocked = !!got[t.id];
-          html += '<div class="trophy-card' + (unlocked ? "" : " t-locked") + '">' +
-            '<div class="t-icon">' + (unlocked ? t.icon : "🔒") + "</div>" +
-            '<div class="t-body"><div class="t-name">' + t.name + "</div>" +
-            '<div class="t-desc">' + t.desc + "</div>" +
-            (unlocked ? "" : '<div class="t-locked-note">Not yet earned</div>') +
-            "</div></div>";
+        list.innerHTML = "";
+        var PT_FAMS = [
+          { key: "nights", label: "🌙 Showing Up — badges for coming out, night after night" },
+          { key: "topics", label: "🧭 Topic Badges — badges for playing across the topics" },
+          { key: "feats", label: "🔥 Feats — streaks, comebacks, and perfect rounds" }
+        ];
+        var PT_FAM_OF = { firstnight: "nights", regular: "nights", devoted: "nights", fixture: "nights",
+          wellrounded: "topics", explorer: "topics", topicmaster: "topics", deepcut: "topics", tripleflawless: "topics" };
+        PT_FAMS.forEach(function (fam) {
+          var inFam = PLAYER_TROPHIES.filter(function (tr) { return (PT_FAM_OF[tr.id] || "feats") === fam.key; });
+          if (!inFam.length) return;
+          renderConstellation(list, fam, inFam, got);
         });
-        list.innerHTML = html;
         var h = $("ach-h"), sub = $("ach-sub");
         if (player && player.name) {
           var n = player.name;
@@ -14573,7 +14575,7 @@ Answer: Augusta</pre>
           }
         }
       }
-      $("btn-achievements").addEventListener("click", function() {
+            $("btn-achievements").addEventListener("click", function() {
         renderAchievements();
         openOverlay("overlay-achievements");
       });
