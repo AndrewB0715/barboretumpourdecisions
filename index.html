@@ -8180,6 +8180,31 @@ Answer: Augusta</pre>
           o.start(t); o.stop(t + dur + 0.1);
         });
       }
+      function woooChant(t) {
+        /* Synthesized "WOOOOO!" — a rising vocal-like "ooo" using
+           sawtooth through bandpass filters shaped like human formants. */
+        if (!ensureSfx()) return;
+        var dur = 1.2;
+        [0, 0.15, 0.3].forEach(function (offset, idx) {
+          var o = sfxCtx.createOscillator();
+          o.type = "sawtooth";
+          var startF = 180 + idx * 20;
+          o.frequency.setValueAtTime(startF, t + offset);
+          o.frequency.linearRampToValueAtTime(startF * 2.2, t + offset + dur * 0.7);
+          o.frequency.linearRampToValueAtTime(startF * 1.8, t + offset + dur);
+          var bp = sfxCtx.createBiquadFilter();
+          bp.type = "bandpass";
+          bp.frequency.value = 800 + idx * 200;
+          bp.Q.value = 2;
+          var g = sfxCtx.createGain();
+          g.gain.setValueAtTime(0, t + offset);
+          g.gain.linearRampToValueAtTime(0.12, t + offset + 0.1);
+          g.gain.setValueAtTime(0.12, t + offset + dur * 0.8);
+          g.gain.exponentialRampToValueAtTime(0.001, t + offset + dur);
+          o.connect(bp); bp.connect(g); g.connect(sfxOut());
+          o.start(t + offset); o.stop(t + offset + dur + 0.1);
+        });
+      }
       function flashChant() {
         var el = $("chant-flash");
         if (!el) return;
@@ -8189,7 +8214,8 @@ Answer: Augusta</pre>
         if (ensureSfx()) {
           var t = sfxCtx.currentTime + 0.01;
           triangleRing(t, 0.14);
-          triangleRing(t + 0.55, 0.1);
+          woooChant(t + 0.3);
+          triangleRing(t + 1.8, 0.1);
         }
         if (chantTimer) clearTimeout(chantTimer);
         chantTimer = setTimeout(function () { el.classList.remove("show"); }, 4200);
