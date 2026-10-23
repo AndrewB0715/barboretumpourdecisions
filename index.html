@@ -701,7 +701,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .fx-swatch.on { border-color: var(--cream); box-shadow: 0 0 0 2px var(--gold); }
 
       /* ---------- phone tip banner & host picker ---------- */
-      .homescreen-banner { background: linear-gradient(135deg, #1a3a5c, #2d5a87); color: #fff; padding: 1rem; margin: 0.5rem; border-radius: 12px; text-align: center; border: 2px solid #ffd700; }
+      .homescreen-banner { background: linear-gradient(135deg, #1a3a5c, #2d5a87); color: #fff; padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top, 0px)); margin: 0.5rem; margin-top: calc(0.5rem + env(safe-area-inset-top, 0px)); border-radius: 12px; text-align: center; border: 2px solid #ffd700; position: relative; z-index: 10; }
       .homescreen-banner .btn { margin-top: 0.5rem; }
       .tip-banner {
         width: 100%; max-width: 1100px; margin: 0 auto 1.4rem; text-align: center;
