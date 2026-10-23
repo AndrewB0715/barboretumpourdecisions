@@ -1999,6 +1999,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 <!-- ============ QUESTION ============ -->
     <section class="screen" id="screen-question">
       <div class="q-meta">
+        <button class="btn small" id="btn-q-home" type="button" title="Back to home">🏠</button>
         <span id="q-cat">Category</span>
         <span class="q-count" id="q-count">Question 1 of 12</span>
         <span class="spacer"></span>
@@ -13582,7 +13583,8 @@ Answer: Augusta</pre>
         renderBoard(banner || "");
         show("screen-board");
       }
-      $("btn-start").addEventListener("click", function () {
+            $("btn-q-home").addEventListener("click", function() { stopTimer(); show("screen-title"); });
+$("btn-start").addEventListener("click", function () {
         if (!entranceSeen) { entranceSeen = true; startEntrance(); }
         else { renderCategories(); show("screen-categories"); }
       });
