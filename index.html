@@ -703,6 +703,11 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       /* ---------- phone tip banner & host picker ---------- */
       .homescreen-banner { background: linear-gradient(135deg, #1a3a5c, #2d5a87); color: #fff; padding: 1rem; padding-top: calc(1rem + env(safe-area-inset-top, 0px)); margin: 0.5rem; margin-top: calc(0.5rem + env(safe-area-inset-top, 0px)); border-radius: 12px; text-align: center; border: 2px solid #ffd700; position: relative; z-index: 10; }
       .homescreen-banner .btn { margin-top: 0.5rem; }
+      #app-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: var(--bg, #1a0f1e); transition: opacity 0.4s ease; }
+      #app-loader.hidden { opacity: 0; pointer-events: none; }
+      #app-loader .spin-glasses { font-size: 32px; animation: spinGlasses 1.2s linear infinite; }
+      @keyframes spinGlasses { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { #app-loader .spin-glasses { animation: none; } }
       .tip-banner {
         width: 100%; max-width: 1100px; margin: 0 auto 1.4rem; text-align: center;
         border: 1px solid var(--gold); background: rgba(226,166,61,.12); color: var(--gold-soft);
@@ -1569,6 +1574,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 </style>
   </head>
   <body>
+    <div id="app-loader" aria-hidden="true"><div class="spin-glasses">🍷🍺</div></div>
     <div id="theme-fx" aria-hidden="true"></div>
     <div class="web web-tl" aria-hidden="true"></div>
     <div class="web web-tr" aria-hidden="true"></div>
@@ -17824,6 +17830,17 @@ $("btn-start").addEventListener("click", function () {
           if (e.persisted) setTimeout(resumeApp, 300);
         });
 
+      })();
+      /* Hide the loading spinner once the app is ready */
+      (function hideLoader() {
+        var loader = document.getElementById("app-loader");
+        if (loader) {
+          // Wait a beat for first paint, then fade out
+          setTimeout(function() {
+            loader.classList.add("hidden");
+            setTimeout(function() { loader.remove(); }, 500);
+          }, 800);
+        }
       })();
     </script>
   </body>
