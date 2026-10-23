@@ -9648,7 +9648,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "shamrock" ? 100 : style === "valentine" ? 72 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -9661,7 +9661,9 @@ Answer: Augusta</pre>
         else if (style === "winter") winterBeat(t, spb);
         else if (style === "safari") safariBeat(t, spb);
         else if (style === "blocky") blockyBeat(t, spb);
-          else if (style === "ocean") oceanBeat(t, spb);
+        else if (style === "ocean") oceanBeat(t, spb);
+        else if (style === "shamrock") shamrockBeat(t, spb);
+        else if (style === "valentine") valentineBeat(t, spb);
         else if (style === "nordic") nordicBeat(t, spb);
         else if (style === "cinematic") cinematicBeat(t, spb);
         else if (style === "spaceopera") spaceoperaBeat(t, spb);
@@ -9699,6 +9701,35 @@ Answer: Augusta</pre>
         if (musicBeat === 1 && musicBar % 2 === 0) {
           thereminNote(ch.tones[(musicBar / 2) % ch.tones.length] + 12, t, spb * 2.6);
         }
+      }
+      var SHAMROCK_CHORDS = [
+        { bass: 43, tones: [55, 59, 62, 67] }, /* G  */
+        { bass: 36, tones: [48, 55, 60, 64] }, /* C  */
+        { bass: 38, tones: [50, 57, 62, 65] }, /* D  */
+        { bass: 40, tones: [52, 55, 59, 64] }  /* Em */
+      ];
+      var VALENTINE_CHORDS = [
+        { bass: 41, tones: [53, 57, 60, 65] }, /* F  */
+        { bass: 38, tones: [50, 53, 57, 62] }, /* Dm */
+        { bass: 34, tones: [46, 53, 58, 62] }, /* Bb */
+        { bass: 36, tones: [48, 55, 60, 64] }  /* C  */
+      ];
+      /* Shamrock: a jaunty jig. Bouncy off-beat plucks over a rolling bass. */
+      function shamrockBeat(t, spb) {
+        var ch = SHAMROCK_CHORDS[musicBar % SHAMROCK_CHORDS.length];
+        if (musicBeat === 0) bassNote(ch.bass, t, spb * 1.2);
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 0.9);
+        pluckNote(ch.tones[musicBeat % ch.tones.length] + 12, t, 0.05);
+        pluckNote(ch.tones[(musicBeat + 2) % ch.tones.length] + 12, t + spb * 0.5, 0.035);
+        if (musicBeat % 2 === 1) pluckNote(ch.tones[(musicBeat + 3) % ch.tones.length] + 24, t + spb * 0.75, 0.028);
+      }
+      /* Valentine's: a slow romantic waltz. Bass on one, soft pads on two and three. */
+      function valentineBeat(t, spb) {
+        var ch = VALENTINE_CHORDS[musicBar % VALENTINE_CHORDS.length];
+        if (musicBeat === 0) { bassNote(ch.bass, t, spb * 1.6); padChord(ch.tones, t, spb * 3); }
+        if (musicBeat === 1) pluckNote(ch.tones[1] + 12, t, 0.04);
+        if (musicBeat === 2) pluckNote(ch.tones[2] + 12, t, 0.04);
+        if (musicBeat === 3 && musicBar % 2 === 0) thereminNote(ch.tones[0] + 24, t, spb * 1.4);
       }
       var OCEAN_CHORDS = [
         { bass: 36, tones: [48, 55, 59, 62] }, /* C  */
