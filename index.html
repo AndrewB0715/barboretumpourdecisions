@@ -17631,7 +17631,35 @@ Answer: Augusta</pre>
         var el = document.getElementById("visit-count");
         if (el && n > 0) el.textContent = "👋 " + n + (n === 1 ? " visit" : " visits") + " on this device";
       })();
-    </script>
+      /* Mobile resume: when the app comes back from background, restart
+         theme animations and resume audio that the OS paused. */
+      (function() {
+        function resumeApp() {
+          try {
+            // Resume any suspended audio contexts
+            if (typeof AC !== "undefined" && AC && AC.state === "suspended") { try { AC.resume(); } catch(e){} }
+            // Force-restart CSS animations by toggling a class on body
+            var b = document.body;
+            b.classList.add("resume-kick");
+            void b.offsetWidth;
+            b.classList.remove("resume-kick");
+            // Re-trigger the theme picker to restart theme visuals
+            var tp = document.getElementById("theme-picker-quick");
+            if (tp) { tp.style.display = "none"; void tp.offsetWidth; tp.style.display = ""; }
+          } catch(e) {}
+        }
+        document.addEventListener("visibilitychange", function() {
+          if (!document.hidden) {
+            setTimeout(resumeApp, 300);
+          }
+        });
+        window.addEventListener("pageshow", function(e) {
+          if (e.persisted) setTimeout(resumeApp, 300);
+        });
+        window.addEventListener("focus", function() {
+          setTimeout(resumeApp, 300);
+        });
+      })();
   </body>
 </html>
 
