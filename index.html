@@ -10002,6 +10002,24 @@ Answer: Augusta</pre>
           o.start(t + off); o.stop(t + off + 0.1);
         });
       }
+      /* Bubble: quick rising sine blip like an underwater bubble */
+      function bubbleNote(midi, t) {
+        try {
+          var ctx = sfxCtx || musicCtx;
+          if (!ctx) return;
+          var o = ctx.createOscillator();
+          var g = ctx.createGain();
+          o.type = "sine";
+          var f0 = 440 * Math.pow(2, (midi - 69) / 12);
+          o.frequency.setValueAtTime(f0, t);
+          o.frequency.exponentialRampToValueAtTime(f0 * 2.2, t + 0.14);
+          g.gain.setValueAtTime(0.0001, t);
+          g.gain.exponentialRampToValueAtTime(0.12, t + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+          o.connect(g); g.connect(ctx.destination);
+          o.start(t); o.stop(t + 0.22);
+        } catch (e) {}
+      }
       function chirpsBeat(t, spb) {
         var ch = LEAFY_CHORDS[musicBar % LEAFY_CHORDS.length];
         if (musicBeat === 0 && musicBar % 2 === 0) bassNote(ch.bass, t, spb * 2.4);
@@ -10070,7 +10088,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 : style === "christmas" ? 96 : style === "cork" ? 68 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 96 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 : style === "christmas" ? 96 : style === "cork" ? 60 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -10186,12 +10204,16 @@ Answer: Augusta</pre>
          swell, and sparse plucks fall like droplets. */
       function oceanBeat(t, spb) {
         var ch = OCEAN_CHORDS[musicBar % OCEAN_CHORDS.length];
-        if (musicBeat === 0) { padChord(ch.tones, t, spb * 4 + 0.2); bassNote(ch.bass, t, spb * 3.2); }
-        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.8);
-        /* Dreamy music-box melody, sparse and floating */
-        if (musicBeat === 1 && musicBar % 2 === 0) boxNote(ch.tones[2] + 24, t, spb * 2.2);
-        if (musicBeat === 3 && musicBar % 4 === 1) boxNote(ch.tones[0] + 24, t, spb * 2.2);
-        if (musicBeat === 3 && musicBar % 4 === 3) boxNote(ch.tones[3] + 24, t + spb * 0.5, spb * 1.8);
+        /* Fishy: bouncy and bubbly. Light bass, darting fish melody, bubble pops. */
+        if (musicBeat === 0) bassNote(ch.bass + 12, t, spb * 1.2);
+        if (musicBeat === 2) bassNote(ch.bass + 19, t, spb * 0.9);
+        /* Fish darting: quick playful chip melody that jumps around */
+        var swim = [2, 0, 3, 1, 2, 3, 0, 2];
+        chipNote(ch.tones[swim[(musicBar * 4 + musicBeat) % 8]] + 24, t, 0.11);
+        if (musicBeat % 2 === 1) chipNote(ch.tones[swim[(musicBar * 4 + musicBeat + 3) % 8]] + 36, t + spb * 0.5, 0.07);
+        /* Bubbles: rising blips on off-beats */
+        if (musicBeat === 1 && musicBar % 2 === 0) bubbleNote(60 + (musicBar % 5) * 3, t + spb * 0.25);
+        if (musicBeat === 3 && musicBar % 2 === 1) bubbleNote(66 + (musicBar % 4) * 2, t + spb * 0.75);
       }
       function fallBeat(t, spb) {
         var ch = FALL_CHORDS[musicBar % FALL_CHORDS.length];
@@ -10242,10 +10264,11 @@ Answer: Augusta</pre>
       ];
       function corkBeat(t, spb) {
         var ch = CORK_CHORDS[musicBar % CORK_CHORDS.length];
-        if (musicBeat === 0) { logNote(ch.bass, t, spb * 2.4); padChord(ch.tones, t, spb * 3.6); }
-        if (musicBeat === 2) logNote(ch.bass + 7, t, spb * 1.6);
-        if (musicBeat === 1 && musicBar % 2 === 0) pluckNote(ch.tones[1] + 12, t, 0.09);
-        if (musicBeat === 3 && musicBar % 2 === 1) pluckNote(ch.tones[2] + 12, t + spb * 0.25, 0.07);
+        /* Deep cellar: woody log drums lead, dark low pad, sparse mellow plucks */
+        if (musicBeat === 0) { logNote(ch.bass - 12, t, spb * 3.0); darkPad([ch.tones[0] - 12, ch.tones[1] - 12], t, spb * 4); }
+        if (musicBeat === 2) logNote(ch.bass - 5, t, spb * 2.0);
+        if (musicBeat === 1 && musicBar % 4 === 0) pluckNote(ch.tones[0] + 12, t, 0.12);
+        if (musicBeat === 3 && musicBar % 4 === 2) pluckNote(ch.tones[1] + 12, t, 0.12);
       }
       /* Safari, refined: a grand-tour expedition — wide pads, a
          soaring lead phrase that travels bar to bar, gentle distant
