@@ -646,6 +646,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .view-toggle .btn.on { outline: 2px solid #ffd700; }
       .patch-notes { font-size: .85rem; color: var(--dim, #aaa); margin: .4em 0 0; text-align: left; max-width: 420px; margin-left: auto; margin-right: auto; } .patch-notes summary { cursor: pointer; }
       .visit-count { font-size: .8rem; color: var(--faint, #999); margin: .2em 0 0; }
+      .menu-subgroup-label { font-size: .85rem; font-weight: 700; color: var(--dim, #aaa); margin: .7em 0 .3em; }
       .av-anim { display: inline-block; }
       .av-anim-float { animation: avFloat 3.2s ease-in-out infinite; }
       .av-anim-bounce { animation: avBounce 1.8s ease-in-out infinite; }
@@ -938,6 +939,19 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         background:
           radial-gradient(1100px 600px at 80% -10%, rgba(64, 180, 230, .16), transparent 60%),
           radial-gradient(900px 700px at -10% 110%, rgba(10, 90, 140, .35), transparent 55%),
+          var(--bg);
+      }
+      [data-theme="independence"] {
+        --bg: #0a0a1e; --bg-2: #12122e; --panel: #1a1a3e; --panel-2: #22224e;
+        --line: #3a3a6a; --cream: #f5f5ff; --dim: #c5c5e5; --faint: #8a8ab5;
+        --gold: #ffd166; --gold-soft: #ffe09a; --wine: #b01e28; --wine-deep: #7e1420;
+        --green: #7fd08c;
+      }
+      [data-theme="independence"] body {
+        background:
+          radial-gradient(1000px 500px at 15% 0%, rgba(178, 34, 52, .22), transparent 60%),
+          radial-gradient(1000px 500px at 85% 0%, rgba(60, 90, 180, .22), transparent 60%),
+          radial-gradient(800px 600px at 50% 110%, rgba(255, 255, 255, .06), transparent 55%),
           var(--bg);
       }
       [data-theme="halloween"] body {
@@ -1541,6 +1555,17 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <h1 class="game-title">Barboretum Trivia:<br /><span class="pour">Pour Decisions</span></h1>
           <p class="title-sub">Trivia night at the Harris Teeter wine bar.<br />Grab a glass, grab a team, make some pour decisions.</p>
           <div class="menu-group">
+            <div class="menu-group-label">▶ Play</div>
+            <div class="title-actions">
+              <button class="btn primary" id="btn-start">▶ Start the Game</button>
+              <button class="btn" id="btn-plan-title" type="button">🗓️ Plan Tonight's Evening</button>
+              <button class="btn gold" id="btn-player-entry" type="button">📱 Join as a Player</button>
+              <button class="btn" data-action="goto-find">🧭 Find Your Team</button>
+              <button class="btn small" id="btn-how-join" type="button">❓ How do I join?</button>
+            </div>
+          </div>
+          
+          <div class="menu-group">
             <div class="menu-group-label">🧭 New here? Start with these two</div>
             <div class="title-actions">
               <button class="btn gold" id="btn-tour" type="button">🧭 Quick Tour — a two-minute walkthrough</button>
@@ -1560,27 +1585,30 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <li>🍷 <strong>No per-seat plans or subscription tiers</strong> — a packed bar is the point, not an upgrade tier.</li>
             </ul>
             <button class="btn small" id="btn-vs-kahoot" type="button" style="margin-top:.7rem">📖 For Jeremy: how this stacks up against Kahoot →</button>
-          </div>
-          <div class="menu-group">
-            <div class="menu-group-label">▶ Play</div>
-            <div class="title-actions">
-              <button class="btn primary" id="btn-start">▶ Start the Game</button>
-              <button class="btn" id="btn-plan-title" type="button">🗓️ Plan Tonight's Evening</button>
-              <button class="btn gold" id="btn-player-entry" type="button">📱 Join as a Player</button>
-              <button class="btn" data-action="goto-find">🧭 Find Your Team</button>
-            </div>
+            <button class="btn small" id="btn-jeremy-guide" type="button" style="margin-top:.7rem">Jeremy Host Guide: TV flow and scoring</button>
           </div>
           <div class="menu-group">
             <div class="menu-group-label">🛠 Host Tools</div>
+            <div class="menu-subgroup-label">🎬 Run the Night</div>
             <div class="title-actions">
-              <button class="btn" id="btn-teams">👥 Set Up Teams</button>
               <button class="btn gold" id="btn-hcc" type="button">🛟 Host Control Center</button>
+              <button class="btn" id="btn-teams">👥 Set Up Teams</button>
+              
+            </div>
+            <div class="menu-subgroup-label">✏️ Create</div>
+            <div class="title-actions">
               <button class="btn open-builder" type="button">✏️ Question Builder</button>
               <button class="btn" id="btn-studio" type="button">🎨 Custom Effects Studio</button>
               <button class="btn" id="btn-suggest" type="button">💡 Suggest a Feature</button>
-              <button class="btn" id="btn-aiideas" type="button">🤖 Muse AI Ideas</button>
-              <button class="btn" id="btn-audit" type="button">🤖 AI Test Game Audit</button>
+            </div>
+            <div class="menu-subgroup-label">🤖 AI Helpers</div>
+            <div class="title-actions">
               <button class="btn" id="btn-aihost" type="button">🤖 AI Host Mode</button>
+              <button class="btn" id="btn-audit" type="button">🤖 AI Test Game Audit</button>
+              <button class="btn" id="btn-aiideas" type="button">🤖 Muse AI Ideas</button>
+            </div>
+            <div class="menu-subgroup-label">🧰 Manage</div>
+            <div class="title-actions">
               <button class="btn" id="btn-blocked" type="button">🚫 Blocked Names</button>
               <button class="btn" id="btn-ambience" type="button">🌌 Ambience Links</button>
             </div>
@@ -2444,6 +2472,22 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <li>“And before you head home tonight: add us to your home screen and your trophies come home with you — the steps are right below, under 📱 Take It Home.”</li>
         </ol>
         <p class="builder-note"><strong>Why not Kahoot?</strong> If Edward, Lee, or a guest asks why the bar runs this app instead, the honest side-by-side is right below: <a href="#help-vs-kahoot">For Jeremy: Pour Decisions vs. Kahoot</a>.</p>
+        <h3 class="builder-h3" id="help-jeremy-guide">Jeremy's Host Guide</h3>
+        <p class="builder-note"><strong>Following along on the TV:</strong></p>
+        <ol class="steps">
+          <li>Tap <strong>Start the Game</strong> on the title screen, then pick a round.</li>
+          <li>Read each question aloud from the TV. Tables talk it over.</li>
+          <li>Tap <strong>Reveal</strong> (or press R) to show the answer.</li>
+          <li>Mark each team <strong>Got it</strong> or <strong>Missed it</strong> in the award row. That is the official team score.</li>
+          <li>Tap <strong>Next</strong> for the next question. At round end the triangle rings and standings show.</li>
+        </ol>
+        <p class="builder-note"><strong>How players score (their phones):</strong></p>
+        <ul class="steps">
+          <li>Players tap through on their phones, marking themselves honestly after you reveal.</li>
+          <li><strong>100 points</strong> per correct answer, plus a <strong>speed bonus</strong> (up to +50) for answering fast.</li>
+          <li>Phone scores are personal (trophies, streaks, unlocks). The <strong>team score on the TV</strong> wins the night.</li>
+          <li>Nothing syncs between phones and the TV. That is by design.</li>
+        </ul>
         <h3 class="builder-h3" id="help-vs-kahoot">🥊 For Jeremy: Pour Decisions vs. Kahoot</h3>
         <p class="builder-note">The whole picture, in plain facts — where this app fits the bar better, and where Kahoot honestly still wins, so you can answer straight either way.</p>
         <p class="builder-note"><strong>Where this app fits the bar better</strong></p>
@@ -7830,6 +7874,26 @@ Answer: Augusta</pre>
          the 🔺 Ring the Triangle button in the Host Control Center —
          but on its own, it only plays when a round ends. */
       var chantTimer = null;
+      /* Real triangle ring: a bar triangle is bright metal with
+         inharmonic partials and a long shimmer — not a pure tone. */
+      function triangleRing(t, peak) {
+        if (!ensureSfx()) return;
+        var base = 2093; /* C7 */
+        var partials = [1, 1.483, 1.932, 2.546, 2.99, 3.42];
+        var amps = [1, 0.55, 0.4, 0.28, 0.18, 0.1];
+        partials.forEach(function (ratio, i) {
+          var o = sfxCtx.createOscillator();
+          o.type = "sine";
+          o.frequency.value = base * ratio;
+          var g = sfxCtx.createGain();
+          var dur = 3.2 - i * 0.25;
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(peak * amps[i], t + 0.005);
+          g.gain.exponentialRampToValueAtTime(0.001, t + dur);
+          o.connect(g); g.connect(sfxOut());
+          o.start(t); o.stop(t + dur + 0.1);
+        });
+      }
       function flashChant() {
         var el = $("chant-flash");
         if (!el) return;
@@ -7838,8 +7902,8 @@ Answer: Augusta</pre>
         el.classList.add("show");
         if (ensureSfx()) {
           var t = sfxCtx.currentTime + 0.01;
-          sfxTone(96, t, 1.4, "triangle", 0.12);
-          sfxTone(96, t + 0.55, 1.1, "triangle", 0.09);
+          triangleRing(t, 0.14);
+          triangleRing(t + 0.55, 0.1);
         }
         if (chantTimer) clearTimeout(chantTimer);
         chantTimer = setTimeout(function () { el.classList.remove("show"); }, 4200);
@@ -9648,7 +9712,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "shamrock" ? 100 : style === "valentine" ? 72 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -9662,6 +9726,7 @@ Answer: Augusta</pre>
         else if (style === "safari") safariBeat(t, spb);
         else if (style === "blocky") blockyBeat(t, spb);
         else if (style === "ocean") oceanBeat(t, spb);
+        else if (style === "independence") independenceBeat(t, spb);
         else if (style === "shamrock") shamrockBeat(t, spb);
         else if (style === "valentine") valentineBeat(t, spb);
         else if (style === "nordic") nordicBeat(t, spb);
@@ -9730,6 +9795,24 @@ Answer: Augusta</pre>
         if (musicBeat === 1) pluckNote(ch.tones[1] + 12, t, 0.04);
         if (musicBeat === 2) pluckNote(ch.tones[2] + 12, t, 0.04);
         if (musicBeat === 3 && musicBar % 2 === 0) thereminNote(ch.tones[0] + 24, t, spb * 1.4);
+      }
+      var INDEPENDENCE_CHORDS = [
+        { bass: 36, tones: [48, 55, 60, 64] }, /* C  */
+        { bass: 41, tones: [48, 53, 57, 60] }, /* F  */
+        { bass: 36, tones: [48, 55, 60, 64] }, /* C  */
+        { bass: 43, tones: [50, 55, 59, 62] }  /* G  */
+      ];
+      /* Independence: an original parade march. Booming bass drum on the
+         beat, snare ticks on the off-beats, and a triumphant brass-style
+         lead climbing the chord tones. */
+      function independenceBeat(t, spb) {
+        var ch = INDEPENDENCE_CHORDS[musicBar % INDEPENDENCE_CHORDS.length];
+        if (musicBeat === 0) { bassNote(ch.bass - 12, t, spb * 1.4); bassNote(ch.bass, t, spb * 1.1); }
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 0.9);
+        hatTick(t, true); hatTick(t + spb * 0.5, false);
+        var mel = [0, 1, 2, 1];
+        pluckNote(ch.tones[mel[musicBeat]] + 12, t, 0.06);
+        if (musicBeat === 3) thereminNote(ch.tones[2] + 24, t + spb * 0.5, spb * 0.9);
       }
       var OCEAN_CHORDS = [
         { bass: 36, tones: [48, 55, 59, 62] }, /* C  */
@@ -9935,6 +10018,13 @@ Answer: Augusta</pre>
             ambNextStep = now + 5.5 + Math.random() * 4;
             ambNoise(now, 2.8, "lowpass", 320 + Math.random() * 160, 0.5, 0.05);
             ambNoise(now + 1.4, 2.2, "lowpass", 240, 0.5, 0.035);
+          }
+        } else if (th === "independence") {
+          /* distant fireworks: soft booms with crackle */
+          if (Math.random() < 0.12) {
+            ambNoise(now, 0.5, "lowpass", 180 + Math.random() * 120, 0.7, 0.08);
+            var n2 = 2 + Math.floor(Math.random() * 4);
+            for (var i2 = 0; i2 < n2; i2++) ambNoise(now + 0.3 + Math.random() * 0.8, 0.03, "highpass", 3000 + Math.random() * 2000, 1, 0.02);
           }
         } else if (th === "safari") {
           if (now >= ambNextCall) {
@@ -13174,6 +13264,10 @@ Answer: Augusta</pre>
       $("btn-ent-skip").addEventListener("click", finishEntrance);
       $("btn-teams").addEventListener("click", function () { renderTeams(); openOverlay("overlay-teams"); });
       $("btn-help").addEventListener("click", function () { openOverlay("overlay-help"); });
+      $("btn-jeremy-guide").addEventListener("click", function () {
+        openOverlay("overlay-help");
+        setTimeout(function () { var el = $("help-jeremy-guide"); if (el) el.scrollIntoView({ block: "start" }); }, 80);
+      });
       $("btn-vs-kahoot").addEventListener("click", function () {
         openOverlay("overlay-help");
         setTimeout(function () { var el = $("help-vs-kahoot"); if (el) el.scrollIntoView({ block: "start" }); }, 80);
@@ -13996,7 +14090,40 @@ Answer: Augusta</pre>
         $("p-feedback").textContent = right ? "✓ +" + (100 + (pSpeedBonus || 0)) + " — nice one!" + (pSpeedBonus ? " (⚡ +" + pSpeedBonus + " speed bonus)" : "") : "✗ No points — the next one's yours.";
         paintPlayerHead();
       }
-      $("btn-player-entry").addEventListener("click", openPlayer);
+            $("btn-player-entry").addEventListener("click", openPlayer);
+      /* How-do-I-join overlay: TV night vs AI/solo, in plain words. */
+      (function(){
+        var b = $("btn-how-join");
+        if (!b || b.dataset.wired) return; b.dataset.wired = "1";
+        b.addEventListener("click", function(){
+          var ov = document.getElementById("how-join-overlay");
+          if (!ov) {
+            ov = document.createElement("div");
+            ov.className = "overlay"; ov.id = "how-join-overlay";
+            ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "How do I join?");
+            ov.innerHTML = '<div class="sheet" style="max-width:540px">' +
+              "<h2>❓ How Do I Join?</h2>" +
+              "<h3>🍷 At the bar (Jeremy's hosting)</h3>" +
+              "<ol class='steps'>" +
+              "<li>Scan the QR code on the table or bar — the game opens right in your browser. No app to install.</li>" +
+              "<li>Tap <strong>📱 Join as a Player</strong>, pick your name and icon.</li>" +
+              "<li>Pick the <strong>same round</strong> Jeremy is running on the TV.</li>" +
+              "<li>Watch the TV for each question, tap your answer here, then tap <strong>Show the Answer</strong> after Jeremy reveals it and mark yourself honestly: ✓ Got it or ✗ Missed it.</li>" +
+              "</ol>" +
+              "<h3>🤖 Against the AI (or solo practice)</h3>" +
+              "<ol class='steps'>" +
+              "<li>Tap <strong>📱 Join as a Player</strong> and set up your profile.</li>" +
+              "<li>Pick <strong>any topic</strong> below to practice solo — your score, trophies, and unlocks all count.</li>" +
+              "<li>Or tap <strong>🤖 AI Host Mode</strong> on the title screen and the app runs the whole show itself.</li>" +
+              "</ol>" +
+              "<p class='builder-note'>Your trophies and progress live on <strong>this phone</strong> — bring the same phone next week.</p>" +
+              '<button class="btn gold" type="button" id="how-join-gotit" style="margin-top:.6em">Got it</button></div>';
+            document.body.appendChild(ov);
+            document.getElementById("how-join-gotit").addEventListener("click", function(){ closeOverlay("how-join-overlay"); });
+          }
+          openOverlay("how-join-overlay");
+        });
+      })();
       $("player-icon-btn").addEventListener("click", function () { $("player-icon-picker").classList.toggle("open"); });
       $("btn-player-save").addEventListener("click", function () {
         var name = $("player-name").value.trim() || "Player";
@@ -15575,9 +15702,10 @@ Answer: Augusta</pre>
         { id: "blocky", icon: "🧱", name: "Blocky Adventure" },
         { id: "shamrock", icon: "☘️", name: "Shamrock" },
         { id: "valentine", icon: "💘", name: "Valentine's" },
-        { id: "ocean", icon: "🌊", name: "Ocean" }
+        { id: "ocean", icon: "🌊", name: "Ocean" },
+        { id: "independence", icon: "🇺🇸", name: "Independence" }
       ];
-      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824" };
+      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824", independence: "#0a0a1e" };
       var currentTheme = "default";
       function setTheme(id) {
         currentTheme = id;
@@ -15625,6 +15753,7 @@ Answer: Augusta</pre>
         else if (currentTheme === "shamrock") items = ["🍀", "☘️", "🍀", "🌈", "☘️", "🪙", "🍀", "☘️", "🍀", "🌈"];
         else if (currentTheme === "valentine") items = ["💗", "💘", "🩷", "💗", "💕", "🌹", "💗", "🩷", "💘", "💗"];
         else if (currentTheme === "ocean") items = ["🐠", "🫧", "🐢", "🌊", "🐠", "🫧", "🐬", "🫧", "🐠", "🌊"];
+        else if (currentTheme === "independence") items = ["🎆", "🎇", "🇺🇸", "🎆", "⭐", "🎇", "🇺🇸", "🎆", "⭐", "🎇"];
         items.forEach(function (ch) {
           var s = document.createElement("span");
           s.className = "fx-item" + (currentTheme === "halloween" ? " bat" : "");
