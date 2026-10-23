@@ -701,6 +701,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .fx-swatch.on { border-color: var(--cream); box-shadow: 0 0 0 2px var(--gold); }
 
       /* ---------- phone tip banner & host picker ---------- */
+      .homescreen-banner { background: linear-gradient(135deg, #1a3a5c, #2d5a87); color: #fff; padding: 1rem; margin: 0.5rem; border-radius: 12px; text-align: center; border: 2px solid #ffd700; }
+      .homescreen-banner .btn { margin-top: 0.5rem; }
       .tip-banner {
         width: 100%; max-width: 1100px; margin: 0 auto 1.4rem; text-align: center;
         border: 1px solid var(--gold); background: rgba(226,166,61,.12); color: var(--gold-soft);
@@ -1578,6 +1580,11 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     <!-- ============ TITLE / LOBBY ============ -->
     <section class="screen active" id="screen-title">
       <div class="tip-banner">📱 Playing along on your phone? Watch the TV for the current question — tap through here to play along.</div>
+      <div class="homescreen-banner" id="homescreen-banner" hidden>
+        <strong>📲 Add this to your Home Screen!</strong><br />
+        <span id="homescreen-steps">iPhone: tap <strong>Share</strong> ⬆️ → <strong>Add to Home Screen</strong> → <strong>Add</strong></span><br />
+        <button class="btn small" id="btn-homescreen-dismiss" type="button">Got it</button>
+      </div>
       <div class="restore-banner" id="restore-banner" hidden>
         <span id="restore-text">↩️ Your game was restored.</span><br />
         <button class="btn primary" id="btn-restore-resume" type="button">▶ Resume the Game</button>
@@ -14772,6 +14779,26 @@ $("btn-start").addEventListener("click", function () {
       });
       /* Auto-show what's new on update: if the app version changed since
          last visit, pop the What's New overlay automatically. */
+      (function showHomescreenPrompt() {
+        try {
+          var seen = localStorage.getItem("pourDecisions.homescreenPrompt.v1");
+          var isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches;
+          var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+          if (!seen && !isStandalone) {
+            localStorage.setItem("pourDecisions.homescreenPrompt.v1", "1");
+            var banner = document.getElementById("homescreen-banner");
+            var steps = document.getElementById("homescreen-steps");
+            if (banner) {
+              if (!isIOS) {
+                steps.innerHTML = "Android: tap the <strong>⋮ menu</strong> → <strong>Add to Home screen</strong>";
+              }
+              banner.hidden = false;
+              var dismiss = document.getElementById("btn-homescreen-dismiss");
+              if (dismiss) dismiss.addEventListener("click", function() { banner.hidden = true; });
+            }
+          }
+        } catch(e) {}
+      })();
       (function checkUpdate() {
         try {
           var last = localStorage.getItem("pourDecisions.lastVersion.v1");
