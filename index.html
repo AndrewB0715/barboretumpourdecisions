@@ -1565,7 +1565,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       #qr-box img.qr-branded { max-width: 232px !important; }
 
       /* Theme particles: floating emoji for each theme */
-      .theme-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+      .theme-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none !important; z-index: 0; overflow: hidden; }
+      .theme-particles * { pointer-events: none !important; }
       .theme-particle { position: absolute; top: -50px; animation: fall linear infinite; opacity: 0.8; }
       @keyframes fall {
         0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
@@ -17790,9 +17791,7 @@ Answer: Augusta</pre>
         window.addEventListener("pageshow", function(e) {
           if (e.persisted) setTimeout(resumeApp, 300);
         });
-        window.addEventListener("focus", function() {
-          setTimeout(resumeApp, 300);
-        });
+
       })();
   </body>
 </html>
