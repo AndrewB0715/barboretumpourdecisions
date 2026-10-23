@@ -12312,9 +12312,16 @@ Answer: Augusta</pre>
         });
       }
       $("btn-trophies").addEventListener("click", function () {
-        viewHost = hostData.current;
-        renderTrophies();
-        openOverlay("overlay-trophies");
+        /* If this phone has a player profile, show THEIR trophies —
+           not the hosts'. Hosts' badges stay in the Host Control Center. */
+        if (player && player.name) {
+          renderPlayerTrophies();
+          openOverlay("overlay-player-trophies");
+        } else {
+          viewHost = hostData.current;
+          renderTrophies();
+          openOverlay("overlay-trophies");
+        }
       });
 
       /* ================= SUGGEST A FEATURE ================= */
