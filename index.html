@@ -7935,6 +7935,8 @@ Answer: Augusta</pre>
         var t = sfxCtx.currentTime + 0.01;
         [60, 64, 67, 72, 76, 79, 84].forEach(function (m, i) { sfxTone(m, t + i * 0.08, 0.7, "triangle", 0.1); });
         [72, 76, 79].forEach(function (m) { sfxTone(m, t + 0.6, 1.1, "sine", 0.05); });
+        /* the bar's triangle rings as the intro lands */
+        triangleRing(t + 0.7, 0.12);
       }
       /* The room ritual, saved for the end of a round: the hosts ring
          the bar's triangle, the room chants "Wooooo!" and shouts the
