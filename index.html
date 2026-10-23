@@ -7862,6 +7862,13 @@ Answer: Augusta</pre>
         auditNoteRound();
         pr.list.forEach(function (it) { nightQuestions.push({ q: it.q, catName: it.catName || pr.catName }); });
         if (teams.length >= MAX_TEAMS) unlockTrophy("fullhouse");
+        /* Triangle rings as the round opens — the bar knows it's game time. */
+        try {
+          if (typeof ensureSfx === "function" && ensureSfx()) {
+            var tt = sfxCtx.currentTime + 0.05;
+            triangleRing(tt, 0.14);
+          }
+        } catch (e) {}
         showRoundOpener(pr, function () { showQuestion(); });
       }
       /* Round opener: animated title card + fanfare before question 1. */
