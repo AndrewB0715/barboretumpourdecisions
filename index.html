@@ -1582,6 +1582,13 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <button class="btn small" id="btn-how-join" type="button">❓ How do I join?</button>
             </div>
           </div>
+          <div class="menu-group quick-controls">
+            <div class="title-actions">
+              <button class="btn music-btn" type="button" aria-pressed="false">🎵 Music: Off</button>
+              <button class="btn sfx-btn on" type="button" aria-pressed="true">🔊 Sound: On</button>
+            </div>
+            <div class="theme-picker" id="theme-picker-quick" role="group" aria-label="Night theme"></div>
+          </div>
           
           <div class="menu-group">
             <div class="menu-group-label">🧭 New here? Start with these two</div>
@@ -1675,8 +1682,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <button class="btn toggle btn-amb-context" type="button" aria-pressed="false">🌌 Ambience: Off</button>
             </div>
             <div class="host-picker" id="host-picker" role="group" aria-label="Choose tonight's host"></div>
-            <div class="theme-picker" id="theme-picker-title" role="group" aria-label="Night theme"></div>
           </div>
+          
           <p class="hosted-by">Hosted by <strong>Edward</strong>, <strong>Jeremy</strong> &amp; <strong>Lee</strong> · Up to 10 teams · About 30 players</p>
           <p class="send-note">📱 Send this link to Jeremy, Edward, or Lee — it opens and plays right on their phones. No app to install, no sign-in.</p>
           <p class="creator-credit">Created by Andrew Blaeser with the help of ChatGPT, Muse, and Grok</p>
@@ -10339,6 +10346,15 @@ Answer: Augusta</pre>
         renderAmbienceSlots();
         openOverlay("overlay-ambience");
       });
+            /* Music starts on the user's first tap anywhere (browsers block
+         autoplay until there's an interaction). */
+      (function(){
+        function firstTap(){
+          document.removeEventListener("pointerdown", firstTap);
+          if (!musicPlaying && typeof toggleMusic === "function") toggleMusic();
+        }
+        document.addEventListener("pointerdown", firstTap);
+      })();
       document.querySelectorAll(".music-btn").forEach(function (b) {
         b.addEventListener("click", toggleMusic);
       });
