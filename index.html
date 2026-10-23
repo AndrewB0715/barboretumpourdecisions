@@ -1551,6 +1551,23 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     
       .qr-branded { max-width: 232px !important; width: 100% !important; height: auto !important; display: block; margin: 0 auto; border-radius: 12px; }
       #qr-box img.qr-branded { max-width: 232px !important; }
+
+      /* Theme particles: floating emoji for each theme */
+      .theme-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+      .theme-particle { position: absolute; top: -50px; animation: fall linear infinite; opacity: 0.8; }
+      @keyframes fall {
+        0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+        10% { opacity: 0.8; }
+        90% { opacity: 0.8; }
+        100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+      }
+      @keyframes wave {
+        0%, 100% { transform: translateX(0) translateY(0); }
+        25% { transform: translateX(-20px) translateY(-10px); }
+        50% { transform: translateX(0) translateY(0); }
+        75% { transform: translateX(20px) translateY(10px); }
+      }
+      .theme-particle.wave { animation: wave 4s ease-in-out infinite; top: auto; }
 </style>
   </head>
   <body>
@@ -6544,6 +6561,25 @@ Answer: Augusta</pre>
             { q: "✂️ What is the 'central leader' when pruning?", a: "The main trunk", choices: ["The main trunk", "The biggest apple", "The top beehive", "The mulch ring"], correct: 0 },
             { q: "🌸 Which of these is one of Andrew's two apple trees?", a: "Fuji", choices: ["Fuji", "Granny Smith", "Honeycrisp", "Gala"], correct: 0 },
             { q: "🌸 The other of Andrew's two apple trees is which variety?", a: "McIntosh", choices: ["McIntosh", "Red Delicious", "Golden Delicious", "Pink Lady"], correct: 0 }
+          ]
+        },
+        {
+          id: "christmas", name: "Christmas", icon: "🎄",
+          tagline: "The nativity story and Christmas traditions.",
+          cue: "Name the Christmas fact",
+          questions: [
+            { q: "⭐ According to the Gospel of Matthew, what guided the wise men to Jesus?", a: "A star", choices: ["A star", "An angel", "A map", "A shepherd"], correct: 0 },
+            { q: "🎄 In which town was Jesus born?", a: "Bethlehem", choices: ["Bethlehem", "Nazareth", "Jerusalem", "Capernaum"], correct: 0 },
+            { q: "👶 Who was Jesus' mother?", a: "Mary", choices: ["Mary", "Martha", "Elizabeth", "Anna"], correct: 0 },
+            { q: "👨 Who was Jesus' earthly father?", a: "Joseph", choices: ["Joseph", "John", "Peter", "James"], correct: 0 },
+            { q: "🐑 Who were the first to hear of Jesus' birth, according to Luke?", a: "Shepherds", choices: ["Shepherds", "Kings", "Priests", "Farmers"], correct: 0 },
+            { q: "🎁 What three gifts did the wise men bring?", a: "Gold, frankincense, and myrrh", choices: ["Gold, frankincense, and myrrh", "Gold, silver, and bronze", "Bread, wine, and oil", "Sheep, goats, and doves"], correct: 0 },
+            { q: "🌟 How many wise men does the Bible say visited Jesus?", a: "The Bible doesn't say", choices: ["The Bible doesn't say", "Three", "Twelve", "Seven"], correct: 0, fact: "The Bible mentions three gifts but never says how many wise men there were." },
+            { q: "🏠 Why was Jesus born in a manger?", a: "There was no room at the inn", choices: ["There was no room at the inn", "They preferred barns", "It was tradition", "The temple was closed"], correct: 0 },
+            { q: "😇 Which angel told Mary she would have a son?", a: "Gabriel", choices: ["Gabriel", "Michael", "Raphael", "Uriel"], correct: 0 },
+            { q: "📯 What did the angels say to the shepherds?", a: "'Glory to God in the highest'", choices: ["'Glory to God in the highest'", "'Peace on Earth'", "'Fear not'", "All of these"], correct: 3 },
+            { q: "🖼️ A nativity scene typically includes which animals?", a: "Sheep, donkeys, and cattle", choices: ["Sheep, donkeys, and cattle", "Lions and tigers", "Horses only", "No animals"], correct: 0 },
+            { q: "🎄 Which country started the tradition of the Christmas tree?", a: "Germany", choices: ["Germany", "England", "France", "Italy"], correct: 0, fact: "The modern Christmas tree tradition began in 16th-century Germany." }
           ]
         },
         {
@@ -14522,7 +14558,9 @@ Answer: Augusta</pre>
         { id: "rocketleague", icon: "🚗", name: "Rocket League Rookie", desc: "Get 5 Rocket League questions right", req: "5 Rocket League correct" },
         { id: "golfer", icon: "⛳", name: "Fairway Finder", desc: "Get 5 golf questions right", req: "5 golf correct" },
         { id: "orchardkeeper", icon: "🍎", name: "Orchard Keeper", desc: "Get 5 Apple Tree questions right", req: "5 Apple Tree correct" },
-        { id: "beefriend", icon: "🐝", name: "Bee Friend", desc: "Get 3 bee/pollination questions right", req: "3 bee questions correct" }
+        { id: "beefriend", icon: "🐝", name: "Bee Friend", desc: "Get 3 bee/pollination questions right", req: "3 bee questions correct" },
+        { id: "nativity", icon: "⭐", name: "Nativity Scholar", desc: "Get 5 Christmas questions right", req: "5 Christmas correct" },
+        { id: "starfollower", icon: "🌟", name: "Star Follower", desc: "Get all 3 wise-men questions right", req: "3 wise-men questions correct" }
       ];
       function playerTrophyById(id) {
         for (var i = 0; i < PLAYER_TROPHIES.length; i++) if (PLAYER_TROPHIES[i].id === id) return PLAYER_TROPHIES[i];
@@ -14668,6 +14706,7 @@ Answer: Augusta</pre>
         });
         list.appendChild(svg);
       }
+      var APP_VERSION = "Update 20";
       var VERSION_HISTORY = [
         { v: "Update 14", d: "Oct 23", items: ["Fixed the giant QR code on desktop — now a normal size"] },
         { v: "Update 13", d: "Oct 23", items: ["Achievements screen now uses the Skyrim constellation star chart"] },
@@ -14702,6 +14741,63 @@ Answer: Augusta</pre>
         renderWhatsNew();
         openOverlay("overlay-whatsnew");
       });
+      /* Auto-show what's new on update: if the app version changed since
+         last visit, pop the What's New overlay automatically. */
+      (function checkUpdate() {
+        try {
+          var last = localStorage.getItem("pourDecisions.lastVersion.v1");
+          if (last !== APP_VERSION) {
+            localStorage.setItem("pourDecisions.lastVersion.v1", APP_VERSION);
+            if (last !== null) {
+              // Not first visit - show what's new
+              setTimeout(function() {
+                renderWhatsNew();
+                openOverlay("overlay-whatsnew");
+              }, 2500);
+            }
+          }
+        } catch(e) {}
+      })();
+
+      /* Theme particles: spawn floating emoji based on current theme */
+      var THEME_PARTICLES = {
+        ocean: ["🌊", "🐚", "🐠", "💧"],
+        fall: ["🍂", "🍁", "🌰", "🍃"],
+        winter: ["❄️", "⛄", "🌨️", "🧊"],
+        shamrock: ["☘️", "🍀", "🌈", "💚"],
+        independence: ["🇺🇸", "🎆", "🎇", "⭐"],
+        halloween: ["🎃", "🍬", "🍭", "👻"],
+        christmas: ["💡", "🎄", "⭐", "🔔"],
+        valentine: ["💕", "💘", "🌹", "💝"]
+      };
+      function startThemeParticles() {
+        // Remove old particles
+        var old = document.querySelector(".theme-particles");
+        if (old) old.remove();
+        var theme = (typeof currentTheme !== "undefined" && currentTheme) ? currentTheme : "default";
+        var emojis = THEME_PARTICLES[theme];
+        if (!emojis) return;
+        // Respect reduced motion
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var container = document.createElement("div");
+        container.className = "theme-particles";
+        container.setAttribute("aria-hidden", "true");
+        for (var i = 0; i < 15; i++) {
+          var p = document.createElement("div");
+          p.className = "theme-particle";
+          p.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          p.style.left = Math.random() * 100 + "%";
+          p.style.fontSize = (16 + Math.random() * 20) + "px";
+          p.style.animationDuration = (6 + Math.random() * 8) + "s";
+          p.style.animationDelay = (Math.random() * 8) + "s";
+          container.appendChild(p);
+        }
+        document.body.appendChild(container);
+      }
+      // Start particles on load and when theme changes
+      setTimeout(startThemeParticles, 1000);
+      // Hook into theme changes
+      var _origSetTheme = typeof setTheme === "function" ? setTheme : null;
       function renderAchievements() {
         /* Skyrim-style constellation view of every achievement. */
         var list = $("achievements-list");
