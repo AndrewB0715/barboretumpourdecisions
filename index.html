@@ -610,6 +610,52 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .fxm-pulse { animation: fxm-pulse .7s ease; display: inline-block; }
       @keyframes fxm-pulse { 0%, 100% { transform: scale(1); } 30% { transform: scale(1.35); } 60% { transform: scale(1.12); } }
       .aw-icon { display: inline-block; }
+      .avb-bronze { border: 3px solid #cd7f32; border-radius: 50%; padding: 2px; }
+      .avb-silver { border: 3px solid #c0c0c0; border-radius: 50%; padding: 2px; }
+      .avb-gold { border: 3px solid #ffd700; border-radius: 50%; padding: 2px; box-shadow: 0 0 10px #ffd70066; }
+      .avb-wine { border: 3px solid #722f37; border-radius: 50%; padding: 2px; }
+      .avb-star { border: 3px dashed #ffe45e; border-radius: 50%; padding: 2px; }
+      .avb-diamond { border: 3px solid #b9f2ff; border-radius: 50%; padding: 2px; box-shadow: 0 0 12px #b9f2ff88; }
+      .avb-streak { border: 3px solid #ff6b35; border-radius: 50%; padding: 2px; }
+      .avb-ocean { border: 3px solid #1a8cff; border-radius: 50%; padding: 2px; }
+      .avb-rose { border: 3px solid #e75480; border-radius: 50%; padding: 2px; }
+      .avb-champion { border: 4px double #ffd700; border-radius: 50%; padding: 2px; box-shadow: 0 0 14px #ffd70099; }
+      .avbg-cellar { background: radial-gradient(circle, #5a1f28, #2a0d12); border-radius: 50%; }
+      .avbg-night { background: radial-gradient(circle, #1b2a4a, #060a18); border-radius: 50%; }
+      .avbg-sunset { background: linear-gradient(135deg, #ff9a56, #7b2d5b); border-radius: 50%; }
+      .avbg-ocean { background: linear-gradient(135deg, #1a8cff, #062a5e); border-radius: 50%; }
+      .avbg-pumpkin { background: radial-gradient(circle, #ff9a3c, #7a2e00); border-radius: 50%; }
+      .avbg-frost { background: radial-gradient(circle, #cfeeff, #6aa8d0); border-radius: 50%; }
+      .avbg-royal { background: radial-gradient(circle, #6a3fa0, #241040); border-radius: 50%; }
+      .constel { width: 100%; height: auto; display: block; margin: .4em 0 1em; background: radial-gradient(ellipse at 50% 30%, #1a1030 0%, #0d0818 70%); border-radius: 12px; border: 1px solid #3a2a5a; }
+      .con-label { fill: #e8d9b0; font-size: 13px; font-weight: bold; }
+      .con-line { stroke: #5a4a8a; stroke-width: 1.5; }
+      .con-line.lit { stroke: #ffd700; stroke-width: 2; }
+      .con-node { cursor: pointer; }
+      .con-node .halo { fill: #ffd700; opacity: .18; }
+      .con-node .disc { fill: #2a1f4a; stroke: #6a5a9a; stroke-width: 2; }
+      .con-node.lit .disc { fill: #4a3510; stroke: #ffd700; }
+      .con-node .emo { font-size: 20px; text-anchor: middle; }
+      .con-node.dim .emo { opacity: .35; }
+      .con-name { fill: #cbb98a; font-size: 10px; text-anchor: middle; }
+      .con-node.lit .con-name { fill: #ffe9a8; }
+      .con-twinkle { animation: conTw 2.6s ease-in-out infinite; }
+      @keyframes conTw { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+      @media (prefers-reduced-motion: reduce) { .con-twinkle { animation: none; } }
+      .view-toggle { display: flex; gap: .5em; margin: .3em 0 .8em; }
+      .view-toggle .btn.on { outline: 2px solid #ffd700; }
+      .patch-notes { font-size: .85rem; color: var(--dim, #aaa); margin: .4em 0 0; text-align: left; max-width: 420px; margin-left: auto; margin-right: auto; } .patch-notes summary { cursor: pointer; }
+      .visit-count { font-size: .8rem; color: var(--faint, #999); margin: .2em 0 0; }
+      .av-anim { display: inline-block; }
+      .av-anim-float { animation: avFloat 3.2s ease-in-out infinite; }
+      .av-anim-bounce { animation: avBounce 1.8s ease-in-out infinite; }
+      .av-anim-wiggle { animation: avWiggle 2.4s ease-in-out infinite; }
+      .av-anim-celebrate { animation: avCelebrate 1.4s ease-in-out infinite; }
+      @keyframes avFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+      @keyframes avBounce { 0%,100% { transform: translateY(0) scale(1); } 30% { transform: translateY(-10px) scale(1.04); } 55% { transform: translateY(0) scale(.98); } 75% { transform: translateY(-4px) scale(1.01); } }
+      @keyframes avWiggle { 0%,100% { transform: rotate(-9deg); } 50% { transform: rotate(9deg); } }
+      @keyframes avCelebrate { 0%,100% { transform: scale(1) rotate(0deg); } 25% { transform: scale(1.14) rotate(-7deg); } 75% { transform: scale(1.14) rotate(7deg); } }
+      @media (prefers-reduced-motion: reduce) { .av-anim-float, .av-anim-bounce, .av-anim-wiggle, .av-anim-celebrate { animation: none; } }
       @media (prefers-reduced-motion: reduce) { .fx-celebrate, .fx-wrong, .confetti-bit, .rain-bit, .fx-burst-char, .fx-drop, .rain-char, .fxm-bounce, .fxm-spin, .fxm-pulse { animation: none !important; } }
 
       /* ---------- grouped menus ---------- */
@@ -881,6 +927,18 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         --line: #2c4a75; --cream: #eef6ff; --dim: #bcd7f5; --faint: #7f9cc4;
         --gold: #ffd166; --gold-soft: #ffe09a; --wine: #b01e28; --wine-deep: #7e1420;
         --green: #7fd08c;
+      }
+      [data-theme="ocean"] {
+        --bg: #061824; --bg-2: #0a2436; --panel: #0e2f47; --panel-2: #14405e;
+        --line: #2c5a7a; --cream: #eaf7ff; --dim: #b8dcf2; --faint: #7fa8c4;
+        --gold: #ffd166; --gold-soft: #ffe09a; --wine: #b01e28; --wine-deep: #7e1420;
+        --green: #7fd08c;
+      }
+      [data-theme="ocean"] body {
+        background:
+          radial-gradient(1100px 600px at 80% -10%, rgba(64, 180, 230, .16), transparent 60%),
+          radial-gradient(900px 700px at -10% 110%, rgba(10, 90, 140, .35), transparent 55%),
+          var(--bg);
       }
       [data-theme="halloween"] body {
         background:
@@ -1575,7 +1633,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           </div>
           <p class="hosted-by">Hosted by <strong>Edward</strong>, <strong>Jeremy</strong> &amp; <strong>Lee</strong> · Up to 10 teams · About 30 players</p>
           <p class="send-note">📱 Send this link to Jeremy, Edward, or Lee — it opens and plays right on their phones. No app to install, no sign-in.</p>
-          <p class="creator-credit">Created by Andrew Blaeser and Muse</p>
+          <p class="creator-credit">Created by Andrew Blaeser with the help of ChatGPT, Muse, and Grok</p>
+          <p class="visit-count" id="visit-count" aria-live="off"></p>
+          <details class="patch-notes"><summary>📝 Version history</summary>
+          <ul>
+          <li><strong>Version 3</strong> — Thursday build: 141 topics, ocean theme, Skyrim trophy constellations, avatar locker, animated avatars, Picture Round.</li>
+          <li><strong>Version 2</strong> — Tuesday build.</li>
+          <li><strong>Version 1</strong> — Monday minimal build.</li>
+          </ul></details>
         </div>
         <div class="qr-card">
           <div class="qr-box" id="qr-box"><div class="qr-fallback">QR code loading…</div></div>
@@ -2279,6 +2344,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <div class="player-toggles">
             <button class="btn small toggle on" id="p-toggle-sound" type="button" aria-pressed="true">🔔 Sound: On</button>
             <button class="btn small toggle on" id="p-toggle-vib" type="button" aria-pressed="true">📳 Vibration: On</button>
+            <label class="btn small" style="display:inline-flex;align-items:center;gap:.4em;">🕺 Avatar motion
+            <select id="p-avatar-anim" aria-label="Avatar motion">
+              <option value="none">Still</option>
+              <option value="float">Float</option>
+              <option value="bounce">Bounce</option>
+              <option value="wiggle">Wiggle</option>
+              <option value="celebrate">Celebrate</option>
+            </select></label>
             <button class="btn small ghost" id="p-change" type="button">Change character</button>
             <button class="btn small ghost" id="p-reset" type="button">Reset my score</button>
           </div>
@@ -2940,6 +3013,7 @@ Answer: Augusta</pre>
         <div class="builder-row">
           <button class="btn gold" id="btn-suggest-save" type="button">Save Suggestion</button>
           <button class="btn" id="btn-suggest-share" type="button">📤 Share to Andrew</button>
+          <button class="btn" id="btn-suggest-email" type="button">📧 Email to Andrew</button>
           <button class="btn" id="btn-suggest-copy" type="button">📋 Copy</button>
           <span class="builder-status" id="suggest-status" role="status"></span>
         </div>
@@ -6319,7 +6393,50 @@ Answer: Augusta</pre>
             { q: "🏀 Michael Jordan grew up and played high school ball in which North Carolina city?", a: "Wilmington", choices: ["Raleigh", "Durham", "Charlotte", "Wilmington"], correct: 3 }
           ]
         },
-      ];
+              {
+          id: "pictureround", name: "Picture Round", icon: "🖼️",
+          tagline: "Four pictures, one right answer. Name what you see — from Andrew's own seafood counter to famous bridges.",
+          cue: "Pick the right picture",
+          questions: [
+            { q: "Which one is the Maine lobster? 🦞", a: "The Maine lobster",
+              choices: ["assets/pic-shrimp.jpeg", "assets/pic-maine-lobster.jpeg", "assets/pic-rainbow-trout.jpeg", "assets/pic-king-crab.jpeg"],
+              choiceLabels: ["Shrimp", "Maine lobster", "Rainbow trout", "King crab legs"], correct: 1 },
+            { q: "Which one is the T-bone steak? 🥩", a: "The T-bone steak",
+              choices: ["assets/pic-ribeye.jpeg", "assets/pic-tbone.jpeg", "assets/pic-nystrip.jpeg", "assets/pic-flank.jpeg"],
+              choiceLabels: ["Ribeye", "T-bone", "New York strip", "Flank"], correct: 1 },
+            { q: "Which one is the blue crab? 🦀", a: "The blue crab",
+              choices: ["assets/pic-blue-crab.jpeg", "assets/pic-dungeness.jpeg", "assets/pic-snow-crab.jpeg", "assets/pic-king-crab.jpeg"],
+              choiceLabels: ["Blue crab", "Dungeness crab", "Snow crab legs", "King crab legs"], correct: 0 },
+            { q: "Which one is the triangle? 🎺", a: "The triangle",
+              choices: ["assets/pic-trumpet.jpeg", "assets/pic-violin.jpeg", "assets/pic-triangle.jpeg", "assets/pic-cello.jpeg"],
+              choiceLabels: ["Trumpet", "Violin", "Triangle", "Cello"], correct: 2 },
+            { q: "Which one is the Golden Gate Bridge? 🌉", a: "The Golden Gate Bridge",
+              choices: ["assets/pic-golden-gate.jpeg", "assets/pic-brooklyn.jpeg", "assets/pic-tower.jpeg", "assets/pic-sydney.jpeg"],
+              choiceLabels: ["Golden Gate", "Brooklyn Bridge", "Tower Bridge", "Sydney Harbour Bridge"], correct: 0 },
+            { q: "Which one is the tuna? 🐟", a: "The tuna",
+              choices: ["assets/pic-salmon.jpeg", "assets/pic-tuna.jpeg", "assets/pic-rainbow-trout.jpeg", "assets/pic-atl-salmon.jpeg"],
+              choiceLabels: ["Salmon", "Tuna", "Rainbow trout", "Atlantic salmon fillets"], correct: 1 },
+            { q: "Which one is the spiny lobster? 🦞", a: "The spiny lobster",
+              choices: ["assets/pic-maine-lobster.jpeg", "assets/pic-spiny.jpeg", "assets/pic-snow-crab.jpeg", "assets/pic-king-crab.jpeg"],
+              choiceLabels: ["Maine lobster", "Spiny lobster", "Snow crab legs", "King crab legs"], correct: 1 },
+            { q: "Which one is the tiger shrimp? 🦐", a: "The tiger shrimp",
+              choices: ["assets/pic-shrimp.jpeg", "assets/pic-tiger-shrimp.jpeg", "assets/pic-spiny.jpeg", "assets/pic-atl-salmon.jpeg"],
+              choiceLabels: ["Shrimp", "Tiger shrimp", "Spiny lobster", "Atlantic salmon fillets"], correct: 1 },
+            { q: "Which one is the brisket? 🥩", a: "The brisket",
+              choices: ["assets/pic-brisket.jpeg", "assets/pic-flank.jpeg", "assets/pic-filet.jpeg", "assets/pic-fresh-steaks.jpeg"],
+              choiceLabels: ["Brisket", "Flank", "Filet mignon", "Fresh steaks"], correct: 0 },
+            { q: "Which one is the pork roast? 🍖", a: "The pork roast",
+              choices: ["assets/pic-pork-roast.jpeg", "assets/pic-pork-chops.jpeg", "assets/pic-sausage.jpeg", "assets/pic-lamb.jpeg"],
+              choiceLabels: ["Pork roast", "Pork chops", "Sausages", "Lamb chops"], correct: 0 },
+            { q: "Which one is Tower Bridge in London? 🌉", a: "Tower Bridge",
+              choices: ["assets/pic-tower.jpeg", "assets/pic-brooklyn.jpeg", "assets/pic-rialto.jpeg", "assets/pic-charles.jpeg"],
+              choiceLabels: ["Tower Bridge", "Brooklyn Bridge", "Rialto Bridge", "Charles Bridge"], correct: 0 },
+            { q: "Which one is the cello? 🎻", a: "The cello",
+              choices: ["assets/pic-cello.jpeg", "assets/pic-violin.jpeg", "assets/pic-trumpet.jpeg", "assets/pic-triangle.jpeg"],
+              choiceLabels: ["Cello", "Violin", "Trumpet", "Triangle"], correct: 0 }
+          ]
+        },
+];
 
       /* Fill-in-the-blank additions (Andrew's formats pass): a spread
          of ✏️ blanks folded into familiar rounds, so a Fill in the
@@ -6375,24 +6492,15 @@ Answer: Augusta</pre>
       });
 
       var ICON_GROUPS = [
-        { label: "🍷 Bar & Bites", icons: ["🍷","🍇","🥂","🍺","🍾","🧀","🌹","✨","🍿","🌮","🍕","🍩","🍓","🥨","🍔","🌶️","☕","🍰"] },
-        { label: "🐾 Animals — Wild & Ocean", icons: ["🦊","🦉","🐻","🦁","🐯","🐼","🐨","🦓","🦒","🦩","🦅","🦜","🐙","🐳","🐬","🦈","🐠","🦀","🦑","🐧","🦋","🐝"] },
-        { label: "🐶 Animals — Pets & Farm", icons: ["🐶","🐱","🐰","🐹","🐷","🐔","🐴","🐮","🐑","🐸","🐢"] },
-        { label: "🎬 Movie & TV Favorites", icons: ["🎩","🌑","🕵️","🦸","🤠","🧛","🕶️","🦖","🕷️","👻","⌛","🎬","📺","🎭"] },
-        { label: "🌌 Star Wars", icons: ["🌌","⚔️","🚀","🛸","🤖","🪐","💫","☄️","🌠","🛰️","👽","🔭","⭐","🌙"] },
-        { label: "🖖 Star Trek", icons: ["🖖","🛸","🚀","🪐","💫","🔴","📜","🐹","✨","🧠"] },
-        { label: "💍 Middle-earth", icons: ["💍","🧝","🧙","🐉","🦄","🏹","⛏️","🗡️","🦅","🌋","🌻","🐴","🍳","🏰","🔮","🧪"] },
-        { label: "🏴‍☠️ Pirates", icons: ["🏴‍☠️","🧭","🗺️","🪙","🦜","💀","🔱","🌊","🦑","⛵","⚓"] },
-        { label: "🪄 Magic & Hogwarts", icons: ["🪄","🧹","🦁","🦅","🦡","🐍","🧙‍♀️","🔑","📜","🎃","🏆"] },
-        { label: "🚗 Vehicles", icons: ["🚗","🏎️","🛻","🚕","🚌","🚂","✈️","🛩️","🚁","⛵","🚤","🚢","🏍️","🚲","🚜","🚑","🚒","🚓"] },
-        { label: "🏆 Sports", icons: ["⚽","🏀","🏈","⚾","🥎","🎾","🏐","🏉","🎱","🏓","⛳","🏒","🥊","🥇","🎯","🏄","🏊","🚴","🏋️","🤸","🧗"] },
-        { label: "🎣 Favorite Activities", icons: ["🎣","🏕️","🌱","🌻","👨‍🍳","🍳","🎸","🎤","🎧","🎷","🎮","🕹️","🥾","🧭","🗺️","📸","🎨","📚","♟️","🧶","🎺","🎻","🥁","🚣","🪕"] },
-        { label: "🚜 Clarkson's Farm & Countryside", icons: ["🚜","🐑","🐄","🐖","🐓","🌾","🚶","🥕","🧑‍🌾","🐝","🍺","🏡","🐕","🌻","🥚","🧀"] },
-        { label: "🎮 Video Games & Blocky Builds", icons: ["🎮","🕹️","⛏️","🧱","💎","🗡️","🛡️","🎲","👾","🏆","🚀","⭐","🔥","🧨","🌋","🐉"] },
-        { label: "🆕 Fresh at the Bar", icons: ["🎤", "🏅", "🦌", "🧱", "🏖️", "🌴", "🔑", "🍇", "☎️", "💾", "📼", "🍺", "🥤", "🏛️", "🔗", "👟", "🎓", "🐝", "🛒", "⛽", "🦀", "🦞", "🐛", "🦋", "🌻", "🏕️", "🔺", "🎸", "⚓", "🏈"] },
-        { label: "🦀 New Rounds: Boats, Wands & Wi-Fi", icons: ["🦀", "🚢", "🌊", "🧊", "🦐", "🪄", "🧹", "🦉", "🏰", "🚂", "💌", "📡", "🎙️", "📹", "🧾", "🏡", "🌳", "📬", "🛻", "✈️", "🌉", "🏙️", "🥕", "🥝", "🔔", "🎧", "🧽", "🍍", "🍩", "🛸", "🪐", "🌌"] },
-        { label: "⭐ Just for Fun", icons: ["⚡","🍀","🧠","🔥","🎲","👑","🪙","🔴","🔱","🌊","🏜️","🌋"] }
-      ];
+        { label: "🍷 Bar & Bites", icons: ["🍷", "🍇", "🥂", "🍺", "🍾", "🧀", "🌹", "✨", "🍿", "🌮", "🍕", "🍩", "🍓", "🥨", "🍔", "🌶️", "☕", "🍰"] },
+        { label: "🐾 Animals", icons: ["🦊", "🦉", "🐻", "🦁", "🐯", "🐼", "🐨", "🦓", "🦒", "🦩", "🦅", "🦜", "🐙", "🐳", "🐬", "🦈", "🐠", "🦀", "🦑", "🐧", "🦋", "🐝", "🐶", "🐱", "🐰", "🐹", "🐷", "🐔", "🐴", "🐮", "🐑", "🐸", "🐢"] },
+        { label: "🎬 Movies & TV", icons: ["🎩", "🌑", "🕵️", "🦸", "🤠", "🧛", "🕶️", "🦖", "🕷️", "👻", "⌛", "🎬", "📺", "🎭"] },
+        { label: "🚀 Sci-Fi", icons: ["🌌", "⚔️", "🚀", "🛸", "🤖", "🪐", "💫", "☄️", "🌠", "🛰️", "👽", "🔭", "⭐", "🌙", "🖖", "🔴", "📜", "🧠"] },
+        { label: "🐉 Fantasy & Adventure", icons: ["💍", "🧝", "🧙", "🐉", "🦄", "🏹", "⛏️", "🗡️", "🌋", "🌻", "🍳", "🏰", "🔮", "🧪", "🏴‍☠️", "🧭", "🗺️", "🪙", "💀", "🔱", "🌊", "⛵", "⚓", "🪄", "🧹", "🦡", "🐍", "🧙‍♀️", "🔑", "🎃", "🏆"] },
+        { label: "🚗 Vehicles", icons: ["🚗", "🏎️", "🛻", "🚕", "🚌", "🚂", "✈️", "🛩️", "🚁", "🚤", "🚢", "🏍️", "🚲", "🚜", "🚑", "🚒", "🚓"] },
+        { label: "🏆 Sports & Games", icons: ["⚽", "🏀", "🏈", "⚾", "🥎", "🎾", "🏐", "🏉", "🎱", "🏓", "⛳", "🏒", "🥊", "🥇", "🎯", "🏄", "🏊", "🚴", "🏋️", "🤸", "🧗", "🎮", "🕹️", "🧱", "💎", "🛡️", "🎲", "👾", "🔥", "🧨"] },
+        { label: "🎣 Hobbies & Home", icons: ["🎣", "🏕️", "🌱", "👨‍🍳", "🎸", "🎤", "🎧", "🎷", "🥾", "📸", "🎨", "📚", "♟️", "🧶", "🎺", "🎻", "🥁", "🚣", "🪕", "🐄", "🐖", "🐓", "🌾", "🚶", "🥕", "🧑‍🌾", "🏡", "🐕", "🥚"] }
+      ];;
       var ICONS = [];
       ICON_GROUPS.forEach(function (g) { g.icons.forEach(function (ic) { if (ICONS.indexOf(ic) < 0) ICONS.push(ic); }); });
       /* Renders the grouped icon library into a picker element; onPick(ic)
@@ -9540,7 +9648,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -9553,6 +9661,7 @@ Answer: Augusta</pre>
         else if (style === "winter") winterBeat(t, spb);
         else if (style === "safari") safariBeat(t, spb);
         else if (style === "blocky") blockyBeat(t, spb);
+          else if (style === "ocean") oceanBeat(t, spb);
         else if (style === "nordic") nordicBeat(t, spb);
         else if (style === "cinematic") cinematicBeat(t, spb);
         else if (style === "spaceopera") spaceoperaBeat(t, spb);
@@ -9590,6 +9699,21 @@ Answer: Augusta</pre>
         if (musicBeat === 1 && musicBar % 2 === 0) {
           thereminNote(ch.tones[(musicBar / 2) % ch.tones.length] + 12, t, spb * 2.6);
         }
+      }
+      var OCEAN_CHORDS = [
+        { bass: 36, tones: [48, 55, 59, 62] }, /* C  */
+        { bass: 33, tones: [45, 52, 57, 60] }, /* Am */
+        { bass: 41, tones: [48, 53, 57, 60] }, /* F  */
+        { bass: 43, tones: [50, 55, 59, 62] }  /* G  */
+      ];
+      /* Ocean: slow tide. Pads wash over the bar, the bass rolls like a
+         swell, and sparse plucks fall like droplets. */
+      function oceanBeat(t, spb) {
+        var ch = OCEAN_CHORDS[musicBar % OCEAN_CHORDS.length];
+        if (musicBeat === 0) { padChord(ch.tones, t, spb * 4 + 0.2); bassNote(ch.bass, t, spb * 3.2); }
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.8);
+        if (musicBeat === 1 && musicBar % 2 === 0) pluckNote(ch.tones[musicBeat % ch.tones.length] + 24, t, 0.05);
+        if (musicBeat === 3 && musicBar % 2 === 1) pluckNote(ch.tones[(musicBeat + 1) % ch.tones.length] + 24, t + spb * 0.5, 0.035);
       }
       function fallBeat(t, spb) {
         var ch = FALL_CHORDS[musicBar % FALL_CHORDS.length];
@@ -9773,6 +9897,13 @@ Answer: Augusta</pre>
             ambNextStep = now + 2.4 + Math.random() * 3.6;
             var steps = 3 + Math.floor(Math.random() * 3);
             for (var s = 0; s < steps; s++) ambGlide(105 + Math.random() * 25, 52, now + s * 0.27, 0.1, "sine", 0.055);
+          }
+         } else if (th === "ocean") {
+          /* slow wave swells: lowpassed noise washing in every few seconds */
+          if (now >= ambNextStep) {
+            ambNextStep = now + 5.5 + Math.random() * 4;
+            ambNoise(now, 2.8, "lowpass", 320 + Math.random() * 160, 0.5, 0.05);
+            ambNoise(now + 1.4, 2.2, "lowpass", 240, 0.5, 0.035);
           }
         } else if (th === "safari") {
           if (now >= ambNextCall) {
@@ -12232,6 +12363,14 @@ Answer: Augusta</pre>
         if (!entry.text) { suggestStatus("Write your idea first, then share it."); $("suggest-text").focus(); return; }
         shareSuggestion(entry);
       });
+      $("btn-suggest-email").addEventListener("click", function () {
+        var entry = suggestEntryFromForm();
+        if (!entry.text) { suggestStatus("Write your idea first, then email it."); $("suggest-text").focus(); return; }
+        var subject = "Pour Decisions suggestion: " + (entry.type || "idea");
+        var body = suggestMessage(entry);
+        window.location.href = "mailto:Andrew.blaeser@gmail.com?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        suggestStatus("Opening your email app — send it to Andrew.blaeser@gmail.com.");
+      });
       $("btn-suggest-copy").addEventListener("click", function () {
         var entry = suggestEntryFromForm();
         if (!entry.text) { suggestStatus("Write your idea first, then copy it."); $("suggest-text").focus(); return; }
@@ -13116,7 +13255,7 @@ Answer: Augusta</pre>
          The host can still change them in the Host Control Center if
          the handle ever changes; edits save on this device. */
       var SOCIAL_KEY = "pourDecisions.social.v1";
-      var social = { handle: "@barboretum", fb: "https://www.facebook.com/barboretum", ig: "https://www.instagram.com/barboretum" };
+      var social = { handle: "@barboretum", fb: "https://www.facebook.com/share/g/18W3NDLKAo/", ig: "https://www.instagram.com/barboretum_harristeeter" };
       try {
         var soc0 = JSON.parse(localStorage.getItem(SOCIAL_KEY) || "null");
         if (soc0) {
@@ -13490,9 +13629,11 @@ Answer: Augusta</pre>
         v.classList.toggle("on", player.vib);
         v.setAttribute("aria-pressed", player.vib ? "true" : "false");
       }
+        var aa = $("p-avatar-anim"); if (aa) { aa.value = (player && player.avatarAnim) || "float"; if (!aa.dataset.wired) { aa.dataset.wired = "1"; aa.addEventListener("change", function(){ if (!player) return; player.avatarAnim = aa.value; savePlayer(); paintPlayerHead(); }); } }
       function paintPlayerHead() {
         if (!player) return;
         $("p-head-icon").textContent = player.icon;
+        (function(){ var hi = $("p-head-icon"); if (!hi) return; var a = (player && player.avatarAnim) || "float"; var _cls = (!calmModeOn() && a !== "none") ? ("av-anim av-anim-" + a) : ""; var _b = (typeof borderById !== "undefined") ? borderById(player.borderId || "") : null; if (_b) _cls += " " + _b.cls; var _g = (typeof backgroundById !== "undefined") ? backgroundById(player.backgroundId || "") : null; if (_g) _cls += " " + _g.cls; hi.className = _cls.trim(); })();
         $("p-head-name").textContent = player.name;
         $("p-head-score").textContent = player.score + " pts";
         var tEl = $("p-head-title");
@@ -13519,6 +13660,26 @@ Answer: Augusta</pre>
              record already qualifies for (new icons added since their
              last visit, seasonal drops for this month, and so on). */
           checkCollection();
+          /* First-run coach: brand-new players get a one-time overlay
+             explaining Play Along vs Practice Solo. */
+          (function(){
+            var fresh = (player.nights||[]).length === 0 && !(player.lifeAnswered > 0) && !player.onboarded;
+            if (!fresh) return;
+            player.onboarded = true; savePlayer();
+            var ov = document.createElement("div");
+            ov.className = "overlay"; ov.id = "welcome-coach";
+            ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", "Welcome to Pour Decisions");
+            ov.innerHTML = '<div class="sheet" style="max-width:520px">' +
+              "<h2>🎉 Welcome to Pour Decisions!</h2>" +
+              "<p><strong>Two ways to play:</strong></p>" +
+              "<p>📺 <strong>Play along</strong> — pick the round Jeremy is running on the TV, then tap through each question with the room.</p>" +
+              "<p>🎯 <strong>Practice solo</strong> — pick any topic below and play by yourself. Great for warming up before the night starts.</p>" +
+              "<p>Your trophies, unlocks, and stats live on this phone.</p>" +
+              '<button class="btn gold" type="button" id="welcome-gotit" style="margin-top:.6em">Got it — let\'s play</button></div>';
+            document.body.appendChild(ov);
+            openOverlay("welcome-coach");
+            document.getElementById("welcome-gotit").addEventListener("click", function(){ closeOverlay("welcome-coach"); });
+          })();
         } else {
           $("player-join").hidden = false;
           $("player-play").hidden = true;
@@ -13816,7 +13977,7 @@ Answer: Augusta</pre>
         $("player-name-status").textContent = "";
         var icon = $("player-icon-btn").textContent || "🦊";
         if (player) { player.name = name; player.icon = icon; }
-        else player = { name: name, icon: icon, score: 0, right: 0, wrong: 0, sound: true, vib: true, trophies: {}, streak: 0, missRun: 0, nightDate: "", nightRight: 0, nights: [], collection: {}, celebrations: {}, sfxPacks: {}, titles: {}, titleId: "title-newcomer", celebration: "cel-classic", sfxPack: "snd-classic", bestStreak: 0, wins: 0, lifeAnswered: 0, lifeRight: 0, lifeWrong: 0, topicRight: {}, dropProgress: 0, bankedDrops: 0, catsPlayed: {}, nightScore: 0, bestNight: 0 };
+        else player = { name: name, icon: icon, score: 0, right: 0, wrong: 0, sound: true, vib: true, trophies: {}, streak: 0, missRun: 0, nightDate: "", nightRight: 0, nights: [], collection: {}, celebrations: {}, sfxPacks: {}, titles: {}, titleId: "title-newcomer", celebration: "cel-classic", sfxPack: "snd-classic", avatarAnim: "float", bestStreak: 0, wins: 0, lifeAnswered: 0, lifeRight: 0, lifeWrong: 0, topicRight: {}, dropProgress: 0, bankedDrops: 0, catsPlayed: {}, nightScore: 0, bestNight: 0 };
         savePlayer();
         paintPlayerEntry();
         openPlayer();
@@ -13993,6 +14154,68 @@ Answer: Augusta</pre>
           facebookPlayerTrophy(id);
         }
       }
+      function renderConstellation(list, fam, inFam, unlocked) {
+        var NS = "http://www.w3.org/2000/svg";
+        var W = 360, H = 150;
+        var svg = document.createElementNS(NS, "svg");
+        svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+        svg.setAttribute("class", "constel");
+        svg.setAttribute("role", "img");
+        svg.setAttribute("aria-label", fam.label + " constellation");
+        var title = document.createElementNS(NS, "text");
+        title.setAttribute("x", 14); title.setAttribute("y", 22);
+        title.setAttribute("class", "con-label");
+        title.textContent = fam.label;
+        svg.appendChild(title);
+        var n = inFam.length;
+        function pos(i) {
+          var x = n === 1 ? W / 2 : 34 + i * ((W - 68) / (n - 1));
+          var y = 74 + 30 * Math.sin(i * 2.3 + fam.key.length * 1.7);
+          return [x, y];
+        }
+        var lit = inFam.map(function (tr) { return !!unlocked[tr.id]; });
+        for (var i = 0; i < n - 1; i++) {
+          var a = pos(i), b = pos(i + 1);
+          var ln = document.createElementNS(NS, "line");
+          ln.setAttribute("x1", a[0]); ln.setAttribute("y1", a[1]);
+          ln.setAttribute("x2", b[0]); ln.setAttribute("y2", b[1]);
+          ln.setAttribute("class", "con-line" + ((lit[i] && lit[i + 1]) ? " lit" : ""));
+          svg.appendChild(ln);
+        }
+        var calm = (typeof calmModeOn === "function") && calmModeOn();
+        inFam.forEach(function (tr, i) {
+          var p = pos(i);
+          var g = document.createElementNS(NS, "g");
+          g.setAttribute("class", "con-node" + (lit[i] ? " lit" : " dim") + (lit[i] && !calm ? " con-twinkle" : ""));
+          g.setAttribute("tabindex", "0");
+          g.setAttribute("role", "button");
+          g.setAttribute("aria-label", tr.name + (lit[i] ? " (unlocked)" : " (locked)"));
+          var halo = document.createElementNS(NS, "circle");
+          halo.setAttribute("cx", p[0]); halo.setAttribute("cy", p[1]); halo.setAttribute("r", 22);
+          halo.setAttribute("class", "halo");
+          halo.style.display = lit[i] ? "" : "none";
+          g.appendChild(halo);
+          var disc = document.createElementNS(NS, "circle");
+          disc.setAttribute("cx", p[0]); disc.setAttribute("cy", p[1]); disc.setAttribute("r", 15);
+          disc.setAttribute("class", "disc");
+          g.appendChild(disc);
+          var em = document.createElementNS(NS, "text");
+          em.setAttribute("x", p[0]); em.setAttribute("y", p[1] + 7);
+          em.setAttribute("class", "emo");
+          em.textContent = tr.icon || "🏆";
+          g.appendChild(em);
+          var nm = document.createElementNS(NS, "text");
+          nm.setAttribute("x", p[0]); nm.setAttribute("y", p[1] + 32);
+          nm.setAttribute("class", "con-name");
+          nm.textContent = (tr.name || "").slice(0, 14);
+          g.appendChild(nm);
+          function open() { openBadgeDetail(trophyDetail("player", tr)); }
+          g.addEventListener("click", open);
+          g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+          svg.appendChild(g);
+        });
+        list.appendChild(svg);
+      }
       function renderPlayerTrophies() {
         if (!player) return;
         var unlocked = player.trophies || {};
@@ -14001,6 +14224,14 @@ Answer: Augusta</pre>
           " unlocked — your shelf lives on this phone and carries over from night to night.";
         var list = $("player-trophy-list");
         list.innerHTML = "";
+        var _tview = (player && player.trophyView) || "stars";
+        (function(){ var tr = document.createElement("div"); tr.className = "view-toggle";
+          [["stars","🌌 Stars"],["list","📋 List"]].forEach(function(v){
+            var b = document.createElement("button"); b.type="button"; b.className = "btn small" + (_tview===v[0] ? " on" : "");
+            b.textContent = v[1]; b.setAttribute("aria-pressed", _tview===v[0] ? "true" : "false");
+            b.addEventListener("click", function(){ player.trophyView = v[0]; savePlayer(); renderPlayerTrophies(); });
+            tr.appendChild(b); });
+          list.appendChild(tr); })();
         /* The badge case, in its three families: Showing Up (badges
            for coming out, night after night), Topic Badges (playing
            across the topics), and Feats (how you played). */
@@ -14011,6 +14242,13 @@ Answer: Augusta</pre>
         ];
         var PT_FAM_OF = { firstnight: "nights", regular: "nights", devoted: "nights", fixture: "nights",
           wellrounded: "topics", explorer: "topics", topicmaster: "topics", deepcut: "topics", tripleflawless: "topics" };
+        if (_tview === "stars") {
+          PT_FAMS.forEach(function (fam) {
+            var inFam = PLAYER_TROPHIES.filter(function (tr) { return (PT_FAM_OF[tr.id] || "feats") === fam.key; });
+            if (!inFam.length) return;
+            renderConstellation(list, fam, inFam, unlocked);
+          });
+        } else {
         PT_FAMS.forEach(function (fam) {
           var inFam = PLAYER_TROPHIES.filter(function (tr) { return (PT_FAM_OF[tr.id] || "feats") === fam.key; });
           if (!inFam.length) return;
@@ -14054,6 +14292,7 @@ Answer: Augusta</pre>
           list.appendChild(card);
           });
         });
+        }
         var mw = $("topic-mastery-list");
         if (mw) {
           mw.innerHTML = "";
@@ -14726,7 +14965,8 @@ Answer: Augusta</pre>
         { id: "s-cue", tier: "seasonal", icon: "🍖", name: "Carolina 'Cue", hint: "Carolina set — get 5 Carolina Food Fight answers right", test: function (p) { return ((p.topicRight || {}).carolinafood || 0) >= 5; } },
         { id: "s-lion", tier: "seasonal", icon: "🦁", name: "Safari Lion", hint: "Play on a Safari-theme night", test: function () { return currentTheme === "safari"; } },
         { id: "s-pick", tier: "seasonal", icon: "⛏️", name: "Blocky Pick", hint: "Play on a Blocky Adventure-theme night", test: function () { return currentTheme === "blocky"; } }
-      ];
+      
+];
 
       /* ================= TOPIC MASTERY =================
          Cross-night mastery: correct answers in a category pile up
@@ -14993,6 +15233,14 @@ Answer: Augusta</pre>
         TITLES.forEach(function (c) {
           grant(player.titles, c, "🎁 New title unlocked", "Title — equip it in My Collection to wear it under your name.", "Title");
         });
+        if (!player.borders) player.borders = {};
+        if (!player.backgrounds) player.backgrounds = {};
+        AVATAR_BORDERS.forEach(function (c) {
+          grant(player.borders, c, "🎁 New avatar border unlocked", "Border — equip it in My Collection to frame your avatar.", "Avatar Border");
+        });
+        AVATAR_BACKGROUNDS.forEach(function (c) {
+          grant(player.backgrounds, c, "🎁 New avatar background unlocked", "Background — equip it in My Collection to style your avatar.", "Avatar Background");
+        });
         if (changed) {
           savePlayer();
           paintPlayerHead();
@@ -15031,6 +15279,34 @@ Answer: Augusta</pre>
         for (var i = 0; i < TITLES.length; i++) if (TITLES[i].id === id) return TITLES[i];
         return null;
       }
+      /* ---------- Avatar Locker (Golf It! / Rocket League style) ----------
+         Cosmetic borders & backgrounds earned via achievements. Equipped in
+         My Collection; applied to the avatar in paintPlayerHead(). */
+      var AVATAR_BORDERS = [
+        { id: "b-bronze", icon: "🥉", name: "Bronze Ring", hint: "Finish your first trivia night", cls: "avb-bronze", test: function(p){ return (p.nights||[]).length >= 1; } },
+        { id: "b-silver", icon: "🥈", name: "Silver Ring", hint: "Win a trivia night", cls: "avb-silver", test: function(p){ return (p.wins||0) >= 1; } },
+        { id: "b-gold", icon: "🥇", name: "Gold Ring", hint: "Win 3 trivia nights", cls: "avb-gold", test: function(p){ return (p.wins||0) >= 3; } },
+        { id: "b-wine", icon: "🍷", name: "Wine Ring", hint: "Unlock 5 trophies", cls: "avb-wine", test: function(p){ return colTrophies(p) >= 5; } },
+        { id: "b-star", icon: "⭐", name: "Star Ring", hint: "Unlock 15 trophies", cls: "avb-star", test: function(p){ return colTrophies(p) >= 15; } },
+        { id: "b-diamond", icon: "💎", name: "Diamond Ring", hint: "Unlock 30 trophies", cls: "avb-diamond", test: function(p){ return colTrophies(p) >= 30; } },
+        { id: "b-streak", icon: "🔥", name: "Hot Streak Ring", hint: "Reach a 5-answer streak", cls: "avb-streak", test: function(p){ return (p.bestStreak||0) >= 5; } },
+        { id: "b-ocean", icon: "🌊", name: "Ocean Ring", hint: "Get 10 Ocean Life answers right", cls: "avb-ocean", test: function(p){ return ((p.topicRight||{}).oceanlife||0) >= 10; } },
+        { id: "b-rose", icon: "🌹", name: "Rose Ring", hint: "Play 10 trivia nights", cls: "avb-rose", test: function(p){ return (p.nights||[]).length >= 10; } },
+        { id: "b-champion", icon: "👑", name: "Champion Ring", hint: "Win 10 trivia nights", cls: "avb-champion", test: function(p){ return (p.wins||0) >= 10; } }
+      ];
+      var AVATAR_BACKGROUNDS = [
+        { id: "bg-cellar", icon: "🍷", name: "Wine Cellar", hint: "Play 2 trivia nights", cls: "avbg-cellar", test: function(p){ return (p.nights||[]).length >= 2; } },
+        { id: "bg-night", icon: "🌌", name: "Night Sky", hint: "Get 50 answers right (all time)", cls: "avbg-night", test: function(p){ return (p.lifeRight||0) >= 50; } },
+        { id: "bg-sunset", icon: "🌅", name: "Sunset", hint: "Win 2 trivia nights", cls: "avbg-sunset", test: function(p){ return (p.wins||0) >= 2; } },
+        { id: "bg-ocean", icon: "🌊", name: "Ocean", hint: "Get 5 Ocean Life answers right", cls: "avbg-ocean", test: function(p){ return ((p.topicRight||{}).oceanlife||0) >= 5; } },
+        { id: "bg-pumpkin", icon: "🎃", name: "Pumpkin", hint: "Play 5 trivia nights", cls: "avbg-pumpkin", test: function(p){ return (p.nights||[]).length >= 5; } },
+        { id: "bg-frost", icon: "❄️", name: "Frost", hint: "Play 8 trivia nights", cls: "avbg-frost", test: function(p){ return (p.nights||[]).length >= 8; } },
+        { id: "bg-royal", icon: "👑", name: "Royal", hint: "Unlock 20 trophies", cls: "avbg-royal", test: function(p){ return colTrophies(p) >= 20; } }
+      ];
+      function borderById(id){ for (var i=0;i<AVATAR_BORDERS.length;i++) if (AVATAR_BORDERS[i].id===id) return AVATAR_BORDERS[i]; return null; }
+      function backgroundById(id){ for (var i=0;i<AVATAR_BACKGROUNDS.length;i++) if (AVATAR_BACKGROUNDS[i].id===id) return AVATAR_BACKGROUNDS[i]; return null; }
+      function equipBorder(item){ if(!player) return; player.borderId = item.id; savePlayer(); paintPlayerHead(); renderCollection(); }
+      function equipBackground(item){ if(!player) return; player.backgroundId = item.id; savePlayer(); paintPlayerHead(); renderCollection(); }
       /* ---------- Random drops ----------
          Every DROP_EVERY correct answers banks a surprise drop; drops
          open at the end-of-round unlock moment. The pool skips
@@ -15114,9 +15390,10 @@ Answer: Augusta</pre>
         var got = main.filter(function (c) { return !!owned[c.id]; }).length;
         var sAll = COLLECTIBLES.filter(function (c) { return c.tier === "seasonal"; });
         var sGot = sAll.filter(function (c) { return !!owned[c.id]; }).length;
-        var totalAll = COLLECTIBLES.length + CELEBRATIONS.length + SOUND_PACKS.length + TITLES.length;
+        var totalAll = COLLECTIBLES.length + CELEBRATIONS.length + SOUND_PACKS.length + TITLES.length + AVATAR_BORDERS.length + AVATAR_BACKGROUNDS.length;
         var gotAll = Object.keys(owned).length + Object.keys(player.celebrations || {}).length +
-          Object.keys(player.sfxPacks || {}).length + Object.keys(player.titles || {}).length;
+          Object.keys(player.sfxPacks || {}).length + Object.keys(player.titles || {}).length +
+          Object.keys(player.borders || {}).length + Object.keys(player.backgrounds || {}).length;
         $("col-sub").textContent = player.icon + " " + player.name + " · " + gotAll + " of " + totalAll + " unlockables" +
           " (icons " + got + "/" + main.length + " · seasonal " + sGot + "/" + sAll.length + ") · Nights won: " + (player.wins || 0) +
           ". Your collection lives on this phone only — it doesn't sync to other devices. Tap anything you've earned to equip it.";
@@ -15203,6 +15480,8 @@ Answer: Augusta</pre>
         renderEquipSection(wrap, "🎉 Celebrations", "#e2a63d", CELEBRATIONS, player.celebrations || {}, player.celebration || "cel-classic", equipCelebration);
         renderEquipSection(wrap, "🔊 Sound Packs", "#7ec8e3", SOUND_PACKS, player.sfxPacks || {}, player.sfxPack || "snd-classic", equipSfxPack);
         renderEquipSection(wrap, "🏷️ Titles — worn under your name", "#c39bd3", TITLES, player.titles || {}, player.titleId || "title-newcomer", equipTitle);
+        renderEquipSection(wrap, "🖼️ Avatar Borders — frame your icon", "#ffd700", AVATAR_BORDERS, player.borders || {}, player.borderId || "", equipBorder);
+        renderEquipSection(wrap, "🎨 Avatar Backgrounds — style your icon", "#7ec8e3", AVATAR_BACKGROUNDS, player.backgrounds || {}, player.backgroundId || "", equipBackground);
       }
       /* Celebrations & sound packs render like the icon tiers, except
          "equipped" is an id (not the icon character) and equipping one
@@ -15264,9 +15543,10 @@ Answer: Augusta</pre>
         { id: "safari", icon: "🦁", name: "Safari" },
         { id: "blocky", icon: "🧱", name: "Blocky Adventure" },
         { id: "shamrock", icon: "☘️", name: "Shamrock" },
-        { id: "valentine", icon: "💘", name: "Valentine's" }
+        { id: "valentine", icon: "💘", name: "Valentine's" },
+        { id: "ocean", icon: "🌊", name: "Ocean" }
       ];
-      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e" };
+      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824" };
       var currentTheme = "default";
       function setTheme(id) {
         currentTheme = id;
@@ -15313,6 +15593,7 @@ Answer: Augusta</pre>
         else if (currentTheme === "blocky") items = ["🧱", "⛏️", "💎", "🧱", "⛏️", "💎", "🧱", "⛏️"];
         else if (currentTheme === "shamrock") items = ["🍀", "☘️", "🍀", "🌈", "☘️", "🪙", "🍀", "☘️", "🍀", "🌈"];
         else if (currentTheme === "valentine") items = ["💗", "💘", "🩷", "💗", "💕", "🌹", "💗", "🩷", "💘", "💗"];
+        else if (currentTheme === "ocean") items = ["🐠", "🫧", "🐢", "🌊", "🐠", "🫧", "🐬", "🫧", "🐠", "🌊"];
         items.forEach(function (ch) {
           var s = document.createElement("span");
           s.className = "fx-item" + (currentTheme === "halloween" ? " bat" : "");
@@ -16778,6 +17059,17 @@ Answer: Augusta</pre>
       paintSettings();
       paintSfx();
       renderHostPicker();
+      /* Visit counter: per-device page-visit count, $0, no backend. */
+      (function(){
+        var n = 0;
+        try {
+          n = parseInt(localStorage.getItem("pourDecisions.visits.v1") || "0", 10) || 0;
+          n++;
+          localStorage.setItem("pourDecisions.visits.v1", String(n));
+        } catch (e) { n = 0; }
+        var el = document.getElementById("visit-count");
+        if (el && n > 0) el.textContent = "👋 " + n + (n === 1 ? " visit" : " visits") + " on this device";
+      })();
     </script>
   </body>
 </html>
