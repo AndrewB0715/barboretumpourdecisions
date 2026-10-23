@@ -646,6 +646,24 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .view-toggle .btn.on { outline: 2px solid #ffd700; }
       .patch-notes { font-size: .85rem; color: var(--dim, #aaa); margin: .4em 0 0; text-align: left; max-width: 420px; margin-left: auto; margin-right: auto; } .patch-notes summary { cursor: pointer; }
       .visit-count { font-size: .8rem; color: var(--faint, #999); margin: .2em 0 0; }
+            .round-opener .opener-card {
+        text-align: center; padding: 3rem 2rem; max-width: 560px;
+        animation: opener-in .7s ease-out;
+      }
+      @keyframes opener-in {
+        from { transform: scale(.85); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      .opener-kicker { font-size: 1rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold, #ffd166); margin-bottom: .6rem; }
+      .opener-title { font-size: 2.6rem; font-weight: 900; line-height: 1.15; margin-bottom: 1rem;
+        background: linear-gradient(180deg, #fff, var(--gold, #ffd166));
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      .opener-teams { font-size: 1.1rem; color: var(--dim, #aaa); margin-bottom: 1.2rem; }
+      .opener-hint { font-size: .9rem; color: var(--faint, #888); animation: opener-pulse 1.4s ease-in-out infinite; }
+      @keyframes opener-pulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+      @media (prefers-reduced-motion: reduce) {
+        .round-opener .opener-card, .opener-hint { animation: none; }
+      }
       .menu-subgroup-label { font-size: .85rem; font-weight: 700; color: var(--dim, #aaa); margin: .7em 0 .3em; }
       .av-anim { display: inline-block; }
       .av-anim-float { animation: avFloat 3.2s ease-in-out infinite; }
@@ -3261,7 +3279,7 @@ Answer: Augusta</pre>
           <input class="builder-input" id="hcc-soc-fb" maxlength="300" placeholder="https://www.facebook.com/barboretum" />
         </label>
         <label class="builder-label">Instagram page link
-          <input class="builder-input" id="hcc-soc-ig" maxlength="300" placeholder="https://www.instagram.com/barboretum" />
+          <input class="builder-input" id="hcc-soc-ig" maxlength="300" placeholder="https://www.instagram.com/thebarboretum" />
         </label>
         <p class="builder-note" id="hcc-soc-status" role="status">Saved on this device as you type.</p>
         <h3 class="builder-h3">♿ Room &amp; Sound</h3>
@@ -7648,7 +7666,32 @@ Answer: Augusta</pre>
         auditNoteRound();
         pr.list.forEach(function (it) { nightQuestions.push({ q: it.q, catName: it.catName || pr.catName }); });
         if (teams.length >= MAX_TEAMS) unlockTrophy("fullhouse");
-        showQuestion();
+        showRoundOpener(pr, function () { showQuestion(); });
+      }
+      /* Round opener: animated title card + fanfare before question 1. */
+      function showRoundOpener(pr, done) {
+        var reduced = (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) || (typeof calmModeOn === "function" && calmModeOn());
+        var ov = document.createElement("div");
+        ov.className = "overlay round-opener"; ov.id = "round-opener";
+        ov.setAttribute("role", "dialog"); ov.setAttribute("aria-label", "Round starting");
+        var teamLine = teams.length ? teams.map(function (tm) { return tm.icon + " " + tm.name; }).join("  •  ") : "";
+        ov.innerHTML = '<div class="opener-card">' +
+          '<div class="opener-kicker">🍷 Barboretum Trivia</div>' +
+          '<div class="opener-title">' + pr.catName + '</div>' +
+          (teamLine ? '<div class="opener-teams">' + teamLine + '</div>' : "") +
+          '<div class="opener-hint">tap to begin</div></div>';
+        document.body.appendChild(ov);
+        requestAnimationFrame(function () { ov.classList.add("open"); });
+        playFanfare();
+        var finished = false;
+        function finish() {
+          if (finished) return; finished = true;
+          ov.classList.remove("open");
+          setTimeout(function () { if (ov.parentNode) ov.parentNode.removeChild(ov); }, 400);
+          done();
+        }
+        ov.addEventListener("click", finish);
+        setTimeout(finish, reduced ? 800 : 3800);
       }
 
       function showQuestion() {
@@ -7874,6 +7917,36 @@ Answer: Augusta</pre>
          the 🔺 Ring the Triangle button in the Host Control Center —
          but on its own, it only plays when a round ends. */
       var chantTimer = null;
+      /* Round-opening fanfare: an original rising sting.
+         Brass-style swells climbing to a triumphant chord hit. */
+      function playFanfare() {
+        if (!ensureSfx()) return;
+        var t = sfxCtx.currentTime + 0.01;
+        var rise = [48, 52, 55, 60, 64]; /* C E G C E */
+        rise.forEach(function (m, i) {
+          var o = sfxCtx.createOscillator(); o.type = "sawtooth";
+          o.frequency.value = mtof(m);
+          var g = sfxCtx.createGain();
+          g.gain.setValueAtTime(0, t + i * 0.12);
+          g.gain.linearRampToValueAtTime(0.06, t + i * 0.12 + 0.08);
+          g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.12 + 0.5);
+          o.connect(g); g.connect(sfxOut());
+          o.start(t + i * 0.12); o.stop(t + i * 0.12 + 0.6);
+        });
+        /* final chord hit */
+        var th = t + rise.length * 0.12 + 0.05;
+        [60, 64, 67, 72].forEach(function (m) {
+          var o = sfxCtx.createOscillator(); o.type = "sawtooth";
+          o.frequency.value = mtof(m);
+          var g = sfxCtx.createGain();
+          g.gain.setValueAtTime(0, th);
+          g.gain.linearRampToValueAtTime(0.05, th + 0.05);
+          g.gain.exponentialRampToValueAtTime(0.001, th + 1.6);
+          o.connect(g); g.connect(sfxOut());
+          o.start(th); o.stop(th + 1.7);
+        });
+        triangleRing(th, 0.08);
+      }
       /* Real triangle ring: a bar triangle is bright metal with
          inharmonic partials and a long shimmer — not a pure tone. */
       function triangleRing(t, peak) {
@@ -13380,7 +13453,7 @@ Answer: Augusta</pre>
          The host can still change them in the Host Control Center if
          the handle ever changes; edits save on this device. */
       var SOCIAL_KEY = "pourDecisions.social.v1";
-      var social = { handle: "@barboretum", fb: "https://www.facebook.com/share/g/18W3NDLKAo/", ig: "https://www.instagram.com/barboretum_harristeeter" };
+      var social = { handle: "@barboretum", fb: "https://www.facebook.com/share/g/1Hq5dYa5n3/", ig: "https://www.instagram.com/thebarboretum" };
       try {
         var soc0 = JSON.parse(localStorage.getItem(SOCIAL_KEY) || "null");
         if (soc0) {
