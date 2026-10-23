@@ -14784,13 +14784,7 @@ Answer: Augusta</pre>
           var last = localStorage.getItem("pourDecisions.lastVersion.v1");
           if (last !== APP_VERSION) {
             localStorage.setItem("pourDecisions.lastVersion.v1", APP_VERSION);
-            if (last !== null) {
-              // Not first visit - show what's new
-              setTimeout(function() {
-                renderWhatsNew();
-                openOverlay("overlay-whatsnew");
-              }, 2500);
-            }
+            // Auto-popup disabled - use the What's New button manually
           }
         } catch(e) {}
       })();
