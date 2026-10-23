@@ -17834,13 +17834,27 @@ $("btn-start").addEventListener("click", function () {
       /* Hide the loading spinner once the app is ready */
       (function hideLoader() {
         var loader = document.getElementById("app-loader");
+        var fill = document.getElementById("load-fill");
+        if (fill) fill.style.width = "100%";
         if (loader) {
           // Wait a beat for first paint, then fade out
           setTimeout(function() {
             loader.classList.add("hidden");
             setTimeout(function() { loader.remove(); }, 500);
-          }, 800);
+          }, 600);
         }
+      })();
+      /* Animate the progress bar while the app loads */
+      (function loadProgress() {
+        var fill = document.getElementById("load-fill");
+        if (!fill) return;
+        var pct = 10;
+        fill.style.width = "10%";
+        var iv = setInterval(function() {
+          pct = Math.min(pct + Math.random() * 25, 90);
+          fill.style.width = pct + "%";
+          if (pct >= 90 || !document.getElementById("app-loader")) clearInterval(iv);
+        }, 300);
       })();
     </script>
   </body>
