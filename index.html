@@ -6881,23 +6881,26 @@ Answer: Augusta</pre>
       /* ================= QR CODE ================= */
       (function makeQR() {
         var box = $("qr-box");
-        try {
+        if (!box) return;
+        /* Branded join QR (Andrew's version with the wine glass).
+           Falls back to generated QR if the image is missing. */
+        var img = document.createElement("img");
+        img.src = "assets/qr-join.png";
+        img.alt = "Scan to join Barboretum Trivia";
+        img.className = "qr-branded";
+        img.onerror = function() {
+          box.innerHTML = "";
           if (typeof QRCode !== "undefined") {
-            box.innerHTML = "";
             new QRCode(box, {
               text: window.location.href,
               width: 232, height: 232,
-              colorDark: "#241019", colorLight: "#f8eedd",
-              correctLevel: QRCode.CorrectLevel.M
+              colorDark: "#241019", colorLight: "#f7f2e8"
             });
-          } else {
-            box.innerHTML = '<div class="qr-fallback">Point your phone camera at this page\u2019s link to open the game.</div>';
           }
-        } catch (e) {
-          box.innerHTML = '<div class="qr-fallback">Point your phone camera at this page\u2019s link to open the game.</div>';
-        }
+        };
+        box.innerHTML = "";
+        box.appendChild(img);
       })();
-
       /* ================= CATEGORIES ================= */
       function allQuestions() {
         var out = [];
