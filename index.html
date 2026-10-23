@@ -1015,6 +1015,18 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         --gold: #ff5d7e; --gold-soft: #ff93a9; --wine: #d81159; --wine-deep: #9c0d40;
         --green: #7fd08c;
       }
+      [data-theme="christmas"] {
+        --bg: #0a1a0a; --bg-2: #0e2410; --panel: #123318; --panel-2: #174020;
+        --line: #2c6e3c; --cream: #f2fbe9; --dim: #cdeeb9; --faint: #8fce97;
+        --gold: #ffd23e; --gold-soft: #ffe37e; --wine: #c41e3a; --wine-deep: #8b1428;
+        --green: #8fe388;
+      }
+      [data-theme="christmas"] body {
+        background:
+          radial-gradient(1100px 600px at 85% -10%, rgba(255, 210, 62, .14), transparent 60%),
+          radial-gradient(900px 700px at -10% 110%, rgba(196, 30, 58, .12), transparent 55%),
+          var(--bg);
+      }
       [data-theme="safari"] body {
         background:
           radial-gradient(1100px 600px at 85% -10%, rgba(232, 177, 60, .20), transparent 60%),
@@ -9970,7 +9982,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 66 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 : style === "christmas" ? 96 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -9985,6 +9997,7 @@ Answer: Augusta</pre>
         else if (style === "blocky") blockyBeat(t, spb);
         else if (style === "ocean") oceanBeat(t, spb);
         else if (style === "independence") independenceBeat(t, spb);
+        else if (style === "christmas") christmasBeat(t, spb);
         else if (style === "shamrock") shamrockBeat(t, spb);
         else if (style === "valentine") valentineBeat(t, spb);
         else if (style === "nordic") nordicBeat(t, spb);
@@ -10103,6 +10116,28 @@ Answer: Augusta</pre>
         bellTick(t + spb * 0.5, false);     /* …and the off-beat */
         if (musicBeat === 1 || musicBeat === 3) boxNote(ch.tones[(musicBar + musicBeat) % ch.tones.length] + 12, t);
         if (musicBeat === 0 && musicBar % 2 === 1) boxNote(ch.tones[1] + 24, t + spb * 0.5);
+      }
+      var CHRISTMAS_CHORDS = [
+        { bass: 36, tones: [48, 55, 60, 64] }, /* C  */
+        { bass: 41, tones: [48, 53, 57, 60] }, /* F  */
+        { bass: 43, tones: [50, 55, 59, 62] }, /* G  */
+        { bass: 36, tones: [48, 55, 60, 64] }  /* C  */
+      ];
+      /* Christmas: a warm holiday waltz. Jingle bells on every beat,
+         music-box melody twinkling above, soft pads like falling snow. */
+      function christmasBeat(t, spb) {
+        var ch = CHRISTMAS_CHORDS[musicBar % CHRISTMAS_CHORDS.length];
+        if (musicBeat === 0) { padChord(ch.tones, t, spb * 4 + 0.1); bassNote(ch.bass, t, spb * 1.8); }
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.5);
+        bellTick(t, true);
+        bellTick(t + spb * 0.33, false);
+        bellTick(t + spb * 0.66, false);
+        /* Music-box melody: gentle descending phrase */
+        var mel = [72, 71, 69, 67, 69, 71, 72];
+        if (musicBeat < 4) {
+          var note = mel[(musicBar * 4 + musicBeat) % mel.length];
+          boxNote(note, t);
+        }
       }
       /* Safari, refined: a grand-tour expedition — wide pads, a
          soaring lead phrase that travels bar to bar, gentle distant
@@ -16173,9 +16208,10 @@ Answer: Augusta</pre>
         { id: "shamrock", icon: "☘️", name: "Shamrock" },
         { id: "valentine", icon: "💘", name: "Valentine's" },
         { id: "ocean", icon: "🌊", name: "Ocean" },
-        { id: "independence", icon: "🇺🇸", name: "Independence" }
+        { id: "independence", icon: "🇺🇸", name: "Independence" },
+        { id: "christmas", icon: "🎄", name: "Christmas" }
       ];
-      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824", independence: "#0a0a1e" };
+      var THEME_COLORS = { default: "#160a10", halloween: "#12061f", fall: "#170b04", winter: "#060f22", safari: "#171003", blocky: "#0d1a12", shamrock: "#06230f", valentine: "#20040e", ocean: "#061824", independence: "#0a0a1e", christmas: "#0a1a0a" };
       var currentTheme = "default";
       function setTheme(id) {
         currentTheme = id;
