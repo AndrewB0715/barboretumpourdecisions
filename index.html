@@ -1629,6 +1629,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             <div class="title-actions">
               <button class="btn music-btn" type="button" aria-pressed="false">🎵 Music: Off</button>
               <button class="btn sfx-btn on" type="button" aria-pressed="true">🔊 Sound: On</button>
+              <button class="btn" id="btn-test-chant" type="button">🔺🎤 Test Triangle + WOOOOO</button>
             </div>
             <div class="theme-picker" id="theme-picker-quick" role="group" aria-label="Night theme" style="margin-top:.4rem"></div>
           </div>
@@ -17606,6 +17607,8 @@ $("btn-start").addEventListener("click", function () {
       }
       $("hcc-signature").addEventListener("click", function () { trad.signature = !trad.signature; saveTrad(); paintTradToggles(); });
       $("hcc-triangle").addEventListener("click", function () { flashChant(); });
+      var testChantBtn = $("btn-test-chant");
+      if (testChantBtn) testChantBtn.addEventListener("click", function () { flashChant(); });
       $("hcc-prizehide").addEventListener("click", function () { setPrizeHide(!trad.prizeHide); });
       $("prize-hide-toggle").addEventListener("click", function () { setPrizeHide(!trad.prizeHide); });
       $("hcc-defenders").addEventListener("input", function () { trad.defenders = this.value.trim(); saveTrad(); });
