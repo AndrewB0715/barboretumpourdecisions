@@ -2502,7 +2502,9 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       <div class="sheet">
         <h2 id="help-h">How to run this at the bar</h2>
         <p class="sheet-sub">Everything runs off one host device on the bar Wi-Fi — an iPad, a Windows laptop, or a Mac all work. No installs, no accounts.</p>
-        <h3 class="builder-h3">🧭 Where Everything Is</h3>
+        <div class="builder-row"><button class="btn small" data-close="overlay-help" type="button">✖ Close this guide</button></div>
+        <p class="builder-note"><strong>⚡ Quick start — the whole night in 6 steps:</strong> 1) Put it on the TV. 2) Open 🛟 Host Control Center and tap 🔎 Preflight Check. 3) Add teams in 👥 Set Up Teams. 4) Tap ▶ Start the Game and pick a round. 5) Read aloud, tap Reveal (or press R), tap ✓ for every team that got it, then Next Question. 6) Finish with 🍷 Final Pour, then 🌙 End the Night. Jump to: <a href="#help-where">Where Everything Is</a> · <a href="#help-hosting-steps">Hosting Steps</a> · <a href="#help-jeremy-guide">Jeremy's Host Guide</a> · <a href="#help-vs-kahoot">vs Kahoot</a> · <a href="#help-take-home">Take It Home</a>.</p>
+        <h3 class="builder-h3" id="help-where">🧭 Where Everything Is</h3>
         <p class="builder-note">Every host tool, in the exact words on its button, and where that button lives. Nothing here is more than two taps from the title screen.</p>
         <ul class="steps">
           <li><strong>▶ Start the Game</strong> — title screen, ▶ Play. Opens the round picker: the topic search, the 🎛 Format control, and every round.</li>
@@ -2521,7 +2523,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <li><strong>📱 Join as a Player</strong> — title screen, ▶ Play: the guest phone view, with 📖 How Playing Along Works inside it.</li>
           <li><strong>🧭 Quick Tour</strong> — title screen, up top under “🧭 New here? Start with these two,” beside ❓ How to Play &amp; Run the Night.</li>
         </ul>
-        <h3 class="builder-h3">🎤 Jeremy's Hosting Steps</h3>
+        <h3 class="builder-h3" id="help-hosting-steps">🎤 Jeremy's Hosting Steps</h3>
         <p class="builder-note">The whole night, in order. Short version first — the details live further down this page and on the ⬇ Host Run Sheet.</p>
         <p class="builder-note"><strong>Part 1 — Run the night</strong></p>
         <ol class="steps">
@@ -2561,6 +2563,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         <ul class="steps">
           <li>Players tap through on their phones, marking themselves honestly after you reveal.</li>
           <li><strong>100 points</strong> per correct answer, plus a <strong>speed bonus</strong> (up to +50) for answering fast.</li>
+          <li><strong>Expert topics</strong> pay a <strong>solo bonus (+50)</strong> when one team plays alone.</li>
           <li>Phone scores are personal (trophies, streaks, unlocks). The <strong>team score on the TV</strong> wins the night.</li>
           <li>Nothing syncs between phones and the TV. That is by design.</li>
         </ul>
@@ -2591,7 +2594,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <button class="btn small btn-follow-share-fb" type="button">f Share this app on Facebook</button>
           <button class="btn small btn-follow-copy-link" type="button">📋 Copy the app link (for Instagram)</button>
         </div>
-        <h3 class="builder-h3">📱 Take It Home</h3>
+        <h3 class="builder-h3" id="help-take-home">📱 Take It Home</h3>
         <p class="builder-note">What to tell guests who want their trophies at home: their trophies, collection, and passport live on <strong>their own phone</strong> — adding the app to the home screen just gives it a front door. Two short step lists cover nearly every phone:</p>
         <p class="builder-note"><strong>iPhone (Safari)</strong></p>
         <ol class="steps">
@@ -3413,6 +3416,8 @@ Answer: Augusta</pre>
       <div class="sheet">
         <h2 id="ph-h">📖 How Playing Along Works</h2>
         <p class="sheet-sub">The short version, the same way Jeremy explains it from the bar:</p>
+        <div class="builder-row"><button class="btn small" data-close="overlay-player-help" type="button">✖ Close this guide</button></div>
+        <p class="builder-note"><strong>⚡ Quick start:</strong> 1) Watch the TV for the question. 2) Pick the same round here and tap your answer. 3) After the host reveals, tap Show the Answer and mark ✓ Got it or ✗ Missed it, honestly. 4) Your score, trophies, and passport save on this phone. That's it — the rest below is detail.</p>
         <ol class="steps">
           <li><strong>Watch the TV.</strong> That's where the host runs the game — the questions, the timer, and the official team scores all live up there.</li>
           <li><strong>Your phone is your own scorecard.</strong> Pick the same round the host is running, tap your answer (A / B / C / D), and after the host reveals the answer on the TV, tap <strong>Show the Answer</strong> here and mark yourself honestly: ✓ Got it or ✗ Missed it.</li>
@@ -4933,30 +4938,43 @@ Answer: Augusta</pre>
           tagline: "Breeds, famous pets, and the animals who own us — a round for everyone who has fur on their clothes.",
           cue: "For pet people",
           questions: [            { q: "🦜 What are the two parrots at the Salty Dog T-shirt shop called?", a: "Roscoe and Earnest", choices: ["Roscoe and Earnest", "Jake and Elwood", "Sunny and Cher", "Coco and Pepper"], correct: 0 },
-            { q: "🦎 What do you call a lizard that can change its color?", a: "Chameleon", choices: ["Chameleon", "Gecko", "Iguana", "Skink"], correct: 0 },
-            { q: "🦀 Can you keep a lobster as a pet?", a: "Yes, in a saltwater aquarium", choices: ["Yes, in a saltwater aquarium", "No, it's illegal everywhere", "Only in Maine", "Only restaurants can"], correct: 0 },
+            { q: "🦎 What do you call a lizard that can change its color?", pet: "lizard", a: "Chameleon", choices: ["Chameleon", "Gecko", "Iguana", "Skink"], correct: 0 },
+            { q: "🦀 Can you keep a lobster as a pet?", pet: "shell", a: "Yes, in a saltwater aquarium", choices: ["Yes, in a saltwater aquarium", "No, it's illegal everywhere", "Only in Maine", "Only restaurants can"], correct: 0 },
             { q: "🦜 How long can a large parrot live?", a: "50-80 years", choices: ["50-80 years", "10-15 years", "20-25 years", "5-10 years"], correct: 0 },
-            { q: "🦎 Which is the largest lizard in the world?", a: "Komodo dragon", choices: ["Komodo dragon", "Monitor lizard", "Gila monster", "Iguana"], correct: 0 },
+            { q: "🦎 Which is the largest lizard in the world?", pet: "lizard", a: "Komodo dragon", choices: ["Komodo dragon", "Monitor lizard", "Gila monster", "Iguana"], correct: 0 },
 
-            { q: "Which dog breed is famous for its blue-black tongue? 👅", a: "The Chow Chow", choices: ["The Chow Chow", "Their paw pads", "The Dalmatian", "The Boxer"], correct: 0 },
-            { q: "Which breed ended the Lab's 31-year run atop the AKC list in 2022? 🐶", a: "The French Bulldog", choices: ["The Golden Retriever", "The German Shepherd", "The French Bulldog", "The Poodle"], correct: 2 },
-            { q: "A group of cats living together is sometimes called what? 🐱", a: "A clowder", choices: ["A clowder", "A pack", "A herd", "The betta"], correct: 0 },
-            { q: "Which breed earned the nickname 'wiener dog' for its long body and short legs? 🌭", a: "The Dachshund", choices: ["The Dachshund", "The Corgi", "The French Bulldog", "The Basset Hound"], correct: 0 },
-            { q: "What is a baby cat called? Easy points! 🐱", a: "A kitten", choices: ["A cub", "A kitten", "The Sphynx", "A pup"], correct: 1 },
-            { q: "Which sense is strongest in dogs compared to humans? 👃", a: "Smell", choices: ["Hearing", "Smell", "An Akita", "Taste"], correct: 1 },
-            { q: "Hachiko waited at a train station for years — which loyal breed was he? 🐕", a: "An Akita", choices: ["An Akita", "A Shiba Inu", "A Husky", "The Dachshund"], correct: 0 },
-            { q: "Which cat breed is famously hairless? 🐱", a: "The Sphynx", choices: ["The Sphynx", "Smell", "The Persian", "The Maine Coon"], correct: 0 },
-            { q: "Which is the largest domestic cat breed — dog-sized, practically? 🐱", a: "The Maine Coon", choices: ["The Bengal", "The Maine Coon", "Smell", "The Ragdoll"], correct: 1 },
+            { q: "Which dog breed is famous for its blue-black tongue? 👅", pet: "dog", a: "The Chow Chow", choices: ["The Chow Chow", "Their paw pads", "The Dalmatian", "The Boxer"], correct: 0 },
+            { q: "Which breed ended the Lab's 31-year run atop the AKC list in 2022? 🐶", pet: "dog", a: "The French Bulldog", choices: ["The Golden Retriever", "The German Shepherd", "The French Bulldog", "The Poodle"], correct: 2 },
+            { q: "A group of cats living together is sometimes called what? 🐱", pet: "cat", a: "A clowder", choices: ["A clowder", "A pack", "A herd", "The betta"], correct: 0 },
+            { q: "Which breed earned the nickname 'wiener dog' for its long body and short legs? 🌭", pet: "dog", a: "The Dachshund", choices: ["The Dachshund", "The Corgi", "The French Bulldog", "The Basset Hound"], correct: 0 },
+            { q: "What is a baby cat called? Easy points! 🐱", pet: "cat", a: "A kitten", choices: ["A cub", "A kitten", "The Sphynx", "A pup"], correct: 1 },
+            { q: "Which sense is strongest in dogs compared to humans? 👃", pet: "dog", a: "Smell", choices: ["Hearing", "Smell", "An Akita", "Taste"], correct: 1 },
+            { q: "Hachiko waited at a train station for years — which loyal breed was he? 🐕", pet: "dog", a: "An Akita", choices: ["An Akita", "A Shiba Inu", "A Husky", "The Dachshund"], correct: 0 },
+            { q: "Which cat breed is famously hairless? 🐱", pet: "cat", a: "The Sphynx", choices: ["The Sphynx", "Smell", "The Persian", "The Maine Coon"], correct: 0 },
+            { q: "Which is the largest domestic cat breed — dog-sized, practically? 🐱", pet: "cat", a: "The Maine Coon", choices: ["The Bengal", "The Maine Coon", "Smell", "The Ragdoll"], correct: 1 },
             { q: "Which pet fish is also called a Siamese fighting fish? 🐠", a: "The betta", choices: ["The guppy", "The betta", "The French Bulldog", "The angelfish"], correct: 1 },
-            { q: "Dogs sweat mainly through which part of the body? 🐾", a: "Their paw pads", choices: ["Their tongues", "Their paw pads", "Their ears", "The Maine Coon"], correct: 1 },
+            { q: "Dogs sweat mainly through which part of the body? 🐾", pet: "dog", a: "Their paw pads", choices: ["Their tongues", "Their paw pads", "Their ears", "The Maine Coon"], correct: 1 },
             { q: "What is a female horse called? 🐴", a: "A mare", choices: ["A mare", "The Dachshund", "A filly at any age", "A doe"], correct: 0 },
-            { q: "🐶 Which dog breed is often called the smartest in the world?", a: "Border Collie", choices: ["Border Collie", "Poodle", "German Shepherd", "Golden Retriever"], correct: 0 },
-            { q: "🐱 Which cat breed is famous for blue eyes and color-point fur?", a: "Siamese", choices: ["Siamese", "Persian", "Bengal", "Ragdoll"], correct: 0 },
-            { q: "🦎 Which popular pet lizard is named for the spiky 'beard' under its chin?", a: "Bearded dragon", choices: ["Bearded dragon", "Chameleon", "Iguana", "Anole"], correct: 0 },
-            { q: "🦎 Which pet lizard can drop its tail to escape danger?", a: "Leopard gecko", choices: ["Leopard gecko", "Bearded dragon", "Skink", "Monitor lizard"], correct: 0 },
-            { q: "🐸 Which smiling salamander pet can regrow lost limbs?", a: "Axolotl", choices: ["Axolotl", "Newt", "Tree frog", "Salamander"], correct: 0 },
-            { q: "🦔 Which small spiky pet curls into a ball when scared?", a: "Hedgehog", choices: ["Hedgehog", "Porcupine", "Hamster", "Sugar glider"], correct: 0 },
-            { q: "🦀 Why do pet hermit crabs need spare shells?", a: "They move into bigger ones as they grow", choices: ["They move into bigger ones as they grow", "They eat them", "They trade them", "They hide food in them"], correct: 0 },
+            { q: "🐶 Which dog breed is often called the smartest in the world?", pet: "dog", a: "Border Collie", choices: ["Border Collie", "Poodle", "German Shepherd", "Golden Retriever"], correct: 0 },
+            { q: "🐱 Which cat breed is famous for blue eyes and color-point fur?", pet: "cat", a: "Siamese", choices: ["Siamese", "Persian", "Bengal", "Ragdoll"], correct: 0 },
+            { q: "🦎 Which popular pet lizard is named for the spiky 'beard' under its chin?", pet: "lizard", a: "Bearded dragon", choices: ["Bearded dragon", "Chameleon", "Iguana", "Anole"], correct: 0 },
+            { q: "🦎 Which pet lizard can drop its tail to escape danger?", pet: "lizard", a: "Leopard gecko", choices: ["Leopard gecko", "Bearded dragon", "Skink", "Monitor lizard"], correct: 0 },
+            { q: "🐸 Which smiling salamander pet can regrow lost limbs?", pet: "exotic", a: "Axolotl", choices: ["Axolotl", "Newt", "Tree frog", "Salamander"], correct: 0 },
+            { q: "🦔 Which small spiky pet curls into a ball when scared?", pet: "exotic", a: "Hedgehog", choices: ["Hedgehog", "Porcupine", "Hamster", "Sugar glider"], correct: 0 },
+            { q: "🦀 Why do pet hermit crabs need spare shells?", pet: "shell", a: "They move into bigger ones as they grow", choices: ["They move into bigger ones as they grow", "They eat them", "They trade them", "They hide food in them"], correct: 0 },
+            { q: "🐱 What do cat lovers call it when a cat kneads its paws on you?", pet: "cat", a: "Making biscuits", choices: ["Making biscuits", "Purring practice", "Claw sharpening", "Dough rolling"], correct: 0 },
+            { q: "🐱 Why are calico cats almost always female?", pet: "cat", a: "Their coat colors ride on the X chromosome", choices: ["Their coat colors ride on the X chromosome", "Only females grow orange fur", "Males can't carry the gene", "It's a breeder's rule"], correct: 0 },
+            { q: "🐱 What do you call a group of kittens?", pet: "cat", a: "A kindle", choices: ["A kindle", "A clowder", "A prickle", "A pack"], correct: 0 },
+            { q: "🐶 Which dog breed is famous for not barking — it yodels instead?", pet: "dog", a: "Basenji", choices: ["Basenji", "Shiba Inu", "Beagle", "Whippet"], correct: 0 },
+            { q: "🐶 Which dog breed is the fastest, topping about 45 miles per hour?", pet: "dog", a: "Greyhound", choices: ["Greyhound", "Whippet", "Border Collie", "Dalmatian"], correct: 0 },
+            { q: "🐶 Dalmatian puppies are born looking what color, before their spots come in?", pet: "dog", a: "White", choices: ["White", "Black", "Spotted already", "Brown"], correct: 0 },
+            { q: "🦎 Which popular pet lizard eats plants — a true herbivore?", pet: "lizard", a: "Green iguana", choices: ["Green iguana", "Leopard gecko", "Bearded dragon", "Chameleon"], correct: 0 },
+            { q: "🦎 Most geckos have no eyelids — so how do they keep their eyes clean?", pet: "lizard", a: "They lick their eyes", choices: ["They lick their eyes", "They blink with a third lid", "They rub on rocks", "They never need to"], correct: 0 },
+            { q: "🦊 Which tiny desert fox has giant ears that dump heat and hear prey underground?", pet: "exotic", a: "Fennec fox", choices: ["Fennec fox", "Red fox", "Arctic fox", "Kit fox"], correct: 0 },
+            { q: "🐿️ Which little marsupial pet glides between trees on a skin flap called a patagium?", pet: "exotic", a: "Sugar glider", choices: ["Sugar glider", "Flying squirrel", "Hamster", "Chinchilla"], correct: 0 },
+            { q: "🐹 Which is the largest rodent in the world — a chill, swimming giant?", pet: "exotic", a: "Capybara", choices: ["Capybara", "Beaver", "Porcupine", "Marmot"], correct: 0 },
+            { q: "🦞 How does a lobster grow bigger than its hard shell allows?", pet: "shell", a: "It molts — sheds the old shell", choices: ["It molts — sheds the old shell", "Its shell stretches", "It grows a second shell", "It stops growing"], correct: 0 },
+            { q: "🦀 Why does a male fiddler crab wave its one giant claw?", pet: "shell", a: "To attract females", choices: ["To attract females", "To scare off birds", "To dig faster", "To keep balance"], correct: 0 },
 ]
         },
       {
@@ -5001,6 +5019,70 @@ Answer: Augusta</pre>
             { q: "🚗 Grand Tour Madagascar Special ('A Massive Hunt'): who drove the Bentley Continental GT?", a: "Jeremy Clarkson", choices: ["Jeremy Clarkson", "Richard Hammond", "James May", "The Stig"], correct: 0 },
             { q: "🚗 Grand Tour Madagascar Special: who drove the Ford Focus RS?", a: "Richard Hammond", choices: ["Richard Hammond", "Jeremy Clarkson", "James May", "Andy Wilman"], correct: 0 },
             { q: "🚗 Grand Tour Madagascar Special: who drove the Caterham?", a: "James May", choices: ["James May", "Jeremy Clarkson", "Richard Hammond", "The Stig"], correct: 0 },
+        ]
+      },
+      {
+        id: "usgovernment", name: "U.S. Government & Founding", icon: "🏛️",
+        tagline: "Three branches, two founding documents, one republic — the civics round.",
+        cue: "For citizens",
+        questions: [
+            { q: "🏛️ Which branch of government makes the laws?", a: "Legislative — Congress", choices: ["Legislative — Congress", "Executive — the President", "Judicial — the courts", "The states"], correct: 0 },
+            { q: "🏛️ Which branch carries out and enforces the laws?", a: "Executive — the President", choices: ["Executive — the President", "Legislative — Congress", "Judicial — the courts", "The military"], correct: 0 },
+            { q: "🏛️ Which branch interprets the laws — headed by the Supreme Court?", a: "Judicial", choices: ["Judicial", "Legislative", "Executive", "Federal"], correct: 0 },
+            { q: "🏛️ How many members sit in the U.S. House of Representatives?", a: "435", choices: ["435", "100", "535", "50"], correct: 0 },
+            { q: "🏛️ How many U.S. Senators are there in total?", a: "100 — two per state", choices: ["100 — two per state", "50 — one per state", "435", "535"], correct: 0 },
+            { q: "🏛️ How long is one term for a member of the House?", a: "2 years", choices: ["2 years", "4 years", "6 years", "8 years"], correct: 0 },
+            { q: "🏛️ How long is one term for a U.S. Senator?", a: "6 years", choices: ["6 years", "2 years", "4 years", "8 years"], correct: 0 },
+            { q: "🏛️ How long is one term for the President?", a: "4 years", choices: ["4 years", "2 years", "6 years", "8 years"], correct: 0 },
+            { q: "🏛️ Who was the principal author of the Declaration of Independence?", a: "Thomas Jefferson", choices: ["Thomas Jefferson", "George Washington", "Benjamin Franklin", "John Adams"], correct: 0 },
+            { q: "🏛️ When was the Declaration of Independence adopted?", a: "July 4, 1776", choices: ["July 4, 1776", "July 4, 1789", "September 17, 1787", "December 25, 1776"], correct: 0 },
+            { q: "🏛️ When was the U.S. Constitution signed?", a: "September 17, 1787", choices: ["September 17, 1787", "July 4, 1776", "September 17, 1776", "July 4, 1789"], correct: 0 },
+            { q: "🏛️ How many amendments does the Constitution have in all?", a: "27", choices: ["27", "10", "21", "33"], correct: 0 },
+            { q: "🏛️ What do we call the first ten amendments?", a: "The Bill of Rights", choices: ["The Bill of Rights", "The Articles", "The Preamble", "The Federalist Papers"], correct: 0 },
+            { q: "🏛️ Which amendment gave women the right to vote?", a: "The 19th Amendment", choices: ["The 19th Amendment", "The 13th Amendment", "The 1st Amendment", "The 26th Amendment"], correct: 0 },
+        ]
+      },
+      {
+        id: "mainelighthouses", name: "Maine Lighthouses", icon: "🗼",
+        tagline: "From Portland Head to West Quoddy — the lights of the Lighthouse State.",
+        cue: "For Maine fans",
+        questions: [
+            { q: "🗼 What is the oldest lighthouse in Maine, first lit in 1791?", a: "Portland Head Light", choices: ["Portland Head Light", "Nubble Light", "West Quoddy Head Light", "Pemaquid Point Light"], correct: 0 },
+            { q: "🗼 Portland Head Light stands in which Maine town?", a: "Cape Elizabeth", choices: ["Cape Elizabeth", "Portland", "York", "Bar Harbor"], correct: 0 },
+            { q: "🗼 Which president commissioned Portland Head Light?", a: "George Washington", choices: ["George Washington", "Thomas Jefferson", "John Adams", "Abraham Lincoln"], correct: 0 },
+            { q: "🗼 Which Maine lighthouse stands on the easternmost point of the continental United States?", a: "West Quoddy Head Light", choices: ["West Quoddy Head Light", "Portland Head Light", "Bass Harbor Head Light", "Boon Island Light"], correct: 0 },
+            { q: "🗼 West Quoddy Head Light sits in which Maine town?", a: "Lubec", choices: ["Lubec", "Eastport", "Bar Harbor", "York"], correct: 0 },
+            { q: "🗼 What colors are the stripes on West Quoddy Head Light's tower?", a: "Red and white", choices: ["Red and white", "Black and white", "Red and black", "White and blue"], correct: 0 },
+            { q: "🗼 Nubble Light's proper name is which light station?", a: "Cape Neddick Light", choices: ["Cape Neddick Light", "York Beach Light", "Sohier Park Light", "Cape Elizabeth Light"], correct: 0 },
+            { q: "🗼 In what year was Nubble Light built?", a: "1879", choices: ["1879", "1791", "1858", "1910"], correct: 0 },
+            { q: "🗼 From which park do most visitors view Nubble Light?", a: "Sohier Park", choices: ["Sohier Park", "Fort Williams Park", "Acadia National Park", "Quoddy Head State Park"], correct: 0 },
+            { q: "🗼 Which is the only lighthouse on Mount Desert Island, in Acadia?", a: "Bass Harbor Head Light", choices: ["Bass Harbor Head Light", "Portland Head Light", "Owl's Head Light", "Pemaquid Point Light"], correct: 0 },
+            { q: "🗼 What color is Bass Harbor Head Light's beam?", a: "Red", choices: ["Red", "White", "Green", "Yellow"], correct: 0 },
+            { q: "🗼 Which Maine lighthouse appears on the Maine state quarter?", a: "Pemaquid Point Light", choices: ["Pemaquid Point Light", "Portland Head Light", "Nubble Light", "Marshall Point Light"], correct: 0 },
+            { q: "🗼 Which is the tallest lighthouse in Maine?", a: "Boon Island Light", choices: ["Boon Island Light", "Portland Head Light", "Seguin Light", "West Quoddy Head Light"], correct: 0 },
+            { q: "🗼 Which Maine light had a cameo in the movie Forrest Gump?", a: "Marshall Point Light", choices: ["Marshall Point Light", "Pemaquid Point Light", "Nubble Light", "Owl's Head Light"], correct: 0 },
+            { q: "🗼 About how many lighthouses does Maine have?", a: "More than 60", choices: ["More than 60", "About 20", "Exactly 100", "About 35"], correct: 0 },
+        ]
+      },
+      {
+        id: "mandalorian", name: "The Mandalorian & Grogu", icon: "🛸",
+        tagline: "Din Djarin, Grogu, beskar, and the Way — from Arvala-7 to Mandalore.",
+        cue: "For Star Wars fans",
+        questions: [
+            { q: "🛸 What is the Mandalorian's real name?", a: "Din Djarin", choices: ["Din Djarin", "Boba Fett", "Jango Fett", "Moff Gideon"], correct: 0 },
+            { q: "🛸 On which desert planet does Din Djarin first find Grogu?", a: "Arvala-7", choices: ["Arvala-7", "Tatooine", "Nevarro", "Mandalore"], correct: 0 },
+            { q: "🛸 How old was Grogu when Din Djarin found him?", a: "About 50 years old", choices: ["About 50 years old", "About 5 years old", "About 900 years old", "About 9 months old"], correct: 0 },
+            { q: "🛸 Grogu belongs to the same mysterious species as which Jedi Master?", a: "Yoda", choices: ["Yoda", "Obi-Wan Kenobi", "Luke Skywalker", "Mace Windu"], correct: 0 },
+            { q: "🛸 What does the show call Grogu before his name is revealed?", a: "The Child", choices: ["The Child", "The Foundling", "The Kid", "The Baby"], correct: 0 },
+            { q: "🛸 What rare metal is the Mandalorian's armor made of?", a: "Beskar", choices: ["Beskar", "Durasteel", "Plasteel", "Cortosis"], correct: 0 },
+            { q: "🛸 Who forges Din Djarin's beskar armor?", a: "The Armorer", choices: ["The Armorer", "Kuiil", "Greef Karga", "Bo-Katan"], correct: 0 },
+            { q: "🛸 What is the Mandalorian creed — '_____'?", a: "This is the Way", choices: ["This is the Way", "May the Force be with you", "I have spoken", "Do or do not"], correct: 0 },
+            { q: "🛸 Which Ugnaught helps Mando on Arvala-7 and says 'I have spoken'?", a: "Kuiil", choices: ["Kuiil", "IG-11", "Greef Karga", "The Client"], correct: 0 },
+            { q: "🛸 What beast does Grogu lift with the Force to save Din Djarin?", a: "A mudhorn", choices: ["A mudhorn", "A rancor", "A krayt dragon", "A blurrg"], correct: 0 },
+            { q: "🛸 What was Din Djarin's ship in season 1?", a: "The Razor Crest", choices: ["The Razor Crest", "The Millennium Falcon", "Slave I", "The Ghost"], correct: 0 },
+            { q: "🛸 Who takes Grogu for Jedi training at the end of season 2?", a: "Luke Skywalker", choices: ["Luke Skywalker", "Ahsoka Tano", "Obi-Wan Kenobi", "Yoda"], correct: 0 },
+            { q: "🛸 After Din Djarin formally adopts him, what is Grogu's full name?", a: "Din Grogu", choices: ["Din Grogu", "Grogu Djarin", "Grogu Skywalker", "Yoda Jr."], correct: 0 },
+            { q: "🛸 What is the big-screen movie starring Din Djarin and Grogu called?", a: "The Mandalorian and Grogu", choices: ["The Mandalorian and Grogu", "The Mandalorian Returns", "Grogu: The Movie", "A New Mandalorian"], correct: 0 },
         ]
       },
       {
@@ -6547,6 +6629,8 @@ Answer: Augusta</pre>
             { q: "🐧 Which flightless bird swims in the Southern Ocean?", a: "Penguin", choices: ["Penguin", "Ostrich", "Emu", "Kiwi"], correct: 0 },
             { q: "🦅 Which bird is the fastest animal in a dive?", a: "Peregrine falcon", choices: ["Peregrine falcon", "Golden eagle", "Swift", "Albatross"], correct: 0 },
             { q: "🦜 What is the Salty Dog's Military Macaw nicknamed?", a: "Green Bean", choices: ["Green Bean", "Red Bird", "Cosmo", "Bailey"], correct: 0 },
+            { q: "🦜 Which Blue-and-Gold Macaw joined the Salty Dog crew in 2015?", a: "Cosmo", choices: ["Cosmo", "Bailey", "Roscoe", "Earnest"], correct: 0 },
+            { q: "🦜 Which African Grey parrot lives at the Salty Dog?", a: "Remy", choices: ["Remy", "Cosmo", "Cherokee", "Bailey"], correct: 0 },
 ]
         },
         {
@@ -6843,7 +6927,7 @@ Answer: Augusta</pre>
               choiceLabels: ["Tower Bridge", "Brooklyn Bridge", "Rialto Bridge", "Charles Bridge"], correct: 0 },
             { q: "Which one is the cello? 🎻", a: "The cello",
               choices: ["assets/pic-cello.jpeg", "assets/pic-violin.jpeg", "assets/pic-trumpet.jpeg", "assets/pic-triangle.jpeg"],
-              choiceLabels: ["Cello", "Violin", "Trumpet", "Triangle"], correct: 0 },,,
+              choiceLabels: ["Cello", "Violin", "Trumpet", "Triangle"], correct: 0 },
             { q: "🖼️ Picture question — this orange bridge has been destroyed in movies more times than any other. Which city is it in?", a: "San Francisco", choices: ["San Francisco", "New York", "Seattle", "Los Angeles"], correct: 0, img: "assets/pic-golden-gate.jpeg", fact: "The Golden Gate Bridge opened in 1937 and is San Francisco's most filmed landmark." },
             { q: "🖼️ Picture question — this London bridge is constantly confused with another bridge. Which bridge do tourists think it is?", a: "London Bridge", choices: ["Westminster Bridge", "London Bridge", "Millennium Bridge", "Tower of London"], correct: 1, img: "assets/pic-tower.jpeg", fact: "Tower Bridge (1894) is the one with the two towers; London Bridge is the plain one next to it." },
             { q: "🖼️ Picture question — this bridge connects Manhattan to which other borough?", a: "Brooklyn", choices: ["Queens", "Brooklyn", "The Bronx", "Staten Island"], correct: 1, img: "assets/pic-brooklyn.jpeg", fact: "The Brooklyn Bridge opened in 1883, linking Manhattan and Brooklyn." },
@@ -7270,7 +7354,7 @@ Answer: Augusta</pre>
       function allQuestions() {
         var out = [];
         getCats().forEach(function (c) {
-          c.questions.forEach(function (q) { out.push({ q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, catName: c.name, catId: c.id, cue: c.cue }); });
+          c.questions.forEach(function (q) { out.push({ q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, pet: q.pet, catName: c.name, catId: c.id, cue: c.cue }); });
         });
         return out;
       }
@@ -7282,9 +7366,9 @@ Answer: Augusta</pre>
         harrypotter: "🌟 Franchises & Andrew's Favorites", videogames: "🌟 Franchises & Andrew's Favorites",
         minecraft: "🌟 Franchises & Andrew's Favorites", warthunder: "🌟 Franchises & Andrew's Favorites", georgiatech: "🌟 Franchises & Andrew's Favorites",
         collegegameday: "🏆 Sports Night", prosports: "🏆 Sports Night", olympics: "🏆 Sports Night", grocery: "🏙️ Charlotte, Teeter & the Carolinas",
-        clarksons: "🌟 Franchises & Andrew's Favorites", marvelmovies: "🌟 Franchises & Andrew's Favorites",
+        clarksons: "📺 Reality Shows", marvelmovies: "🌟 Franchises & Andrew's Favorites",
         marvelshows: "🌟 Franchises & Andrew's Favorites", skyrim: "🌟 Franchises & Andrew's Favorites",
-        deadliestcatch: "🌟 Franchises & Andrew's Favorites", favorites: "🌟 Franchises & Andrew's Favorites",
+        deadliestcatch: "📺 Reality Shows", topgearspecials: "📺 Reality Shows", favorites: "🌟 Franchises & Andrew's Favorites",
         memes: "🎉 Crowd Favorites", logoquiz: "🎉 Crowd Favorites", tangle: "🎉 Crowd Favorites", quotes: "🎉 Crowd Favorites", mascots: "🎉 Crowd Favorites",
         nameteam: "🎉 Crowd Favorites", flags: "🎉 Crowd Favorites",
         presidents: "🍷 Bar Night Rounds", americanholidays: "🍷 Bar Night Rounds",
@@ -7337,7 +7421,11 @@ Answer: Augusta</pre>
         "whatifcollide": "🧪 Experimental: What If?",
         "boatsplanes": "🎲 Game Night, Home & the Wide World", "produce": "🎲 Game Night, Home & the Wide World", "chains": "🎲 Game Night, Home & the Wide World", "foodsholidays": "🎲 Game Night, Home & the Wide World", "etiquette": "🎲 Game Night, Home & the Wide World", "jobs": "🎲 Game Night, Home & the Wide World", "plants": "🎲 Game Night, Home & the Wide World", "shoes": "🎲 Game Night, Home & the Wide World",
         "streaming": "🎉 Crowd Favorites", "jargon": "🎲 Game Night, Home & the Wide World", "servicevehicles": "🎲 Game Night, Home & the Wide World", "states": "🎲 Game Night, Home & the Wide World", "stayawhile": "🎲 Game Night, Home & the Wide World", "beaches": "🎲 Game Night, Home & the Wide World", "inventions": "🎲 Game Night, Home & the Wide World", "wildtech": "🎲 Game Night, Home & the Wide World",
-        "tunes": "📺 Screen, Stage & Stories", "musicgenres": "📺 Screen, Stage & Stories", "guessinstrument": "📺 Screen, Stage & Stories", "bandsorchestras": "📺 Screen, Stage & Stories", "karaoke": "📺 Screen, Stage & Stories"
+        "tunes": "📺 Screen, Stage & Stories", "musicgenres": "📺 Screen, Stage & Stories", "guessinstrument": "📺 Screen, Stage & Stories", "bandsorchestras": "📺 Screen, Stage & Stories", "karaoke": "📺 Screen, Stage & Stories",
+        mandalorian: "🌟 Franchises & Andrew's Favorites",
+        birds: "🐾 Animals & the Wild",
+        usgovernment: "🍷 Bar Night Rounds",
+        mainelighthouses: "🍷 Bar Night Rounds"
       };
       /* Category tags (Andrew's design note): every round carries a
          difficulty (Easy / Mixed / Expert), a season (Year-round /
@@ -7411,8 +7499,26 @@ Answer: Augusta</pre>
         boatsplanes: { diff: "Mixed" },
         bridges: { diff: "Easy", formats: ["Multiple-choice", "Visual"] },
         downtownclt: { diff: "Easy", formats: ["Multiple-choice", "Visual"] },
-        musicgenres: {}, bandsorchestras: { diff: "Mixed" }, karaoke: { diff: "Easy" }, forgotthings: { diff: "Easy", formats: ["Multiple-choice", "Picture"] }, museumthings: { diff: "Mixed" }, howworldworks: { diff: "Mixed" }, grapedebate: { diff: "Mixed" }, threeincommon: { diff: "Mixed" }, beercider: { diff: "Mixed" }, sodaswaters: { diff: "Mixed" }, lego: { diff: "Easy" }, guessinstrument: { formats: ["Audio", "Multiple-choice"] }, tunes: { diff: "Easy", formats: ["Multiple-choice", "Audio"] },
-        minecraft: { diff: "Easy" }, warthunder: { diff: "Mixed" }, foodsholidays: { diff: "Easy" }, etiquette: { diff: "Easy" }, jobs: { diff: "Mixed" }
+        musicgenres: { diff: "Mixed" }, bandsorchestras: { diff: "Mixed" }, karaoke: { diff: "Easy" }, forgotthings: { diff: "Easy", formats: ["Multiple-choice", "Picture"] }, museumthings: { diff: "Mixed" }, howworldworks: { diff: "Mixed" }, grapedebate: { diff: "Mixed" }, threeincommon: { diff: "Mixed" }, beercider: { diff: "Mixed" }, sodaswaters: { diff: "Mixed" }, lego: { diff: "Easy" }, guessinstrument: { diff: "Mixed", formats: ["Audio", "Multiple-choice"] }, tunes: { diff: "Easy", formats: ["Multiple-choice", "Audio"] },
+        minecraft: { diff: "Easy" }, warthunder: { diff: "Mixed" }, foodsholidays: { diff: "Easy" }, etiquette: { diff: "Easy" }, jobs: { diff: "Mixed" },
+        weather: { diff: "Mixed" }, starwars: { diff: "Mixed" }, lotr: { diff: "Mixed" }, pirates: { diff: "Mixed" },
+        startrek: { diff: "Mixed" }, harrypotter: { diff: "Mixed" }, videogames: { diff: "Mixed" }, golf: { diff: "Mixed" },
+        clarksons: { diff: "Mixed" }, marvelmovies: { diff: "Mixed" }, marvelshows: { diff: "Mixed" }, skyrim: { diff: "Mixed" },
+        deadliestcatch: { diff: "Mixed" }, favorites: { diff: "Easy" }, winecorks: { diff: "Mixed" },
+        topgearspecials: { diff: "Mixed" }, firstresponders: { diff: "Easy" }, ncwinebeer: { diff: "Mixed" },
+        ushistory: { diff: "Mixed" }, produce: { diff: "Easy" }, chains: { diff: "Easy" }, holidaytable: { diff: "Easy" },
+        candyfacts: { diff: "Easy" }, halloweencandymusic: { diff: "Easy" }, halloweenmusic: { diff: "Easy" },
+        christmasmusic: { diff: "Easy" }, salmondeepdive: { diff: "Expert" }, shrimpshellfish: { diff: "Expert" },
+        crablobster: { diff: "Expert" }, rawbarsmarts: { diff: "Expert" }, meatcounterextra: { diff: "Expert" },
+        foodsafetysmarts: { diff: "Mixed" }, barboretuminsider: { diff: "Easy" }, birds: { diff: "Easy" },
+        oceanlife: { diff: "Easy" }, spaceplanets: { diff: "Mixed" }, zooanimals: { diff: "Easy" },
+        newyork: { diff: "Mixed" }, rhodeisland: { diff: "Mixed" }, massachusetts: { diff: "Mixed" },
+        maine: { diff: "Mixed" }, southcarolina: { diff: "Mixed" }, georgia: { diff: "Mixed" },
+        appletrees: { diff: "Mixed" }, christmas: { diff: "Easy" }, northcarolina: { diff: "Mixed" },
+        pictureround: { diff: "Mixed" },
+        usgovernment: { diff: "Mixed" },
+        mandalorian: { diff: "Mixed" },
+        mainelighthouses: { diff: "Mixed" }
       };
       function catTags(cat) {
         var m = CAT_META[cat.id] || {};
@@ -7428,7 +7534,7 @@ Answer: Augusta</pre>
       function catTagLine(cat) {
         var t = catTags(cat);
         var extra = t.seasons.filter(function (s) { return s !== t.season; });
-        return t.diff + " · " + t.season + (extra.length ? " + " + extra.join("/") + " picks" : "") + " · " + t.formats.join(" + ") + (t.exp ? " · 🧪 Experimental" : "");
+        return t.diff + " · " + t.season + (extra.length ? " + " + extra.join("/") + " picks" : "") + " · " + t.formats.join(" + ") + (t.diff === "Expert" ? " · ⭐ Solo +50" : "") + (t.exp ? " · 🧪 Experimental" : "");
       }
       function catMatchesTags(cat, f) {
         var t = catTags(cat);
@@ -7689,7 +7795,7 @@ Answer: Augusta</pre>
           var cat = null;
           getCats().forEach(function (c) { if (c.id === catId) cat = c; });
           if (!cat || cat.questions.length === 0) { renderCategories(); show("screen-categories"); return; }
-          var mapped = cat.questions.map(function (q) { return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, catName: cat.name, catId: cat.id, cue: cat.cue }; });
+          var mapped = cat.questions.map(function (q) { return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, pet: q.pet, catName: cat.name, catId: cat.id, cue: cat.cue }; });
           list = settings.shuffle ? shuffle(mapped) : mapped;
           catName = cat.name; cue = cat.cue; icon = cat.icon; tagline = cat.tagline || "";
         }
@@ -7854,12 +7960,14 @@ Answer: Augusta</pre>
         var tags = [], hasPic = false, hasBlank = false, hasTl = false, i, q;
         for (i = 0; i < cat.questions.length; i++) {
           q = cat.questions[i];
+          if (!q) continue;
           if (q.img) hasPic = true;
           if (q.type === "blank") hasBlank = true;
           if (q.type === "timeline") hasTl = true;
         }
         var meta = (typeof CAT_META !== "undefined" && CAT_META[cat.id]) || {};
         if (meta.diff) tags.push(meta.diff);
+        if (meta.diff === "Expert") tags.push("⭐ Solo +50");
         if (hasPic) tags.push("🖼️ Picture");
         if (hasBlank) tags.push("✏️ Fill in the Blank");
         if (hasTl) tags.push("🕰️ Ordering");
@@ -7879,6 +7987,9 @@ Answer: Augusta</pre>
           shown++;
           var row = document.createElement("div");
           row.className = "topic-row";
+          row.style.cursor = "pointer";
+          row.title = "Tap to play " + cat.name;
+          row.addEventListener("click", function () { closeOverlay("overlay-topics"); startRound(cat.id); });
           var name = document.createElement("span");
           name.className = "topic-name";
           name.textContent = cat.icon + " " + cat.name;
@@ -7901,7 +8012,7 @@ Answer: Augusta</pre>
           none.textContent = "No topic matches that search — try a shorter word.";
           listEl.appendChild(none);
         }
-        if (countEl) countEl.textContent = "Every topic on the shelf — " + cats.length + " topics, " + totalQ + " questions — with the formats inside each. Look the whole room over before you build a night." + (term ? " Showing " + shown + " matching “" + (searchEl ? searchEl.value.trim() : "") + "”." : "");
+        if (countEl) countEl.textContent = "Every topic on the shelf — " + cats.length + " topics, " + totalQ + " questions — with the formats inside each. Tap a topic to play it. Look the whole room over before you build a night." + (term ? " Showing " + shown + " matching “" + (searchEl ? searchEl.value.trim() : "") + "”." : "");
       }
       document.querySelectorAll(".open-topics").forEach(function (b) {
         b.addEventListener("click", function () {
@@ -8031,6 +8142,7 @@ Answer: Augusta</pre>
             '<span class="intro-badge">⭐ ' + settings.points + " pts</span>" +
             (settings.format && settings.format !== "mix" ? '<span class="intro-badge">' + formatLabel(settings.format) + " night</span>" : "") +
             (speedBonusEnabled() ? '<span class="intro-badge">⚡ Speed bonus +25/+50</span>' : "") +
+            (teams.length === 1 && pr.catId && pr.catId !== "mix" && ((typeof CAT_META !== "undefined" && CAT_META[pr.catId]) || {}).diff === "Expert" ? '<span class="intro-badge">⭐ Solo bonus +50</span>' : "") +
             (pr.double ? '<span class="intro-badge hot">✖2 DOUBLE POINTS</span>' : "");
         }
         show("screen-intro");
@@ -8573,7 +8685,7 @@ Answer: Augusta</pre>
 
       /* ================= SCORING LEDGER =================
          Every mark on a question goes through setMark(), which records
-         exactly what it changed — points, the +50 streak bonus, the
+         exactly what it changed — points, the +50 streak bonus, the +50 solo bonus on Expert rounds played alone, the
          streak itself, and the round's correct count — in a per-question
          ledger. Clearing or changing a mark reverses precisely those
          changes, so the Back button and re-taps can never inflate or
@@ -8598,6 +8710,7 @@ Answer: Augusta</pre>
           t.score -= rec.points;
           rec.points = 0;
           rec.speed = 0;
+          rec.soloBonus = 0;
           var st0 = statFor(i);
           st0.right = Math.max(0, st0.right - 1);
           st0.answered = Math.max(0, st0.answered - 1);
@@ -8611,9 +8724,12 @@ Answer: Augusta</pre>
           var spd = (game.speedBonus || 0);
           t.streak = rec.streakBefore + 1;
           if (t.streak % 3 === 0) bonus = 50;
-          rec.points = pts + spd + bonus;
+          var solo = 0;
+          if (teams.length === 1 && game.catId && game.catId !== "mix" && ((typeof CAT_META !== "undefined" && CAT_META[game.catId]) || {}).diff === "Expert") solo = 50;
+          rec.points = pts + spd + bonus + solo;
           rec.speed = spd;
           rec.streakBonus = bonus;
+          rec.soloBonus = solo;
           t.score += rec.points;
           var st1 = statFor(i);
           st1.right++; st1.answered++;
@@ -13587,7 +13703,7 @@ Answer: Augusta</pre>
         if (keepAdd) add.value = keepAdd;
       }
       function planMapQ(q, cat) {
-        return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, catName: cat.name, catId: cat.id, cue: cat.cue };
+        return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, hard: q.hard, pet: q.pet, catName: cat.name, catId: cat.id, cue: cat.cue };
       }
       function planRoundEntry(cat, list) {
         return { kind: "round", catId: cat.id, catName: cat.name, icon: cat.icon, cue: cat.cue, tagline: cat.tagline || "", tags: catTagLine(cat), list: list, estMin: list.length * 2, aiOn: true, aiLevel: "asis" };
@@ -14513,7 +14629,7 @@ $("btn-start").addEventListener("click", function () {
           getCats().forEach(function (c) { if (c.id === catId) cat = c; });
           if (!cat) return;
           list = shuffle(cat.questions.map(function (q) {
-            return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, catName: cat.name, catId: cat.id, cue: cat.cue };
+            return { q: q.q, a: q.a, fact: q.fact, img: q.img, videoId: q.videoId, type: q.type, events: q.events, prog: q.prog, season: q.season, priceChecked: q.priceChecked, priceNote: q.priceNote, choiceLabels: q.choiceLabels, choices: q.choices, correct: q.correct, pet: q.pet, catName: cat.name, catId: cat.id, cue: cat.cue };
           }));
         }
         if (!list.length) return;
@@ -14701,6 +14817,19 @@ $("btn-start").addEventListener("click", function () {
           if (curItem && curItem.catId) {
             if (!player.topicRight) player.topicRight = {};
             player.topicRight[curItem.catId] = (player.topicRight[curItem.catId] || 0) + 1;
+          }
+          /* Animal-trophy counters: pet tags on Pets questions and
+             Salty Dog mentions feed the animal trophies below. */
+          if (curItem) {
+            if ((player.topicRight || {}).pets >= 5) unlockPlayerTrophy("petlover");
+            if ((player.topicRight || {}).birds >= 3) unlockPlayerTrophy("birdwatcher");
+            if ((player.topicRight || {}).farmyard >= 5) unlockPlayerTrophy("barnyard");
+            if (curItem.pet === "cat") { player.catRight = (player.catRight || 0) + 1; if (player.catRight >= 3) unlockPlayerTrophy("catperson"); }
+            if (curItem.pet === "dog") { player.dogRight = (player.dogRight || 0) + 1; if (player.dogRight >= 3) unlockPlayerTrophy("dogperson"); }
+            if (curItem.pet === "lizard") { player.lizardRight = (player.lizardRight || 0) + 1; if (player.lizardRight >= 3) unlockPlayerTrophy("lizardlover"); }
+            if (curItem.pet === "exotic") { player.exoticRight = (player.exoticRight || 0) + 1; if (player.exoticRight >= 3) unlockPlayerTrophy("exotickeeper"); }
+            if (curItem.pet === "shell") { player.shellRight = (player.shellRight || 0) + 1; if (player.shellRight >= 3) unlockPlayerTrophy("shellkeeper"); }
+            if (curItem.q && curItem.q.indexOf("Salty Dog") >= 0) { player.saltyRight = (player.saltyRight || 0) + 1; if (player.saltyRight >= 3) unlockPlayerTrophy("saltydog"); }
           }
           /* Feat counters: picture questions, listening questions, and
              speed-bonus answers each feed their own trophy below. */
@@ -14929,7 +15058,10 @@ $("btn-start").addEventListener("click", function () {
           { id: "firstresponder", icon: "🚒", name: "First Responder", desc: "Get 5 First Responders questions right", req: "5 First Responders correct" },
           { id: "tarheelpour", icon: "🍷", name: "Tar Heel Pour", desc: "Get 5 NC Wine & Beer questions right", req: "5 NC Wine & Beer correct" },
           { id: "historian", icon: "📜", name: "Historian", desc: "Get 5 U.S. History questions right", req: "5 U.S. History correct" },
-          { id: "commander", icon: "🇺🇸", name: "Commander in Chief", desc: "Get 5 president picture questions right", req: "5 president pictures correct" }
+          { id: "commander", icon: "🇺🇸", name: "Commander in Chief", desc: "Get 5 president picture questions right", req: "5 president pictures correct" },
+          { id: "exotickeeper", icon: "🌍", name: "Exotic Keeper", desc: "Get 3 exotic pet questions right", req: "3 exotic pet questions correct" },
+          { id: "shellkeeper", icon: "🐚", name: "Shell Keeper", desc: "Get 3 pet lobster & crab questions right", req: "3 pet lobster & crab questions correct" },
+          { id: "saltydog", icon: "🏖️", name: "Salty Dog Regular", desc: "Get 3 Salty Dog questions right", req: "3 Salty Dog questions correct" }
       ];
       function playerTrophyById(id) {
         for (var i = 0; i < PLAYER_TROPHIES.length; i++) if (PLAYER_TROPHIES[i].id === id) return PLAYER_TROPHIES[i];
@@ -15077,7 +15209,8 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
-        { v: "Latest", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
+        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster"] },
+        { v: "New topics & poster", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
         { v: "Boats & motoring", d: "Oct 24", items: ["🦀 8 new Deadliest Catch boat questions (Time Bandit, Summer Bay, Saga, Brenna A, Cornelia Marie)", "🚗 New Top Gear & Grand Tour Specials topic — 22 questions (Botswana, Bolivia, Middle East, India, USA, Vietnam, Colombia, Madagascar)", "🏆 4 new achievements: Crab Catcher, Bering Captain, Petrolhead, Special Specialist", "🎒 2 new collectibles: Crab Pot, Oliver"] },
         { v: "WOOOOO update", d: "Oct 23", items: ["🔊 WOOOOO! chant sound with the triangle", "🔔 Triangle rings when a round starts", "8 new questions: Scooby-Doo, Batman, Spider-Man"] },
         { v: "Pets update", d: "Oct 23", items: ["5 new pet questions (Salty Dog parrots, chameleons, pet lobsters, Komodo dragons)", "4 new animal achievements: Pet Lover, Cat Person, Dog Person, Bird Watcher"] },
