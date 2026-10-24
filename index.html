@@ -10063,6 +10063,29 @@ Answer: Augusta</pre>
           o.start(t); o.stop(t + 1.2);
         });
       }
+      /* Cork pop: a short champagne burst — filtered noise crack
+         plus a quick low thump. Original synthesis, no audio file. */
+      function corkPopNote(t) {
+        if (!musicCtx || !musicNoise || !musicMaster) return;
+        var src = musicCtx.createBufferSource();
+        src.buffer = musicNoise;
+        var f = musicCtx.createBiquadFilter();
+        f.type = "bandpass"; f.frequency.value = 1400; f.Q.value = 1.1;
+        var g = musicCtx.createGain();
+        g.gain.setValueAtTime(0.09, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+        src.connect(f); f.connect(g); g.connect(musicMaster);
+        src.start(t); src.stop(t + 0.15);
+        var o = musicCtx.createOscillator();
+        o.type = "sine";
+        o.frequency.setValueAtTime(420, t);
+        o.frequency.exponentialRampToValueAtTime(110, t + 0.09);
+        var og = musicCtx.createGain();
+        og.gain.setValueAtTime(0.06, t);
+        og.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+        o.connect(og); og.connect(musicMaster);
+        o.start(t); o.stop(t + 0.16);
+      }
       function bellTick(t, accent) {
         var src = musicCtx.createBufferSource();
         src.buffer = musicNoise;
@@ -10392,7 +10415,7 @@ Answer: Augusta</pre>
            mood drives the music; otherwise the house lounge loop. */
         var style = th !== "default" ? th : (musicMood || "default");
         var bpm = style === "halloween" ? 56 : style === "fall" ? 76 : style === "winter" ? 92 :
-          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 96 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 : style === "christmas" ? 96 : style === "cork" ? 60 :
+          style === "safari" ? 78 : style === "blocky" ? 112 : style === "ocean" ? 96 : style === "independence" ? 120 : style === "shamrock" ? 100 : style === "valentine" ? 72 : style === "christmas" ? 96 : style === "cork" ? 96 :
           style === "nordic" ? 62 : style === "cinematic" ? 76 : style === "spaceopera" ? 88 :
           style === "shanty" ? 104 : style === "rural" ? 92 :
           style === "chirps" ? 84 : style === "leafy" ? 70 : style === "warroom" ? 92 :
@@ -10443,11 +10466,14 @@ Answer: Augusta</pre>
       }
       function halloweenBeat(t, spb) {
         var ch = HALLOWEEN_CHORDS[musicBar % HALLOWEEN_CHORDS.length];
-        if (musicBeat === 0) { darkPad(ch.tones, t, spb * 4 + 0.1); bassNote(ch.bass, t, spb * 3.6); }
-        if (musicBeat === 2) bassNote(ch.bass + 12, t, spb * 1.6);
-        if (musicBeat === 1 && musicBar % 2 === 0) {
-          thereminNote(ch.tones[(musicBar / 2) % ch.tones.length] + 12, t, spb * 2.6);
-        }
+        /* Playful spooky: pizzicato plucks lead, music-box twinkles,
+           a low bassoon-ish bass, gentle rattle — mischievous, not scary. */
+        if (musicBeat === 0) { darkPad(ch.tones, t, spb * 4 + 0.1); bassNote(ch.bass, t, spb * 3.2); }
+        if (musicBeat === 2) bassNote(ch.bass + 12, t, spb * 1.4);
+        pluckNote(ch.tones[musicBeat % ch.tones.length] + 12, t, 0.05);
+        pluckNote(ch.tones[(musicBeat + 2) % ch.tones.length] + 12, t + spb * 0.5, 0.032);
+        hatTick(t + spb * 0.5, false); /* gentle rattle */
+        if (musicBeat === 1 && musicBar % 2 === 0) boxNote(ch.tones[(musicBar / 2) % ch.tones.length] + 24, t);
       }
       var SHAMROCK_CHORDS = [
         { bass: 43, tones: [55, 59, 62, 67] }, /* G  */
@@ -10521,11 +10547,14 @@ Answer: Augusta</pre>
       }
       function fallBeat(t, spb) {
         var ch = FALL_CHORDS[musicBar % FALL_CHORDS.length];
-        if (musicBeat === 0) bassNote(ch.bass, t, spb * 1.7);
+        /* Cozy autumn: fingerpicked plucks, warm string pad, a soft
+           piano phrase, birdsong chirps — a peaceful October afternoon. */
+        if (musicBeat === 0) { padChord(ch.tones, t, spb * 4 + 0.1); bassNote(ch.bass, t, spb * 1.7); }
         if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.4);
         pluckNote(ch.tones[musicBeat % ch.tones.length] + 12, t, 0.045);
         pluckNote(ch.tones[(musicBeat + 2) % ch.tones.length] + 12, t + spb * 0.5, 0.028);
         hatTick(t + spb * 0.5, false); /* soft shaker */
+        if (musicBeat === 1 && musicBar % 2 === 1) melodyNote(ch.tones[(musicBar + 1) % ch.tones.length] + 12, t);
         if (musicBeat === 2 && musicBar % 4 === 2) chirpNote(72 + (musicBar % 3) * 2, t + spb * 0.5, 0.1);
       }
       function winterBeat(t, spb) {
@@ -10568,11 +10597,17 @@ Answer: Augusta</pre>
       ];
       function corkBeat(t, spb) {
         var ch = CORK_CHORDS[musicBar % CORK_CHORDS.length];
-        /* Deep cellar: woody log drums lead, dark low pad, sparse mellow plucks */
-        if (musicBeat === 0) { logNote(ch.bass - 12, t, spb * 3.0); darkPad([ch.tones[0] - 12, ch.tones[1] - 12], t, spb * 4); }
-        if (musicBeat === 2) logNote(ch.bass - 5, t, spb * 2.0);
-        if (musicBeat === 1 && musicBar % 4 === 0) pluckNote(ch.tones[0] + 12, t, 0.12);
-        if (musicBeat === 3 && musicBar % 4 === 2) pluckNote(ch.tones[1] + 12, t, 0.12);
+        /* Bubbly celebration: bouncy pizzicato melody, glockenspiel
+           sparkle, plucked bass — and a cork pop at the top of every
+           fourth bar, like opening a bottle for a correct answer. */
+        if (musicBeat === 0) bassNote(ch.bass, t, spb * 1.2);
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.0);
+        pluckNote(ch.tones[musicBeat % ch.tones.length] + 12, t, 0.055);
+        pluckNote(ch.tones[(musicBeat + 2) % ch.tones.length] + 12, t + spb * 0.5, 0.034);
+        if (musicBeat === 2) boxNote(ch.tones[(musicBar + 2) % ch.tones.length] + 24, t);
+        if (musicBeat === 1) bellTick(t + spb * 0.5, false); /* sparkle */
+        hatTick(t + spb * 0.5, false); /* light shaker */
+        if (musicBeat === 0 && musicBar % 4 === 2) corkPopNote(t);
       }
       /* Safari, refined: a grand-tour expedition — wide pads, a
          soaring lead phrase that travels bar to bar, gentle distant
@@ -10629,6 +10664,7 @@ Answer: Augusta</pre>
           while (musicNextTime < musicCtx.currentTime + 0.15) scheduleBeat();
         }, 40);
         musicPlaying = true;
+        playThemeSting(musicStyleNow());
         paintMusic();
         startAmbience();
       }
@@ -10640,6 +10676,31 @@ Answer: Augusta</pre>
         paintMusic();
       }
       function toggleMusic() { if (musicPlaying) stopMusic(); else startMusic(); }
+      function musicStyleNow() {
+        return currentTheme !== "default" ? currentTheme : (musicMood || "default");
+      }
+      /* Short opening sting for the four starter themes — a few
+         signature notes in the theme's own voices. Host-initiated
+         only: when music starts, or when the theme changes while
+         music is already playing. Other themes get no sting. */
+      function playThemeSting(style) {
+        if (!musicCtx || !musicPlaying) return;
+        var t = musicCtx.currentTime + 0.05;
+        var spb = 60 / (style === "halloween" ? 56 : style === "fall" ? 76 : style === "cork" ? 96 : MUSIC_BPM);
+        if (style === "default") {
+          melodyNote(60, t); melodyNote(64, t + spb * 0.5); melodyNote(67, t + spb);
+          hatTick(t + spb * 1.5, false);
+        } else if (style === "halloween") {
+          pluckNote(69, t, 0.05); pluckNote(72, t + spb * 0.5, 0.05); pluckNote(69, t + spb, 0.05);
+          boxNote(84, t + spb * 1.5);
+        } else if (style === "fall") {
+          pluckNote(67, t, 0.045); pluckNote(71, t + spb * 0.5, 0.045); pluckNote(74, t + spb, 0.045);
+          boxNote(79, t + spb * 1.5);
+        } else if (style === "cork") {
+          pluckNote(69, t, 0.055); pluckNote(73, t + spb * 0.5, 0.055); pluckNote(76, t + spb, 0.055);
+          boxNote(84, t + spb * 1.5); corkPopNote(t + spb * 2);
+        }
+      }
 
       /* ================= THEME AMBIENCE =================
          A quiet generated soundscape per theme, riding the music
@@ -15209,7 +15270,7 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
-        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster"] },
+        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files"] },
         { v: "New topics & poster", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
         { v: "Boats & motoring", d: "Oct 24", items: ["🦀 8 new Deadliest Catch boat questions (Time Bandit, Summer Bay, Saga, Brenna A, Cornelia Marie)", "🚗 New Top Gear & Grand Tour Specials topic — 22 questions (Botswana, Bolivia, Middle East, India, USA, Vietnam, Colombia, Madagascar)", "🏆 4 new achievements: Crab Catcher, Bering Captain, Petrolhead, Special Specialist", "🎒 2 new collectibles: Crab Pot, Oliver"] },
         { v: "WOOOOO update", d: "Oct 23", items: ["🔊 WOOOOO! chant sound with the triangle", "🔔 Triangle rings when a round starts", "8 new questions: Scooby-Doo, Batman, Spider-Man"] },
@@ -16684,6 +16745,7 @@ $("btn-start").addEventListener("click", function () {
         renderThemePickers();
         renderThemeFx();
         paintAmbButtons();
+        if (musicPlaying) playThemeSting(musicStyleNow());
       }
       function renderThemePickers() {
         document.querySelectorAll(".theme-picker").forEach(function (wrap) {
