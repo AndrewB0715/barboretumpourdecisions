@@ -1630,6 +1630,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
               <button class="btn music-btn" type="button" aria-pressed="false">🎵 Music: Off</button>
               <button class="btn sfx-btn on" type="button" aria-pressed="true">🔊 Sound: On</button>
               <button class="btn" id="btn-test-chant" type="button">🔺🎤 Test Triangle + WOOOOO</button>
+              <button class="btn" id="btn-test-triangle" type="button">🔺 Triangle Only</button>
             </div>
             <div class="theme-picker" id="theme-picker-quick" role="group" aria-label="Night theme" style="margin-top:.4rem"></div>
           </div>
@@ -3340,6 +3341,7 @@ Answer: Augusta</pre>
         <div class="builder-row">
           <button class="btn small toggle" id="hcc-signature" type="button" aria-pressed="true">🎬 Signature Opening: On</button>
           <button class="btn small" id="hcc-triangle" type="button">🔺 Ring the Triangle</button>
+          <button class="btn small" id="hcc-triangle-only" type="button">🔺 Triangle Only</button>
           <button class="btn small toggle" id="hcc-prizehide" type="button" aria-pressed="false">🤫 Prize Reveal (secret until winners): Off</button>
         </div>
         <label class="builder-label">Defending Champions — last time's winners, typed in by the host (saved on this device only)
@@ -8062,6 +8064,7 @@ Answer: Augusta</pre>
         void count.offsetWidth;
         count.classList.add("beat");
         playSuspensePulse(false);
+        if (ensureSfx()) drumroll(sfxCtx.currentTime + 0.01, 2.1);
         var steps = ["2", "1"];
         var i = 0;
         function step() {
@@ -8272,6 +8275,43 @@ Answer: Augusta</pre>
         }
         if (chantTimer) clearTimeout(chantTimer);
         chantTimer = setTimeout(function () { el.classList.remove("show"); }, 4200);
+      }
+      /* Drumroll: rising snare-style roll for suspense — rapid noise bursts
+         that get faster and louder, ending in a final hit. */
+      function drumroll(t, dur) {
+        if (!ensureSfx()) return;
+        try {
+          var len = Math.floor(sfxCtx.sampleRate * 0.1);
+          var buf = sfxCtx.createBuffer(1, len, sfxCtx.sampleRate);
+          var d = buf.getChannelData(0);
+          for (var i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+          var hits = 22;
+          for (var h = 0; h < hits; h++) {
+            var frac = h / (hits - 1);
+            var ht = t + frac * frac * dur;
+            var src = sfxCtx.createBufferSource();
+            src.buffer = buf;
+            var f = sfxCtx.createBiquadFilter();
+            f.type = "bandpass"; f.frequency.value = 1800; f.Q.value = 0.8;
+            var g = sfxCtx.createGain();
+            var peak = 0.03 + frac * 0.1;
+            g.gain.setValueAtTime(peak, ht);
+            g.gain.exponentialRampToValueAtTime(0.001, ht + 0.09);
+            src.connect(f); f.connect(g); g.connect(sfxOut());
+            src.start(ht); src.stop(ht + 0.1);
+          }
+          /* Final hit: low thump + crash */
+          var ft = t + dur;
+          var o = sfxCtx.createOscillator();
+          o.type = "sine";
+          o.frequency.setValueAtTime(120, ft);
+          o.frequency.exponentialRampToValueAtTime(45, ft + 0.25);
+          var og = sfxCtx.createGain();
+          og.gain.setValueAtTime(0.22, ft);
+          og.gain.exponentialRampToValueAtTime(0.001, ft + 0.4);
+          o.connect(og); og.connect(sfxOut());
+          o.start(ft); o.stop(ft + 0.45);
+        } catch (e) {}
       }
       function startEntrance() {
         clearEntrance();
@@ -17607,8 +17647,16 @@ $("btn-start").addEventListener("click", function () {
       }
       $("hcc-signature").addEventListener("click", function () { trad.signature = !trad.signature; saveTrad(); paintTradToggles(); });
       $("hcc-triangle").addEventListener("click", function () { flashChant(); });
+      var triOnly = $("hcc-triangle-only");
+      if (triOnly) triOnly.addEventListener("click", function () {
+        if (ensureSfx()) triangleRing(sfxCtx.currentTime + 0.01, 0.14);
+      });
       var testChantBtn = $("btn-test-chant");
       if (testChantBtn) testChantBtn.addEventListener("click", function () { flashChant(); });
+      var testTriBtn = $("btn-test-triangle");
+      if (testTriBtn) testTriBtn.addEventListener("click", function () {
+        if (ensureSfx()) triangleRing(sfxCtx.currentTime + 0.01, 0.14);
+      });
       $("hcc-prizehide").addEventListener("click", function () { setPrizeHide(!trad.prizeHide); });
       $("prize-hide-toggle").addEventListener("click", function () { setPrizeHide(!trad.prizeHide); });
       $("hcc-defenders").addEventListener("input", function () { trad.defenders = this.value.trim(); saveTrad(); });
