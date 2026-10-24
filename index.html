@@ -711,9 +711,12 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           radial-gradient(900px 700px at -10% 110%, rgba(226, 166, 61, .10), transparent 55%),
           var(--bg, #160a10); }
       #app-loader.hidden { opacity: 0; pointer-events: none; }
-      #app-loader .spin-glasses { font-size: 32px; animation: spinGlasses 1.2s linear infinite; }
+      .spin-glasses { font-size: 32px; animation: spinGlasses 1.2s linear infinite; }
       @keyframes spinGlasses { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      @media (prefers-reduced-motion: reduce) { #app-loader .spin-glasses { animation: none; } }
+      #busy-veil { position: fixed; inset: 0; z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; background: rgba(22, 10, 16, .55); }
+      #busy-veil.on { display: flex; }
+      #busy-veil .busy-text { font-size: .95rem; opacity: .85; }
+      @media (prefers-reduced-motion: reduce) { .spin-glasses { animation: none; } }
       .tip-banner {
         width: 100%; max-width: 1100px; margin: 0 auto 1.4rem; text-align: center;
         border: 1px solid var(--gold); background: rgba(226,166,61,.12); color: var(--gold-soft);
@@ -1590,6 +1593,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
   </head>
   <body>
     <div id="app-loader" aria-hidden="true"><div class="spin-glasses">🍷🍺</div></div>
+    <div id="busy-veil" aria-hidden="true"><div class="spin-glasses">🍷🍺</div><div class="busy-text">Loading…</div></div>
     <div id="theme-fx" aria-hidden="true"></div>
     <div class="web web-tl" aria-hidden="true"></div>
     <div class="web web-tr" aria-hidden="true"></div>
@@ -9923,6 +9927,11 @@ Answer: Augusta</pre>
 
       /* ================= OVERLAYS ================= */
       function openOverlay(id) { $(id).classList.add("open"); }
+      /* Transition veil: the same spinning glasses as the boot
+         loader, for screen switches whose content build blocks the
+         main thread. Never sticks: callers hide it in a finally. */
+      function showBusy() { var v = $("busy-veil"); if (v) v.classList.add("on"); }
+      function hideBusy() { var v = $("busy-veil"); if (v) v.classList.remove("on"); }
       function closeOverlay(id) { $(id).classList.remove("open"); }
       document.querySelectorAll("[data-close]").forEach(function (b) {
         b.addEventListener("click", function () { closeOverlay(b.getAttribute("data-close")); });
@@ -15314,8 +15323,14 @@ $("btn-start").addEventListener("click", function () {
         list.innerHTML = html;
       }
       $("btn-whatsnew").addEventListener("click", function() {
-        renderWhatsNew();
-        openOverlay("overlay-whatsnew");
+        /* Let the spinning glasses paint first: building the full
+           history list blocks the main thread, which is why opening
+           What's New can feel like a dead few seconds on a phone. */
+        showBusy();
+        setTimeout(function() {
+          try { renderWhatsNew(); openOverlay("overlay-whatsnew"); }
+          finally { hideBusy(); }
+        }, 60);
       });
       /* Auto-show what's new on update: if the app version changed since
          last visit, pop the What's New overlay automatically. */
