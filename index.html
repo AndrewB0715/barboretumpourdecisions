@@ -115,6 +115,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         letter-spacing: .02em;
       }
       .title-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+      .start-here-actions { flex-direction: column; align-items: stretch; }
       .title-actions .btn { font-size: clamp(1.05rem, 2vw, 1.4rem); padding: 1rem 1.8rem; }
       .hosted-by { margin-top: 2.2rem; color: var(--faint); font-size: clamp(.95rem, 1.6vw, 1.15rem); }
       .hosted-by strong { color: var(--dim); }
@@ -1132,6 +1133,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         75% { transform: translate(78vw, -14px); }
         100% { transform: translate(112vw, 0); }
       }
+      .fx-item.sail { animation-name: sailAcross; opacity: .85; }
+      @keyframes sailAcross {
+        0% { transform: translate(-12vw, 0) rotate(-2deg); }
+        25% { transform: translate(20vw, -7px) rotate(2deg); }
+        50% { transform: translate(48vw, 5px) rotate(-2deg); }
+        75% { transform: translate(78vw, -6px) rotate(2deg); }
+        100% { transform: translate(112vw, 0) rotate(-2deg); }
+      }
       .web {
         position: fixed; width: 190px; height: 190px; z-index: 3; pointer-events: none;
         opacity: .38; display: none;
@@ -1656,6 +1665,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
           <div class="wine-mark" aria-hidden="true">🍷</div>
           <h1 class="game-title">Barboretum Trivia:<br /><span class="pour">Pour Decisions</span></h1>
           <p class="title-sub">Trivia night at the Harris Teeter wine bar.<br />Grab a glass, grab a team, make some pour decisions.</p>
+          <div class="menu-group start-here">
+            <div class="menu-group-label">⭐ Start here</div>
+            <div class="title-actions start-here-actions">
+              <button class="btn" id="btn-start-homescreen" type="button">📱 Add to Home Screen</button>
+              <button class="btn" id="btn-start-whatsnew" type="button">📝 What's New</button>
+              <button class="btn gold" id="btn-start-join" type="button">📱 Join as a Player</button>
+            </div>
+          </div>
           <div class="menu-group">
             <div class="menu-group-label">▶ Play</div>
             <div class="title-actions">
@@ -8082,8 +8099,13 @@ Answer: Augusta</pre>
       }
       document.querySelectorAll(".open-topics").forEach(function (b) {
         b.addEventListener("click", function () {
-          try { paintTopics(); } catch(e) { console.error("paintTopics failed:", e); }
-          openOverlay("overlay-topics");
+          /* Spinning-glasses veil, same as What's New: let it paint
+             before the 146-row list blocks the main thread. */
+          showBusy();
+          setTimeout(function () {
+            try { try { paintTopics(); } catch(e) { console.error("paintTopics failed:", e); } openOverlay("overlay-topics"); }
+            finally { hideBusy(); }
+          }, 60);
         });
       });
       var topicsSearchEl = $("topics-search");
@@ -10737,19 +10759,35 @@ Answer: Augusta</pre>
         { bass: 41, tones: [48, 53, 57, 60] }, /* F  */
         { bass: 43, tones: [50, 55, 59, 62] }  /* G  */
       ];
-      /* Ocean: slow tide. Pads wash over the bar, the bass rolls like a
-         swell, and sparse plucks fall like droplets. */
+      /* Ocean, rewritten sailing-style: a rollicking triplet shanty
+         melody over a steady ship's-pulse bass, wave washes rolling
+         under it every other bar, and a bubble pop here and there to
+         keep the sea in it. Original melody, chord tones only. */
+      function waveNote(t, dur) {
+        if (!musicNoise) return;
+        var src = musicCtx.createBufferSource();
+        src.buffer = musicNoise;
+        var f = musicCtx.createBiquadFilter();
+        f.type = "lowpass"; f.frequency.value = 420;
+        var g = musicCtx.createGain();
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.05, t + dur * 0.35);
+        g.gain.linearRampToValueAtTime(0, t + dur);
+        src.connect(f); f.connect(g); g.connect(musicMaster);
+        src.start(t); src.stop(t + dur + 0.05);
+      }
       function oceanBeat(t, spb) {
         var ch = OCEAN_CHORDS[musicBar % OCEAN_CHORDS.length];
-        /* Fishy: bouncy and bubbly. Light bass, darting fish melody, bubble pops. */
-        if (musicBeat === 0) bassNote(ch.bass + 12, t, spb * 1.2);
-        if (musicBeat === 2) bassNote(ch.bass + 19, t, spb * 0.9);
-        /* Fish darting: quick playful chip melody that jumps around */
-        var swim = [2, 0, 3, 1, 2, 3, 0, 2];
-        chipNote(ch.tones[swim[(musicBar * 4 + musicBeat) % 8]] + 24, t, 0.11);
-        if (musicBeat % 2 === 1) chipNote(ch.tones[swim[(musicBar * 4 + musicBeat + 3) % 8]] + 36, t + spb * 0.5, 0.07);
-        /* Bubbles: rising blips on off-beats */
-        if (musicBeat === 1 && musicBar % 2 === 0) bubbleNote(60 + (musicBar % 5) * 3, t + spb * 0.25);
+        if (musicBeat === 0) { padChord(ch.tones, t, spb * 4 + 0.1); bassNote(ch.bass, t, spb * 1.6); }
+        if (musicBeat === 2) bassNote(ch.bass + 7, t, spb * 1.4);
+        /* Sailing melody: beat, offbeat, offbeat — a lilting triplet
+           lope, chord tones only, original phrase. */
+        pluckNote(ch.tones[musicBeat % ch.tones.length] + 12, t, 0.05);
+        pluckNote(ch.tones[(musicBeat + 2) % ch.tones.length] + 12, t + spb * 0.33, 0.032);
+        pluckNote(ch.tones[(musicBeat + 1) % ch.tones.length] + 12, t + spb * 0.66, 0.032);
+        /* Wave wash rolling under every second bar. */
+        if (musicBeat === 0 && musicBar % 2 === 0) waveNote(t, spb * 4);
+        /* A bubble pop on the off-beat, now and then. */
         if (musicBeat === 3 && musicBar % 2 === 1) bubbleNote(66 + (musicBar % 4) * 2, t + spb * 0.75);
       }
       function fallBeat(t, spb) {
@@ -10886,14 +10924,14 @@ Answer: Augusta</pre>
       function musicStyleNow() {
         return currentTheme !== "default" ? currentTheme : (musicMood || "default");
       }
-      /* Short opening sting for the four starter themes — a few
+      /* Short opening sting for the starter themes plus ocean — a few
          signature notes in the theme's own voices. Host-initiated
          only: when music starts, or when the theme changes while
          music is already playing. Other themes get no sting. */
       function playThemeSting(style) {
         if (!musicCtx || !musicPlaying) return;
         var t = musicCtx.currentTime + 0.05;
-        var spb = 60 / (style === "halloween" ? 56 : style === "fall" ? 76 : style === "cork" ? 96 : MUSIC_BPM);
+        var spb = 60 / (style === "halloween" ? 56 : style === "fall" ? 76 : style === "cork" ? 96 : style === "ocean" ? 96 : MUSIC_BPM);
         if (style === "default") {
           melodyNote(60, t); melodyNote(64, t + spb * 0.5); melodyNote(67, t + spb);
           hatTick(t + spb * 1.5, false);
@@ -10906,6 +10944,9 @@ Answer: Augusta</pre>
         } else if (style === "cork") {
           pluckNote(69, t, 0.055); pluckNote(73, t + spb * 0.5, 0.055); pluckNote(76, t + spb, 0.055);
           boxNote(84, t + spb * 1.5); corkPopNote(t + spb * 2);
+        } else if (style === "ocean") {
+          pluckNote(60, t, 0.05); pluckNote(64, t + spb * 0.5, 0.05); pluckNote(67, t + spb, 0.05);
+          boxNote(72, t + spb * 1.5); waveNote(t + spb * 2, spb * 2);
         }
       }
 
@@ -12561,7 +12602,13 @@ Answer: Augusta</pre>
         }
       });
       document.querySelectorAll(".open-builder").forEach(function (b) {
-        b.addEventListener("click", function () { renderBuilder(); openOverlay("overlay-builder"); });
+        b.addEventListener("click", function () {
+          showBusy();
+          setTimeout(function () {
+            try { renderBuilder(); openOverlay("overlay-builder"); }
+            finally { hideBusy(); }
+          }, 60);
+        });
       });
 
       /* ---------- picture questions (builder uploads) ---------- */
@@ -13208,14 +13255,19 @@ Answer: Augusta</pre>
       $("btn-trophies").addEventListener("click", function () {
         /* If this phone has a player profile, show THEIR trophies —
            not the hosts'. Hosts' badges stay in the Host Control Center. */
-        if (player && player.name) {
-          renderPlayerTrophies();
-          openOverlay("overlay-player-trophies");
-        } else {
-          viewHost = hostData.current;
-          renderTrophies();
-          openOverlay("overlay-trophies");
-        }
+        showBusy();
+        setTimeout(function () {
+          try {
+            if (player && player.name) {
+              renderPlayerTrophies();
+              openOverlay("overlay-player-trophies");
+            } else {
+              viewHost = hostData.current;
+              renderTrophies();
+              openOverlay("overlay-trophies");
+            }
+          } finally { hideBusy(); }
+        }, 60);
       });
 
       /* ================= SUGGEST A FEATURE ================= */
@@ -13616,7 +13668,7 @@ Answer: Augusta</pre>
           stems.map(function (s) { return '<p class="builder-note" style="margin:.3rem 0">• ' + escapeHtml(s) + "</p>"; }).join("") +
           AI_TIPS.map(function (s) { return '<p class="builder-note" style="margin:.3rem 0">' + escapeHtml(s) + "</p>"; }).join("") +
           '<div class="builder-row"><button class="btn small gold" id="btn-ai-open-builder" type="button">✏️ Open the Question Builder</button></div></div>';
-        $("btn-ai-open-builder").addEventListener("click", function () { closeOverlay("overlay-aiideas"); renderBuilder(); openOverlay("overlay-builder"); });
+        $("btn-ai-open-builder").addEventListener("click", function () { closeOverlay("overlay-aiideas"); showBusy(); setTimeout(function () { try { renderBuilder(); openOverlay("overlay-builder"); } finally { hideBusy(); } }, 60); });
       }
       var AI_ASK_KEY = "pourDecisions.aiAsks.v1";
       var aiAsks = [];
@@ -15495,7 +15547,7 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
-        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen", "📺 Easier to read on the bar TVs — bigger answers in a 2×2 grid, a wider scoreboard that fits big nights, and a slimmer host bar", "📺 Also on the bar TVs — wider question text, a slimmer 'Answer hidden' box, and a bigger fun fact under revealed answers", "🏁 New end-of-night recap stats — most correct answers, final margin, most misses, and biggest comeback — with checkboxes so Jeremy picks which ones the room sees", "🏆 Trophies now show your progress right on the card (e.g. 50 of 100) plus a Recently earned row, so you can see what's next", "🐛 Bug fix: My Collection counts now agree — the button and the overlay were counting different sets (avatar borders and backgrounds were missing from the button)", "🚩 Hosts can now flag a questionable question mid-game — flagged questions land in a review list in the Host Control Center", "🧹 Removed 3 questions the audit flagged — two where the reveal didn't match the marked answer, and a duplicate Panthers coach question"] },
+        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen", "📺 Easier to read on the bar TVs — bigger answers in a 2×2 grid, a wider scoreboard that fits big nights, and a slimmer host bar", "📺 Also on the bar TVs — wider question text, a slimmer 'Answer hidden' box, and a bigger fun fact under revealed answers", "🏁 New end-of-night recap stats — most correct answers, final margin, most misses, and biggest comeback — with checkboxes so Jeremy picks which ones the room sees", "🏆 Trophies now show your progress right on the card (e.g. 50 of 100) plus a Recently earned row, so you can see what's next", "🐛 Bug fix: My Collection counts now agree — the button and the overlay were counting different sets (avatar borders and backgrounds were missing from the button)", "🚩 Hosts can now flag a questionable question mid-game — flagged questions land in a review list in the Host Control Center", "🧹 Removed 3 questions the audit flagged — two where the reveal didn't match the marked answer, and a duplicate Panthers coach question", "🍷🍺 Loading glasses on more screens — the spinning wine and beer glasses now show while Browse Topics, My Collection, Trophies, Achievements, Trophy Room, Question Builder, and Passport load, so slow screens never look stuck", "🎨 Theme animations for the four themes that had none — Wine Bar gets faint falling wine glasses and grapes, Christmas gets falling trees, gifts, stars, and bells, Wine Cork gets drifting bubbles and bottles, and Halloween adds falling pumpkins, candies, and cookies alongside its bats", "🌊 Ocean theme, bigger and more sailing — more fish plus sailboats, shrimp, lobsters, crabs, and waves on screen, and the ocean music rewritten as a lilting sailing tune with wave washes under it", "⭐ Start here row at the top of the title screen — Add to Home Screen, What's New, and Join as a Player are now the first buttons you see when the app opens", "🍷 Wine Bar theme now has beer bottles falling alongside the wine glasses and grapes", "🍾 Wine Cork theme now has more wine bottles drifting down"] },
         { v: "New topics & poster", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
         { v: "Boats & motoring", d: "Oct 24", items: ["🦀 8 new Deadliest Catch boat questions (Time Bandit, Summer Bay, Saga, Brenna A, Cornelia Marie)", "🚗 New Top Gear & Grand Tour Specials topic — 22 questions (Botswana, Bolivia, Middle East, India, USA, Vietnam, Colombia, Madagascar)", "🏆 4 new achievements: Crab Catcher, Bering Captain, Petrolhead, Special Specialist", "🎒 2 new collectibles: Crab Pot, Oliver"] },
         { v: "WOOOOO update", d: "Oct 23", items: ["🔊 WOOOOO! chant sound with the triangle", "🔔 Triangle rings when a round starts", "8 new questions: Scooby-Doo, Batman, Spider-Man"] },
@@ -15548,6 +15600,11 @@ $("btn-start").addEventListener("click", function () {
           finally { hideBusy(); }
         }, 60);
       });
+      /* Start-here row at the top of the title screen: the same three
+         actions, wired straight to the existing buttons below. */
+      $("btn-start-homescreen").addEventListener("click", function () { $("btn-homescreen-help").click(); });
+      $("btn-start-whatsnew").addEventListener("click", function () { $("btn-whatsnew").click(); });
+      $("btn-start-join").addEventListener("click", function () { $("btn-player-entry").click(); });
       /* Auto-show what's new on update: if the app version changed since
          last visit, pop the What's New overlay automatically. */
       (function showHomescreenPrompt() {
@@ -15610,8 +15667,11 @@ $("btn-start").addEventListener("click", function () {
         }
       }
             $("btn-achievements").addEventListener("click", function() {
-        renderAchievements();
-        openOverlay("overlay-achievements");
+        showBusy();
+        setTimeout(function () {
+          try { renderAchievements(); openOverlay("overlay-achievements"); }
+          finally { hideBusy(); }
+        }, 60);
       });
       function personalizeTrophies() {
         /* Title the trophy shelf with the current player's name. */
@@ -16289,8 +16349,11 @@ $("btn-start").addEventListener("click", function () {
         });
       }
       $("p-room-btn").addEventListener("click", function () {
-        renderRoom();
-        openOverlay("overlay-trophy-room");
+        showBusy();
+        setTimeout(function () {
+          try { renderRoom(); openOverlay("overlay-trophy-room"); }
+          finally { hideBusy(); }
+        }, 60);
       });
       /* Player-side door to the same full backup: the envelope holds the
          whole device, so a guest's profile, trophies, achievements, and
@@ -16969,13 +17032,19 @@ $("btn-start").addEventListener("click", function () {
         wrap.appendChild(grid);
       }
       $("p-collection-btn").addEventListener("click", function () {
-        renderCollection();
-        openOverlay("overlay-collection");
+        showBusy();
+        setTimeout(function () {
+          try { renderCollection(); openOverlay("overlay-collection"); }
+          finally { hideBusy(); }
+        }, 60);
       });
       $("btn-unlocks-collection").addEventListener("click", function () {
         closeOverlay("overlay-unlocks");
-        renderCollection();
-        openOverlay("overlay-collection");
+        showBusy();
+        setTimeout(function () {
+          try { renderCollection(); openOverlay("overlay-collection"); }
+          finally { hideBusy(); }
+        }, 60);
       });
 
       /* ================= NIGHT THEMES (SKIN + MUSIC) ================= */
@@ -17036,22 +17105,26 @@ $("btn-start").addEventListener("click", function () {
         var box = $("theme-fx");
         if (!box) return;
         box.innerHTML = "";
-        if (currentTheme === "default") return;
         var items = [];
-        if (currentTheme === "halloween") items = ["🦇", "🦇", "🦇", "🦇", "🦇"];
+        var extraItems = [];
+        var sailItems = [];
+        if (currentTheme === "default") items = ["🍷", "🍺", "🥂", "🍇", "🍷", "🍺", "🥂", "🍇", "🍷", "🍺"];
+        else if (currentTheme === "halloween") { items = ["🦇", "🦇", "🦇", "🦇", "🦇"]; extraItems = ["🎃", "🍬", "🍪", "🎃", "🍬", "🍪", "🎃", "🍪"]; }
         else if (currentTheme === "fall") items = ["🍂", "🍁", "🍂", "🍁", "🍂", "🍁", "🍂", "🍁", "🍂", "🍁"];
         else if (currentTheme === "winter") { for (var i = 0; i < 26; i++) items.push("❄"); }
         else if (currentTheme === "safari") items = ["🦁", "🦒", "🐘", "🦓", "🦩", "🦁", "🦒", "🐘"];
         else if (currentTheme === "blocky") items = ["🧱", "⛏️", "💎", "🧱", "⛏️", "💎", "🧱", "⛏️"];
         else if (currentTheme === "shamrock") items = ["🍀", "☘️", "🍀", "🌈", "☘️", "🪙", "🍀", "☘️", "🍀", "🌈"];
         else if (currentTheme === "valentine") items = ["💗", "💘", "🩷", "💗", "💕", "🌹", "💗", "🩷", "💘", "💗"];
-        else if (currentTheme === "ocean") items = ["🐠", "🫧", "🐢", "🌊", "🐠", "🫧", "🐬", "🫧", "🐠", "🌊"];
+        else if (currentTheme === "ocean") { items = ["🐠", "🐠", "🫧", "🐢", "🌊", "🐠", "🦐", "🐬", "🫧", "🐠", "🦞", "🌊", "🦀", "🐠", "🫧", "🌊"]; sailItems = ["⛵", "⛵"]; }
         else if (currentTheme === "independence") items = ["🎆", "🎇", "🇺🇸", "🎆", "⭐", "🎇", "🇺🇸", "🎆", "⭐", "🎇"];
+        else if (currentTheme === "christmas") items = ["🎄", "🎁", "⭐", "🔔", "🎄", "🎁", "⭐", "🔔", "🎄", "🎁"];
+        else if (currentTheme === "cork") items = ["🍾", "🍾", "🫧", "🍾", "🍾", "🫧", "🍾", "🍾", "🫧", "🍾", "🍾", "🫧"];
         items.forEach(function (ch) {
           var s = document.createElement("span");
           s.className = "fx-item" + (currentTheme === "halloween" ? " bat" : "");
           s.textContent = ch;
-          if (currentTheme === "safari" || currentTheme === "blocky") s.style.opacity = ".35";
+          if (currentTheme === "safari" || currentTheme === "blocky" || currentTheme === "default") s.style.opacity = ".35";
           if (currentTheme === "halloween") {
             s.style.left = "0";
             s.style.top = (3 + Math.random() * 20) + "%";
@@ -17064,6 +17137,28 @@ $("btn-start").addEventListener("click", function () {
           }
           s.style.animationDelay = (-Math.random() * 18) + "s";
           s.style.setProperty("--sway", (20 + Math.random() * 46) + "px");
+          box.appendChild(s);
+        });
+        extraItems.forEach(function (ch) {
+          var s = document.createElement("span");
+          s.className = "fx-item";
+          s.textContent = ch;
+          s.style.left = (Math.random() * 97) + "%";
+          s.style.fontSize = (16 + Math.random() * 16) + "px";
+          s.style.animationDuration = (9 + Math.random() * 10) + "s";
+          s.style.animationDelay = (-Math.random() * 18) + "s";
+          s.style.setProperty("--sway", (20 + Math.random() * 46) + "px");
+          box.appendChild(s);
+        });
+        sailItems.forEach(function (ch) {
+          var s = document.createElement("span");
+          s.className = "fx-item sail";
+          s.textContent = ch;
+          s.style.left = "0";
+          s.style.top = (70 + Math.random() * 14) + "%";
+          s.style.fontSize = (24 + Math.random() * 12) + "px";
+          s.style.animationDuration = (22 + Math.random() * 10) + "s";
+          s.style.animationDelay = (-Math.random() * 28) + "s";
           box.appendChild(s);
         });
       }
@@ -18500,7 +18595,7 @@ $("btn-start").addEventListener("click", function () {
           grid.appendChild(d);
         });
       }
-      $("p-passport-btn").addEventListener("click", function () { renderPassport(); openOverlay("overlay-passport"); });
+      $("p-passport-btn").addEventListener("click", function () { showBusy(); setTimeout(function () { try { renderPassport(); openOverlay("overlay-passport"); } finally { hideBusy(); } }, 60); });
       document.querySelectorAll(".open-player-help").forEach(function (b) {
         b.addEventListener("click", function () { openOverlay("overlay-player-help"); });
       });
