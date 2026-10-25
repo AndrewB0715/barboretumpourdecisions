@@ -1366,6 +1366,17 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       @media (prefers-reduced-motion: reduce) { .board-score.pop { animation: none; } }
       .superlatives { width: min(640px, 100%); margin: 0 auto 1.6rem; display: grid; gap: .5rem; }
       .superlatives:empty { display: none; }
+      .recap-toggles { width: min(640px, 100%); margin: 0 auto 1.6rem; display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center; justify-content: center; font-size: .95rem; color: var(--dim); }
+      .recap-toggles[hidden] { display: none; }
+      .recap-toggles-note { font-weight: 800; color: var(--faint); }
+      .recap-toggle { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer; font-weight: 600; }
+      .recap-toggle input { width: 18px; height: 18px; accent-color: var(--gold); }
+      .flag-row { margin-top: .6rem; display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; justify-content: center; }
+      .flag-row[hidden] { display: none; }
+      .flag-form { display: inline-flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
+      .flag-form[hidden] { display: none; }
+      .flag-form input { padding: .5rem .7rem; border-radius: 10px; border: 1px solid var(--line); background: #1d0d16; color: var(--cream); min-width: min(320px, 80vw); font-size: 1rem; }
+      .flag-item { border: 1px solid var(--line); border-radius: 14px; padding: .7rem .9rem; margin-bottom: .6rem; line-height: 1.4; }
       .superlative-line {
         border: 1px solid var(--gold); border-radius: 14px; background: rgba(226,166,61,.1);
         padding: .7rem 1rem; font-weight: 800; font-size: clamp(1rem, 2.2vw, 1.3rem); color: var(--cream);
@@ -2092,6 +2103,10 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         <div class="award-status" id="award-status" role="status"></div>
         <div class="ai-results" id="ai-results" aria-live="polite"></div>
         <div class="ff-banner" id="ff-banner" hidden></div>
+        <div class="flag-row" id="flag-row" hidden>
+          <button class="btn small" id="btn-flag-q" type="button">🚩 Flag this question</button>
+          <span class="flag-form" id="flag-form" hidden><input id="flag-reason" type="text" maxlength="120" placeholder="What's wrong? (optional)"><button class="btn small gold" id="btn-flag-save" type="button">Save flag</button><button class="btn small" id="btn-flag-cancel" type="button">Cancel</button></span>
+        </div>
       </div>
       <div class="react-strip" id="react-strip" role="group" aria-label="Crowd reactions — tap to cheer">
         <span class="react-label">React:</span>
@@ -2158,6 +2173,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       <p class="prize-line" id="results-prize-line"></p>
       <p class="winner-sub" id="comeback-line" style="font-size:clamp(1.05rem,2.4vw,1.5rem)"></p>
       <div class="superlatives" id="superlatives"></div>
+      <div class="recap-toggles" id="recap-toggles" hidden></div>
       <div class="podium" id="podium"></div>
       <div class="visual-card" id="results-visual" hidden></div>
       <div class="title-actions" role="group" aria-label="Sharing options">
@@ -3364,6 +3380,19 @@ Answer: Augusta</pre>
       </div>
     </div>
 
+    <!-- ============ FLAGGED QUESTIONS ============ -->
+    <div class="overlay" id="overlay-flagged" role="dialog" aria-modal="true" aria-labelledby="flagged-h">
+      <div class="sheet">
+        <h2 id="flagged-h">🚩 Flagged Questions</h2>
+        <p class="sheet-sub">Questions the host flagged during a game for Andrew to review. Flagging changes nothing in the game — a flagged question still plays until Andrew drops or fixes it.</p>
+        <div id="flagged-list"></div>
+        <div class="title-actions">
+          <button class="btn ghost" id="btn-flagged-clear" type="button">🗑 Clear all flags</button>
+          <button class="btn" data-close="overlay-flagged" type="button">✖ Close</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ============ HOST CONTROL CENTER ============ -->
     <div class="overlay" id="overlay-hcc" role="dialog" aria-modal="true" aria-labelledby="hcc-h">
       <div class="sheet builder-sheet">
@@ -3376,6 +3405,7 @@ Answer: Augusta</pre>
           <button class="hcc-card" id="hcc-backup" type="button"><strong>💾 Back Up Data</strong><span>Download your custom topics — the backup file that moves them between devices.</span></button>
           <button class="hcc-card" id="hcc-dlbackup" type="button"><strong>⬇ Download Full Backup</strong><span>Everything on this device in one file — profiles, trophies, topics, plans. Restoring it on the new site address carries it all across.</span></button>
           <button class="hcc-card" id="hcc-restore" type="button"><strong>⬆ Restore Full Backup</strong><span>Pick a backup file — it replaces what's on this device, then reloads.</span></button>
+          <button class="hcc-card" id="hcc-flagged" type="button"><strong>🚩 Flagged Questions</strong><span>Questions flagged during games for review — nothing here changes the game until Andrew acts on them.</span></button>
           <input type="file" id="hcc-restore-file" accept="application/json,.json" hidden>
         </div>
         <h3 class="builder-h3">🧭 Find It Fast</h3>
@@ -5672,7 +5702,6 @@ Answer: Augusta</pre>
             { q: "For their inaugural season, the Panthers' first-ever home stadium was which college stadium?", a: "Clemson's Memorial Stadium ('Death Valley')", choices: ["UNC's Kenan Stadium", "South Carolina's Williams-Brice", "Clemson's Memorial Stadium ('Death Valley')", "NC State's Carter-Finley"], correct: 2 },
             { q: "The Panthers reached their first Super Bowl (XXXVIII) after which season — losing a thriller to the Patriots?", a: "The 2003 season", choices: ["The 2003 season", "Bank of America Stadium", "The 1996 season", "The 2008 season"], correct: 0 },
             { q: "Super Bowl 50: the Panthers' 15-1 season ended in a loss to which team?", a: "The Denver Broncos", choices: ["The Denver Broncos", "Sam Mills", "The New England Patriots", "The Seattle Seahawks"], correct: 0 },
-            { q: "Who was the Panthers' first head coach in franchise history?", a: "Dom Capers", choices: ["Dom Capers", "George Seifert", "The NFC Championship Game", "John Fox"], correct: 0 },
             { q: "The Panthers play their home games at which Charlotte stadium?", a: "Bank of America Stadium", choices: ["Bank of America Stadium", "Ericsson Stadium was an earlier name", "Truist Field", "1993 (play began in 1995)"], correct: 0 },
             { q: "'Keep Pounding,' the team's motto, comes from a speech by which beloved former player and coach?", a: "Sam Mills", choices: ["Sam Mills", "The 2003 season", "Steve Smith Sr.", "Jake Delhomme"], correct: 0 },
             { q: "Which owner founded the Panthers and owned the team until 2018?", a: "Jerry Richardson", choices: ["Jerry Richardson", "Bank of America Stadium", "David Tepper", "Bruton Smith"], correct: 0 },
@@ -6810,7 +6839,7 @@ Answer: Augusta</pre>
             { q: "🍲 Cabbage Island is famous for what Maine experience?", a: "A traditional clam bake", choices: ["A traditional clam bake", "A lighthouse tour", "Whale watching", "A music festival"], correct: 0, fact: "The Cabbage Island clam bake — reached by boat from Boothbay Harbor — is a classic Maine coastal tradition." },
             { q: "🫐 Bar Harbor is the gateway to which national park?", a: "Acadia National Park", choices: ["Acadia National Park", "Shenandoah", "Great Smoky Mountains", "Cape Cod National Seashore"], correct: 0 },
             { q: "🏞️ Acadia National Park is located primarily on which island?", a: "Mount Desert Island", choices: ["Mount Desert Island", "Long Island", "Martha's Vineyard", "Block Island"], correct: 0 },
-            { q: "🦞 Portland, Maine is famous for what food?", a: "Lobster rolls", choices: ["Lobster rolls", "Clam chowder", "Blueberry pie", "All of these"], correct: 3 },]
+          ]
         },
         {
           id: "southcarolina", name: "South Carolina", icon: "🏖️",
@@ -6882,7 +6911,6 @@ Answer: Augusta</pre>
             { q: "🌟 How many wise men does the Bible say visited Jesus?", a: "The Bible doesn't say", choices: ["The Bible doesn't say", "Three", "Twelve", "Seven"], correct: 0, fact: "The Bible mentions three gifts but never says how many wise men there were." },
             { q: "🏠 Why was Jesus born in a manger?", a: "There was no room at the inn", choices: ["There was no room at the inn", "They preferred barns", "It was tradition", "The temple was closed"], correct: 0 },
             { q: "😇 Which angel told Mary she would have a son?", a: "Gabriel", choices: ["Gabriel", "Michael", "Raphael", "Uriel"], correct: 0 },
-            { q: "📯 What did the angels say to the shepherds?", a: "'Glory to God in the highest'", choices: ["'Glory to God in the highest'", "'Peace on Earth'", "'Fear not'", "All of these"], correct: 3 },
             { q: "🖼️ A nativity scene typically includes which animals?", a: "Sheep, donkeys, and cattle", choices: ["Sheep, donkeys, and cattle", "Lions and tigers", "Horses only", "No animals"], correct: 0 },
             { q: "🎄 Which country started the tradition of the Christmas tree?", a: "Germany", choices: ["Germany", "England", "France", "Italy"], correct: 0, fact: "The modern Christmas tree tradition began in 16th-century Germany." }
           ]
@@ -7289,8 +7317,20 @@ Answer: Augusta</pre>
          flows through setMark(), so undoing a mark unwinds these counts
          exactly the way it unwinds the points. */
       var nightStats = [];
+      /* Point snapshots for the Biggest Comeback recap stat: the team
+         scores at every scoreboard render (round boundaries, Final Pour,
+         Lightning, and any mid-round board view). A snapshot only ever
+         appends — it never touches scoring — and it rides along in the
+         game save, so a mid-night reload keeps the trail. Nights played
+         before this update have no snapshots, so no comeback line shows
+         for them; it appears for games played after this update. */
+      var scoreSnaps = [];
+      function snapScores() {
+        try { scoreSnaps.push(teams.map(function (t) { return t.score || 0; })); } catch (e) {}
+      }
       function resetNightStats() {
         nightStats = teams.map(function () { return { right: 0, answered: 0, bestStreak: 0, ff: 0 }; });
+        scoreSnaps = [];
       }
       function statFor(i) {
         if (!nightStats[i]) nightStats[i] = { right: 0, answered: 0, bestStreak: 0, ff: 0 };
@@ -8265,6 +8305,7 @@ Answer: Augusta</pre>
         $("q-count").textContent = "Question " + (game.idx + 1) + " of " + game.list.length;
         $("q-cue").textContent = (item.cue || game.cue || item.catName) + (item.type === "timeline" ? " · 🕰️ Timeline Tangle — oldest first" : item.type === "blank" ? " · ✏️ Fill in the Blank" : item.type === "tf" ? " · ✔️ True or False" : item.type === "open" ? " · 🗣️ Open Answer" : "");
         $("q-text").textContent = item.q;
+        paintFlagRow();
         setMedia($("q-img"), $("q-video"), item);
         paintPriceNote($("q-price"), item);
         paintProgBtn($("btn-prog"), item, false);
@@ -9465,6 +9506,7 @@ Answer: Augusta</pre>
       }
       function renderBoard(banner) {
         markLastPlace();
+        snapScores();
         paintPlanButtons();
         $("board-banner").textContent = banner || "";
         var list = $("board-list");
@@ -9481,14 +9523,14 @@ Answer: Augusta</pre>
          (nightStats unwinds with every undone mark, so these always
          match the scoreboard). A title with no data behind it — nobody
          earned it, or a dead tie at zero — simply doesn't appear. */
-      function superlativeLines() {
-        var lines = [];
+      function superlativeEntries() {
+        var entries = [];
         var bestFF = null;
         teams.forEach(function (t, i) {
           var s = statFor(i);
           if (s.ff > 0 && (!bestFF || s.ff > bestFF.s.ff)) bestFF = { t: t, s: s };
         });
-        if (bestFF) lines.push("⚡ Fastest Finger: " + bestFF.t.icon + " " + bestFF.t.name + " — first to get it right " + bestFF.s.ff + " time" + (bestFF.s.ff === 1 ? "" : "s") + " tonight!");
+        if (bestFF) entries.push({ key: "ff", label: "⚡ Fastest Finger", text: "⚡ Fastest Finger: " + bestFF.t.icon + " " + bestFF.t.name + " — first to get it right " + bestFF.s.ff + " time" + (bestFF.s.ff === 1 ? "" : "s") + " tonight!" });
         var sharp = null;
         teams.forEach(function (t, i) {
           var s = statFor(i);
@@ -9497,16 +9539,147 @@ Answer: Augusta</pre>
             if (!sharp || rate > sharp.rate) sharp = { t: t, s: s, rate: rate };
           }
         });
-        if (sharp && sharp.s.right > 0) lines.push("🎯 Sharpest Shooter: " + sharp.t.icon + " " + sharp.t.name + " — " + sharp.s.right + " of " + sharp.s.answered + " right (" + Math.round(sharp.rate * 100) + "%)!");
+        if (sharp && sharp.s.right > 0) entries.push({ key: "sharp", label: "🎯 Sharpest Shooter", text: "🎯 Sharpest Shooter: " + sharp.t.icon + " " + sharp.t.name + " — " + sharp.s.right + " of " + sharp.s.answered + " right (" + Math.round(sharp.rate * 100) + "%)!" });
         var hot = null;
         teams.forEach(function (t, i) {
           var s = statFor(i);
           if (s.bestStreak >= 3 && (!hot || s.bestStreak > hot.s.bestStreak)) hot = { t: t, s: s };
         });
-        if (hot) lines.push("🔥 Hot Hand: " + hot.t.icon + " " + hot.t.name + " — a " + hot.s.bestStreak + "-answer streak tonight!");
-        return lines;
+        if (hot) entries.push({ key: "hot", label: "🔥 Hot Hand", text: "🔥 Hot Hand: " + hot.t.icon + " " + hot.t.name + " — a " + hot.s.bestStreak + "-answer streak tonight!" });
+        var most = null;
+        teams.forEach(function (t, i) {
+          var s = statFor(i);
+          if (s.right > 0 && (!most || s.right > most.s.right)) most = { t: t, s: s };
+        });
+        if (most) entries.push({ key: "correct", label: "✅ Most Correct", text: "✅ Most Correct: " + most.t.icon + " " + most.t.name + " — " + most.s.right + " right answers tonight!" });
+        var sorted = sortedTeams();
+        if (sorted.length >= 2) {
+          var margin = sorted[0].t.score - sorted[1].t.score;
+          if (margin > 0) entries.push({ key: "margin", label: "📏 Final Margin", text: "📏 Final Margin: " + margin + " point" + (margin === 1 ? "" : "s") + " between first and second place." });
+        }
+        var cold = null;
+        teams.forEach(function (t, i) {
+          var s = statFor(i);
+          var misses = s.answered - s.right;
+          if (misses > 0 && (!cold || misses > cold.misses)) cold = { t: t, misses: misses };
+        });
+        if (cold) entries.push({ key: "misses", label: "😅 Most Misses", text: "😅 Most Misses: " + cold.t.icon + " " + cold.t.name + " — " + cold.misses + " answers got away tonight!" });
+        /* Biggest Comeback (points): the eventual winner's largest
+           deficit at any scoreboard snapshot. No snapshots (games
+           played before this update, or a night with no board views)
+           means no line — never a guessed number. */
+        if (sorted.length && scoreSnaps.length) {
+          var win = sorted[0];
+          var maxDeficit = 0;
+          scoreSnaps.forEach(function (snap) {
+            var w = snap[win.i];
+            if (w == null) return;
+            var lead = null;
+            sorted.forEach(function (e) {
+              var v = snap[e.i];
+              if (v != null && (lead == null || v > lead)) lead = v;
+            });
+            if (lead != null && lead - w > maxDeficit) maxDeficit = lead - w;
+          });
+          if (maxDeficit > 0) entries.push({ key: "comeback", label: "🚀 Biggest Comeback", text: "🚀 Biggest Comeback: " + win.t.icon + " " + win.t.name + " — trailed by " + maxDeficit + " points mid-night, but finished on top!" });
+        }
+        return entries;
       }
+      /* Recap stat visibility: the host's embarrassment guard. Every
+         stat shows unless the host unchecks it on the results screen;
+         the choice resets each time the results screen opens. */
+      var recapHidden = {};
+      function superlativeLines() {
+        return superlativeEntries().map(function (e) { return e.text; });
+      }
+      function superlativeEntriesShown() {
+        return superlativeEntries().filter(function (e) { return !recapHidden[e.key]; });
+      }
+      function superlativeLinesShown() {
+        return superlativeEntriesShown().map(function (e) { return e.text; });
+      }
+      /* ---------- question review flags (host) ---------- */
+      /* A flagged question keeps playing until Andrew acts on it —
+         this is only a review list, never an auto-delete. Main host
+         game only; Lightning and Final Pour have their own screens. */
+      var FLAG_KEY = "pourDecisions.flags.v1";
+      function loadFlags() { try { var v = JSON.parse(localStorage.getItem(FLAG_KEY) || "[]"); return Array.isArray(v) ? v : []; } catch (e) { return []; } }
+      function saveFlags(list) { try { localStorage.setItem(FLAG_KEY, JSON.stringify(list)); } catch (e) {} }
+      function currentFlagItem() {
+        if (typeof game === "undefined" || !game || !game.list || !game.list[game.idx]) return null;
+        var it = game.list[game.idx];
+        return { catId: game.catId || "", catName: game.catName || "", q: it.q || "" };
+      }
+      function isFlagged(ci) {
+        if (!ci) return false;
+        return loadFlags().some(function (f) { return f.catId === ci.catId && f.q === ci.q; });
+      }
+      function paintFlagRow() {
+        var row = $("flag-row");
+        if (!row) return;
+        var ci = currentFlagItem();
+        if (!ci) { row.hidden = true; return; }
+        row.hidden = false;
+        var btn = $("btn-flag-q");
+        var form = $("flag-form");
+        if (isFlagged(ci)) { btn.textContent = "✓ Flagged — tap to unflag"; form.hidden = true; }
+        else { btn.textContent = "🚩 Flag this question"; }
+      }
+      function renderFlaggedList() {
+        var wrap = $("flagged-list");
+        if (!wrap) return;
+        var list = loadFlags();
+        if (!list.length) { wrap.innerHTML = "<p>No flagged questions yet — flag one from the host question screen and it lands here.</p>"; return; }
+        wrap.innerHTML = "";
+        list.slice().reverse().forEach(function (f) {
+          var d = document.createElement("div");
+          d.className = "flag-item";
+          d.innerHTML = "<div><strong>" + escapeHtml(f.catName || f.catId || "") + "</strong> · " + new Date(f.time || 0).toLocaleDateString() + "</div>" +
+            "<div>“" + escapeHtml(f.q || "") + "”</div>" +
+            (f.reason ? "<div>Note: " + escapeHtml(f.reason) + "</div>" : "");
+          wrap.appendChild(d);
+        });
+      }
+      (function wireFlagRow() {
+        var btn = $("btn-flag-q");
+        if (!btn || btn.dataset.wired) return;
+        btn.dataset.wired = "1";
+        btn.addEventListener("click", function () {
+          var ci = currentFlagItem();
+          if (!ci) return;
+          if (isFlagged(ci)) {
+            saveFlags(loadFlags().filter(function (f) { return !(f.catId === ci.catId && f.q === ci.q); }));
+            paintFlagRow();
+            return;
+          }
+          $("flag-form").hidden = false;
+          $("flag-reason").value = "";
+          $("flag-reason").focus();
+        });
+        $("btn-flag-save").addEventListener("click", function () {
+          var ci = currentFlagItem();
+          if (!ci) return;
+          var list = loadFlags();
+          if (!isFlagged(ci)) list.push({ catId: ci.catId, catName: ci.catName, q: ci.q, reason: ($("flag-reason").value || "").trim(), time: Date.now() });
+          saveFlags(list);
+          $("flag-form").hidden = true;
+          paintFlagRow();
+        });
+        $("btn-flag-cancel").addEventListener("click", function () { $("flag-form").hidden = true; });
+        var hcc = $("hcc-flagged");
+        if (hcc) hcc.addEventListener("click", function () {
+          closeOverlay("overlay-hcc");
+          renderFlaggedList();
+          openOverlay("overlay-flagged");
+        });
+        var clr = $("btn-flagged-clear");
+        if (clr) clr.addEventListener("click", function () {
+          armConfirm(clr, "🗑 Clear all flags", function () { saveFlags([]); renderFlaggedList(); });
+        });
+      })();
+
       function showResults() {
+        recapHidden = {};
         var sorted = sortedTeams();
         var top = sorted[0].t;
         var tied = sorted.filter(function (e) { return e.t.score === top.score; });
@@ -14240,7 +14413,7 @@ $("btn-start").addEventListener("click", function () {
         if (trad.ahi) { lines.push("🎯 Almost Had It Award: " + trad.ahi); }
         var cbLine = comebackText();
         if (cbLine) lines.push(cbLine);
-        if (typeof superlativeLines === "function") superlativeLines().forEach(function (sl) { lines.push(sl); });
+        if (typeof superlativeLinesShown === "function") superlativeLinesShown().forEach(function (sl) { lines.push(sl); });
         var socTag = socialTagLine();
         if (socTag) lines.push(socTag);
         lines.push("");
@@ -14633,6 +14806,19 @@ $("btn-start").addEventListener("click", function () {
         v.setAttribute("aria-pressed", player.vib ? "true" : "false");
       }
         var aa = $("p-avatar-anim"); if (aa) { aa.value = (player && player.avatarAnim) || "float"; if (!aa.dataset.wired) { aa.dataset.wired = "1"; aa.addEventListener("change", function(){ if (!player) return; player.avatarAnim = aa.value; savePlayer(); paintPlayerHead(); }); } }
+      /* Single source of truth for collection counts. The button and
+         the overlay used different category sets — the button forgot
+         avatar borders and backgrounds — so they disagreed (295 vs
+         312). Both now call this. */
+      function collectionTotals() {
+        if (!player) return { got: 0, total: 0 };
+        return {
+          got: Object.keys(player.collection || {}).length + Object.keys(player.celebrations || {}).length +
+            Object.keys(player.sfxPacks || {}).length + Object.keys(player.titles || {}).length +
+            Object.keys(player.borders || {}).length + Object.keys(player.backgrounds || {}).length,
+          total: COLLECTIBLES.length + CELEBRATIONS.length + SOUND_PACKS.length + TITLES.length + AVATAR_BORDERS.length + AVATAR_BACKGROUNDS.length
+        };
+      }
       function paintPlayerHead() {
         if (!player) return;
         $("p-head-icon").textContent = player.icon;
@@ -14645,10 +14831,8 @@ $("btn-start").addEventListener("click", function () {
         else tEl.hidden = true;
         $("p-tally").textContent = "Tonight: " + player.right + " right · " + player.wrong + " missed";
         $("p-trophies-btn").textContent = "🏆 My Trophies (" + Object.keys(player.trophies || {}).length + "/" + PLAYER_TROPHIES.length + ")";
-        var colTotal = COLLECTIBLES.length + CELEBRATIONS.length + SOUND_PACKS.length + TITLES.length;
-        var colGot = Object.keys(player.collection || {}).length + Object.keys(player.celebrations || {}).length +
-          Object.keys(player.sfxPacks || {}).length + Object.keys(player.titles || {}).length;
-        $("p-collection-btn").textContent = "🎒 My Collection (" + colGot + "/" + colTotal + ")";
+        var ct = collectionTotals();
+        $("p-collection-btn").textContent = "🎒 My Collection (" + ct.got + "/" + ct.total + ")";
       }
       function openPlayer() {
         show("screen-player");
@@ -15311,7 +15495,7 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
-        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen", "📺 Easier to read on the bar TVs — bigger answers in a 2×2 grid, a wider scoreboard that fits big nights, and a slimmer host bar"] },
+        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen", "📺 Easier to read on the bar TVs — bigger answers in a 2×2 grid, a wider scoreboard that fits big nights, and a slimmer host bar", "📺 Also on the bar TVs — wider question text, a slimmer 'Answer hidden' box, and a bigger fun fact under revealed answers", "🏁 New end-of-night recap stats — most correct answers, final margin, most misses, and biggest comeback — with checkboxes so Jeremy picks which ones the room sees", "🏆 Trophies now show your progress right on the card (e.g. 50 of 100) plus a Recently earned row, so you can see what's next", "🐛 Bug fix: My Collection counts now agree — the button and the overlay were counting different sets (avatar borders and backgrounds were missing from the button)", "🚩 Hosts can now flag a questionable question mid-game — flagged questions land in a review list in the Host Control Center", "🧹 Removed 3 questions the audit flagged — two where the reveal didn't match the marked answer, and a duplicate Panthers coach question"] },
         { v: "New topics & poster", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
         { v: "Boats & motoring", d: "Oct 24", items: ["🦀 8 new Deadliest Catch boat questions (Time Bandit, Summer Bay, Saga, Brenna A, Cornelia Marie)", "🚗 New Top Gear & Grand Tour Specials topic — 22 questions (Botswana, Bolivia, Middle East, India, USA, Vietnam, Colombia, Madagascar)", "🏆 4 new achievements: Crab Catcher, Bering Captain, Petrolhead, Special Specialist", "🎒 2 new collectibles: Crab Pot, Oliver"] },
         { v: "WOOOOO update", d: "Oct 23", items: ["🔊 WOOOOO! chant sound with the triangle", "🔔 Triangle rings when a round starts", "8 new questions: Scooby-Doo, Batman, Spider-Man"] },
@@ -15450,6 +15634,30 @@ $("btn-start").addEventListener("click", function () {
           " unlocked — your shelf lives on this phone and carries over from night to night.";
         var list = $("player-trophy-list");
         list.innerHTML = "";
+        /* Recently earned: unlocks already carry a timestamp (see
+           unlockPlayerTrophy), so the five newest show first. Entries
+           without a numeric timestamp never get a fabricated date —
+           they simply don't appear here. */
+        var recent = PLAYER_TROPHIES.map(function (tr) { return { tr: tr, ts: unlocked[tr.id] }; })
+          .filter(function (e) { return typeof e.ts === "number"; })
+          .sort(function (a, b) { return b.ts - a.ts; })
+          .slice(0, 5);
+        if (recent.length) {
+          var rh = document.createElement("div");
+          rh.className = "badge-fam";
+          rh.textContent = "🕑 Recently earned";
+          list.appendChild(rh);
+          recent.forEach(function (e) {
+            var row = document.createElement("div");
+            row.className = "trophy-card";
+            row.title = "Tap to read this badge's story";
+            row.innerHTML = '<div class="t-icon">' + emblemSVG(e.tr.id, true) + "</div>" +
+              '<div class="t-body"><div class="t-name">' + e.tr.name + "</div>" +
+              '<div class="t-when">✓ Unlocked ' + fmtWhen(e.ts) + "</div></div>";
+            row.addEventListener("click", function () { openBadgeDetail(trophyDetail("player", e.tr)); });
+            list.appendChild(row);
+          });
+        }
         var _tview = (player && player.trophyView) || "stars";
         (function(){ var tr = document.createElement("div"); tr.className = "view-toggle";
           [["stars","🌌 Stars"],["list","📋 List"]].forEach(function(v){
@@ -15484,6 +15692,7 @@ $("btn-start").addEventListener("click", function () {
           list.appendChild(head);
           inFam.forEach(function (tr) {
           var ts = unlocked[tr.id];
+          var prog = ts ? null : playerProgressLine(tr.id);
           var card = document.createElement("div");
           card.className = "trophy-card" + (ts ? "" : " locked");
           card.title = "Tap to read this badge's story";
@@ -15492,7 +15701,8 @@ $("btn-start").addEventListener("click", function () {
             '<div class="t-body"><div class="t-name">' + tr.name + "</div>" +
             '<div class="t-desc">' + tr.desc + "</div>" +
             (ts ? '<div class="t-when">✓ Unlocked ' + fmtWhen(ts) + "</div>"
-                : '<div class="t-locked-note">Locked — tap to see how close you are</div>') +
+                : (prog ? '<div class="t-locked-note">🔒 ' + escapeHtml(prog) + "</div>"
+                        : '<div class="t-locked-note">Locked — tap to see how close you are</div>')) +
             "</div>";
           card.addEventListener("click", function (e) {
             if (e.target.closest("button")) return;
@@ -15715,6 +15925,21 @@ $("btn-start").addEventListener("click", function () {
         if (id === "sharpshooter") return "Tonight so far: " + Math.min(player.nightRight || 0, 10) + " of 10 right. It has to happen inside a single night.";
         if (id === "deadeye") return "Tonight so far: " + Math.min(player.nightRight || 0, 15) + " of 15 right. It has to happen inside a single night.";
         if (id === "unstoppable") return "Best streak on record: " + Math.min(player.bestStreak || 0, 8) + " — this one needs 8 in a row.";
+        if (id === "hotstreak") return "Best streak on record: " + Math.min(player.bestStreak || 0, 3) + " — this one needs 3 in a row.";
+        if (id === "onfire") return "Best streak on record: " + Math.min(player.bestStreak || 0, 5) + " — this one needs 5 in a row.";
+        if (id === "firstsip") return "Right answers all-time: " + Math.min(player.lifeRight || 0, 1) + " of 1.";
+        if (id === "firstofmany") return "Missed answers all-time: " + Math.min(player.lifeWrong || 0, 1) + " of 1.";
+        if (id === "wrongstuff") return "Tonight so far: " + Math.min(player.wrong || 0, 10) + " of 10 misses. It has to happen inside a single night.";
+        if (id === "tripleflawless") return "Flawless categories so far: " + Math.min(Object.keys(player.perfectCats || {}).length, 3) + " of 3.";
+        if (id === "petlover") return "Pets questions right: " + Math.min((player.topicRight || {}).pets || 0, 5) + " of 5.";
+        if (id === "birdwatcher") return "Bird questions right: " + Math.min((player.topicRight || {}).birds || 0, 3) + " of 3.";
+        if (id === "barnyard") return "Farmyard questions right: " + Math.min((player.topicRight || {}).farmyard || 0, 5) + " of 5.";
+        if (id === "catperson") return "Cat questions right: " + Math.min(player.catRight || 0, 3) + " of 3.";
+        if (id === "dogperson") return "Dog questions right: " + Math.min(player.dogRight || 0, 3) + " of 3.";
+        if (id === "lizardlover") return "Lizard questions right: " + Math.min(player.lizardRight || 0, 3) + " of 3.";
+        if (id === "exotickeeper") return "Exotic pet questions right: " + Math.min(player.exoticRight || 0, 3) + " of 3.";
+        if (id === "shellkeeper") return "Pet lobster & crab questions right: " + Math.min(player.shellRight || 0, 3) + " of 3.";
+        if (id === "saltydog") return "Salty Dog questions right: " + Math.min(player.saltyRight || 0, 3) + " of 3.";
         if (id === "champion") return "Nights your team has won: " + (player.wins || 0) + ".";
         return null;
       }
@@ -16614,10 +16839,9 @@ $("btn-start").addEventListener("click", function () {
         var got = main.filter(function (c) { return !!owned[c.id]; }).length;
         var sAll = COLLECTIBLES.filter(function (c) { return c.tier === "seasonal"; });
         var sGot = sAll.filter(function (c) { return !!owned[c.id]; }).length;
-        var totalAll = COLLECTIBLES.length + CELEBRATIONS.length + SOUND_PACKS.length + TITLES.length + AVATAR_BORDERS.length + AVATAR_BACKGROUNDS.length;
-        var gotAll = Object.keys(owned).length + Object.keys(player.celebrations || {}).length +
-          Object.keys(player.sfxPacks || {}).length + Object.keys(player.titles || {}).length +
-          Object.keys(player.borders || {}).length + Object.keys(player.backgrounds || {}).length;
+        var ct = collectionTotals();
+        var totalAll = ct.total;
+        var gotAll = ct.got;
         $("col-sub").textContent = player.icon + " " + player.name + " · " + gotAll + " of " + totalAll + " unlockables" +
           " (icons " + got + "/" + main.length + " · seasonal " + sGot + "/" + sAll.length + ") · Nights won: " + (player.wins || 0) +
           ". Your collection lives on this phone only — it doesn't sync to other devices. Tap anything you've earned to equip it.";
@@ -17158,6 +17382,7 @@ $("btn-start").addEventListener("click", function () {
         "pourDecisions.studio.v1",
         "pourDecisions.blockedNames.v1",
         "pourDecisions.suggestions.v1",
+        "pourDecisions.flags.v1",
         "pourDecisions.aiAsks.v1",
         "pourDecisions.topicRequests.v1",
         "pourDecisions.social.v1",
@@ -17258,6 +17483,7 @@ $("btn-start").addEventListener("click", function () {
             teams: teams,
             playedCats: playedCats,
             roundsPlayed: roundsPlayed,
+            scoreSnaps: scoreSnaps,
             settings: { seconds: settings.seconds, points: settings.points, shuffle: settings.shuffle, dramatic: settings.dramatic, speedBonus: settings.speedBonus !== false },
             game: hasGame ? {
               catId: game.catId, catName: game.catName, cue: game.cue, list: game.list, idx: game.idx,
@@ -17328,6 +17554,7 @@ $("btn-start").addEventListener("click", function () {
           /* Rebuild the night's superlative stats from the restored
              ledger so the titles still match the scores. */
           resetNightStats();
+          scoreSnaps = (snap.scoreSnaps && Array.isArray(snap.scoreSnaps)) ? snap.scoreSnaps : [];
           (game.ledger || []).forEach(function (led) {
             if (!led) return;
             Object.keys(led).forEach(function (k) {
@@ -17343,6 +17570,7 @@ $("btn-start").addEventListener("click", function () {
           Object.keys(game.ffByIdx || {}).forEach(function (qk) { var fi = game.ffByIdx[qk]; if (fi != null && teams[fi]) statFor(fi).ff++; });
           showQuestion();
         } else {
+          scoreSnaps = (snap.scoreSnaps && Array.isArray(snap.scoreSnaps)) ? snap.scoreSnaps : [];
           gotoBoard("↩️ Game restored — welcome back!");
         }
       }
@@ -17953,7 +18181,7 @@ $("btn-start").addEventListener("click", function () {
         if (trad.ahi) lines += '<div class="vc-line">🎯 <strong>Almost Had It Award:</strong> ' + escapeHtml(trad.ahi) + "</div>";
         var cb = comebackText();
         if (cb) lines += '<div class="vc-line">' + escapeHtml(cb) + "</div>";
-        if (typeof superlativeLines === "function") superlativeLines().forEach(function (sl) { lines += '<div class="vc-line">' + escapeHtml(sl) + "</div>"; });
+        if (typeof superlativeLinesShown === "function") superlativeLinesShown().forEach(function (sl) { lines += '<div class="vc-line">' + escapeHtml(sl) + "</div>"; });
         lines += '<div class="vc-line">📅 ' + (trad.nextTheme ? "<strong>Next time: " + escapeHtml(trad.nextTheme) + "</strong> — same bar, same time. Bring your team!" : "Back next week at the Barboretum wine bar (Harris Teeter) — bring your team!") + "</div>";
         if (social.handle) lines += '<div class="vc-line">📸 Posting your night? Tag <strong>' + escapeHtml(social.handle) + "</strong></div>";
         el.innerHTML = '<div class="vc-kicker">🍷 Barboretum Trivia: Pour Decisions</div>' +
@@ -17971,12 +18199,43 @@ $("btn-start").addEventListener("click", function () {
         var sup = $("superlatives");
         if (sup) {
           sup.innerHTML = "";
-          superlativeLines().forEach(function (line) {
+          superlativeLinesShown().forEach(function (line) {
             var d = document.createElement("div");
             d.className = "superlative-line";
             d.textContent = line;
             sup.appendChild(d);
           });
+        }
+        /* Host's recap toggles: every stat that computed gets a
+           checkbox, all on by default. Uncheck to hide that stat from
+           the recap, the visual card, and the share text. */
+        var tog = $("recap-toggles");
+        if (tog) {
+          tog.innerHTML = "";
+          var allEntries = superlativeEntries();
+          if (!allEntries.length) { tog.hidden = true; }
+          else {
+            tog.hidden = false;
+            var note = document.createElement("div");
+            note.className = "recap-toggles-note";
+            note.textContent = "Show in the recap:";
+            tog.appendChild(note);
+            allEntries.forEach(function (e) {
+              var lab = document.createElement("label");
+              lab.className = "recap-toggle";
+              var cb = document.createElement("input");
+              cb.type = "checkbox";
+              cb.checked = !recapHidden[e.key];
+              cb.setAttribute("aria-label", "Show " + e.label + " in the recap");
+              cb.addEventListener("change", function () {
+                recapHidden[e.key] = !cb.checked;
+                paintResultsExtras();
+              });
+              lab.appendChild(cb);
+              lab.appendChild(document.createTextNode(" " + e.label));
+              tog.appendChild(lab);
+            });
+          }
         }
         paintShareToggles();
         renderVisualCard($("results-visual"));
