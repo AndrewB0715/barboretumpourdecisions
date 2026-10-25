@@ -242,13 +242,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       }
       .q-text {
         font-family: "Playfair Display", Georgia, serif; font-weight: 600;
-        font-size: clamp(1.9rem, 5.2vw, 4.2rem); line-height: 1.18; max-width: 1100px; margin: 0;
+        font-size: clamp(1.9rem, 5.2vw, 4.2rem); line-height: 1.18; max-width: 1400px; margin: 0;
       }
       .q-answer {
         margin-top: clamp(1.4rem, 4vh, 2.6rem); max-width: 1000px;
         border: 2px dashed var(--line); border-radius: 20px; padding: 1.2rem 2rem;
         font-size: clamp(1.5rem, 3.6vw, 2.8rem); font-weight: 900; color: var(--faint);
       }
+      .q-answer:not(.revealed) { padding: .7rem 1.5rem; margin-top: 1rem; font-size: clamp(1.2rem, 2.4vw, 1.8rem); }
       .q-answer.revealed {
         border: 2px solid var(--gold); border-style: solid; color: var(--gold-soft);
         background: rgba(226, 166, 61, .08);
@@ -1589,6 +1590,28 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
       .qr-branded { max-width: 232px !important; width: 100% !important; height: auto !important; display: block; margin: 0 auto; border-radius: 12px; }
       #qr-box img.qr-branded { max-width: 232px !important; }
 
+      /* ---------- TV readability (Oct 24) — wide screens only; phones untouched ---------- */
+      @media (min-width: 1200px) {
+        /* 1. Choices: bigger text, wider grid, 2 columns so 4 answers land 2x2. */
+        .choices-grid { width: min(1400px, 94vw); grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .choice-card { padding: 1.2rem 1.4rem; }
+        .choice-body { font-size: clamp(1.6rem, 2.6vw, 2.6rem); }
+        /* 2. Scoreboard: wider, 2 columns on big nights, quieter +/- buttons. */
+        .board-wrap { max-width: 1500px; }
+        #board-list.board-many { display: grid; grid-template-columns: 1fr 1fr; gap: 0 .8rem; align-items: start; }
+        #board-list.board-many .board-row { margin-bottom: .8rem; }
+        .board-adj button { width: 32px; height: 32px; font-size: 1rem; opacity: .55; }
+        .board-adj button:hover { opacity: 1; }
+        /* 3. Question-screen hostbar + reactions: dimmed and smaller, essentials full-size. */
+        #screen-question .hostbar .btn:not(#btn-reveal):not(#btn-next):not(#btn-board-q) { padding: .55rem .9rem; font-size: 1rem; opacity: .8; }
+        #screen-question .hostbar .btn:not(#btn-reveal):not(#btn-next):not(#btn-board-q):hover { opacity: 1; }
+        #screen-question .hostbar .hint { opacity: .7; }
+        #screen-question .react-strip { opacity: .7; }
+        #screen-question .react-btn { padding: .4rem .6rem; font-size: 1.1rem; }
+        /* 5. Fun fact: bigger on TV (player .p-fact untouched). */
+        .q-fact { font-size: clamp(1.1rem, 2vw, 1.8rem); }
+      }
+
 </style>
   </head>
   <body>
@@ -2055,7 +2078,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         <div class="choices-grid" id="q-choices" hidden></div>
         <div class="timeline-list" id="q-timeline" hidden></div>
         <p class="tl-hint" id="q-timeline-hint" hidden>🕰️ Timeline Tangle — teams put these in order, oldest first. The years stay hidden until the reveal.</p>
-        <div class="q-answer" id="q-answer">Answer hidden — host, press <span class="kbd">R</span> to reveal</div>
+        <div class="q-answer" id="q-answer">Answer hidden</div>
         <div class="q-fact" id="q-fact" hidden></div>
         <div class="suspense" id="suspense" hidden role="button" aria-label="Skip the suspense and reveal the answer now">
           <div class="suspense-line">THE BAR HAS SPOKEN.</div>
@@ -8251,7 +8274,7 @@ Answer: Augusta</pre>
         renderTimelineTV(item, false);
         var ans = $("q-answer");
         ans.className = "q-answer";
-        ans.innerHTML = 'Answer hidden — host, press <span class="kbd">R</span> to reveal';
+        ans.innerHTML = 'Answer hidden';
         $("q-fact").hidden = true;
         $("q-fact").innerHTML = "";
         cancelSuspense();
@@ -9447,6 +9470,7 @@ Answer: Augusta</pre>
         var list = $("board-list");
         list.innerHTML = "";
         var sorted = sortedTeams();
+        list.classList.toggle("board-many", sorted.length >= 7);
         var topScore = sorted.length ? sorted[0].t.score : 0;
         sorted.forEach(function (entry, i) { list.appendChild(boardRow(entry, i + 1, { showMove: true, topScore: topScore })); });
         boardPrevRanks = {};
@@ -15287,7 +15311,7 @@ $("btn-start").addEventListener("click", function () {
       }
       var APP_VERSION = "Latest";
       var VERSION_HISTORY = [
-        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen"] },
+        { v: "Latest", d: "Oct 24", items: ["📺 New Reality Shows group — Deadliest Catch, Top Gear & Grand Tour, and Clarkson's Farm, separate from scripted TV and superheroes", "🔤 Topics in alphabetical order — find a topic by name, the way a shuffle list should work", "👆 Browse Topics rows are tappable — search a topic, tap it, and the round starts", "⭐ Solo bonus: Expert topics pay +50 when one team plays alone", "🏷️ Every topic now shows its difficulty (Easy, Mixed, or Expert)", "🐛 Bug fix: a blank entry in Picture Round was cutting Browse Topics short — fixed, all topics now list", "🐾 13 new Pets questions — cats, dogs, lizards, exotics, and shell pets — plus Cosmo & Remy in Birds", "🏆 Animal trophies actually unlock now — Pet Lover, Cat Person, Dog Person, Bird Watcher, Lizard Lover, Barnyard Pro, plus new Exotic Keeper, Shell Keeper, and Salty Dog Regular", "🏛️ New: U.S. Government & Founding — the three branches, the Constitution, and the Declaration of Independence", "🗼 New: Maine Lighthouses — Portland Head, Nubble, West Quoddy Head, and more", "🛸 New: The Mandalorian & Grogu — Din Djarin, Grogu, beskar, and This is the Way", "📖 Guides slimmed down — Jeremy's host guide and the player guide now open with a quick start and a close button up top, so you get playing faster", "🎵 Fresh theme music — Wine Bar keeps its lounge jazz, Halloween turns playful-spooky, Fall gets warm strings, and Wine Cork goes bubbly with a cork-pop — all synthesized in the app, no audio files", "🥁 Drumroll under the Dramatic Reveal countdown, plus Triangle Only buttons (title screen + Host Control Center) that ring just the triangle, no WOOOOO chant", "🍷🍺 Loading glasses: when a screen like What's New takes a moment, the spinning wine and beer glasses now show while it loads, so it never looks stuck", "🏠 Moved from Dropbox to GitHub: the app now lives at one permanent link — no more Dropbox login or download to play, just open the link or scan the QR. That link never changes, and your progress and achievements on your phone survive every update", "🙃 Three new wrong-answer trophies: First of Many (your first miss), Cold Streak (5 misses in a row), and The Wrong Stuff (10 misses in one night)", "🔍 New 'Which One Is Fake?' topic — four items, one fake: wine and beer bottles, ketchup, cheese, shrimp, fruit, vegetables, fish, candy, herbs, and mushrooms, every choice pictured", "🧹 Topic cleanup — fewer buttons, same questions: the seafood splinters folded into Meat & Seafood Showdown (now 100 questions), Wine Corks into Grape Debate, Downtown Charlotte into Queen City Quiz", "🖼️ Picture questions fixed — the names under the pictures were giving away the answers, so pictures now show with no labels", "🖼️ Embedded-photo picture questions now show as pictures instead of gibberish text", "📱 New home-screen help — a title-screen button with the iPhone and Android steps for adding the app to your home screen", "📺 Easier to read on the bar TVs — bigger answers in a 2×2 grid, a wider scoreboard that fits big nights, and a slimmer host bar"] },
         { v: "New topics & poster", d: "Oct 24", items: ["🍷 Barboretum poster now on the loading screen, behind the spinning glasses", "🐶 7 new pet questions (dogs, cats, lizards, axolotl, hedgehog, pet hermit crabs)", "🦜 Birds topic filled — 8 questions incl. the Salty Dog macaws (Captain, Cherokee, Bailey)", "🐄 8 more farm animal questions", "🚒 New First Responders topic — 10 questions", "🍷 New North Carolina Wine & Beer topic — 12 questions (Biltmore, Duplin, Highland, Sierra Nevada, Wicked Weed)", "🇺🇸 New U.S. History topic — 12 questions", "🖼️ 8 new president picture questions with real portraits (Washington, Lincoln, Jefferson, both Roosevelts, Eisenhower, Kennedy, Obama)", "🏆 6 new achievements + 2 new collectibles (Farm Fresh, First Due)", "🐛 Bug fix: duplicate Crab Pot collectible removed — one Crab Pot now, earned by Deadliest Catch skill"] },
         { v: "Boats & motoring", d: "Oct 24", items: ["🦀 8 new Deadliest Catch boat questions (Time Bandit, Summer Bay, Saga, Brenna A, Cornelia Marie)", "🚗 New Top Gear & Grand Tour Specials topic — 22 questions (Botswana, Bolivia, Middle East, India, USA, Vietnam, Colombia, Madagascar)", "🏆 4 new achievements: Crab Catcher, Bering Captain, Petrolhead, Special Specialist", "🎒 2 new collectibles: Crab Pot, Oliver"] },
         { v: "WOOOOO update", d: "Oct 23", items: ["🔊 WOOOOO! chant sound with the triangle", "🔔 Triangle rings when a round starts", "8 new questions: Scooby-Doo, Batman, Spider-Man"] },
